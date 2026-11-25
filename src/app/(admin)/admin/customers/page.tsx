@@ -102,23 +102,20 @@ export default function CustomersRegistryPage() {
         </div>
 
         <div className="flex items-center gap-2.5">
-          <Button variant="outline" size="sm" onClick={exportCSV} className="text-xs font-semibold gap-1.5">
-            <Download className="w-3.5 h-3.5 text-slate-500" />
-            <span>Export CSV</span>
-          </Button>
+          {canPerform("EXPORT_REPORTS") && (
+            <Button variant="outline" size="sm" onClick={exportCSV} className="text-xs font-semibold gap-1.5">
+              <Download className="w-3.5 h-3.5 text-slate-500" />
+              <span>Export CSV</span>
+            </Button>
+          )}
 
-          {canPerform("CREATE_CUSTOMER") ? (
+          {canPerform("CREATE_CUSTOMER") && (
             <Link href="/admin/customers/new">
               <Button variant="primary" size="sm" className="text-xs font-bold gap-1.5 shadow-md shadow-amber-500/20">
                 <Plus className="w-4 h-4" />
                 <span>Add Customer</span>
               </Button>
             </Link>
-          ) : (
-            <Button variant="primary" size="sm" disabled className="text-xs font-bold gap-1.5 opacity-50" title="Your current role cannot add customers">
-              <Plus className="w-4 h-4" />
-              <span>Add Customer (Disabled)</span>
-            </Button>
           )}
         </div>
       </div>

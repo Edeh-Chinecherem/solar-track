@@ -36,6 +36,8 @@ import { MOCK_USERS, INSTALLATION_STAGES } from "@/lib/mock-data";
 import { solarTrackApi } from "@/lib/api";
 import { AuditLogEntry, UserRole } from "@/lib/types";
 import { formatDateTime } from "@/lib/utils";
+import { useAuthRole } from "@/components/providers/auth-role-provider";
+import { canAccessSettingsTab, SettingsTab } from "@/lib/rbac";
 
 const ROLE_PERMISSIONS: { [key in UserRole]: string[] } = {
   super_admin: ["All System Permissions", "User & Role Management", "Dual Contactor Override", "Audit Log Export"],
@@ -47,7 +49,8 @@ const ROLE_PERMISSIONS: { [key in UserRole]: string[] } = {
 };
 
 export default function AdminSettingsPage() {
-  const [activeTab, setActiveTab] = useState<"roles" | "stages" | "thresholds" | "payg" | "audit">("roles");
+  const { currentRole } = useAuthRole();
+  const [activeTab, setActiveTab] = useState<SettingsTab>("roles");
   const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>([]);
   const [selectedAuditLog, setSelectedAuditLog] = useState<AuditLogEntry | null>(null);
   const [auditSearch, setAuditSearch] = useState("");
@@ -69,8 +72,16 @@ export default function AdminSettingsPage() {
   });
 
   useEffect(() => {
-    solarTrackApi.getAuditLogs().then(setAuditLogs);
-  }, []);
+    if (!canAccessSettingsTab(currentRole, activeTab)) {
+      setActiveTab("roles");
+    }
+  }, [currentRole, activeTab]);
+
+  useEffect(() => {
+    if (canAccessSettingsTab(currentRole, "audit")) {
+      solarTrackApi.getAuditLogs().then(setAuditLogs);
+    }
+  }, [currentRole]);
 
   const handleSaveSettings = (category: string) => {
     setSaveToast(`Settings for ${category} successfully saved and applied.`);
@@ -113,30 +124,34 @@ export default function AdminSettingsPage() {
 
       {/* Navigation Tabs */}
       <div className="flex flex-wrap gap-2 p-1 bg-slate-100 dark:bg-slate-900 rounded-2xl max-w-fit">
-        {[
-          { id: "roles", label: "Roles & Permissions", icon: Users },
-          { id: "stages", label: "Stage Templates", icon: Sliders },
-          { id: "thresholds", label: "Alert Thresholds", icon: Zap },
-          { id: "payg", label: "PAYG Automation", icon: PowerOff },
-          { id: "audit", label: `Audit Log (${auditLogs.length})`, icon: History }
-        ].map((tab) => {
-          const Icon = tab.icon;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center gap-1.5 py-2 px-3.5 rounded-xl text-xs font-bold transition-all ${
-                activeTab === tab.id
-                  ? "bg-white dark:bg-slate-800 text-amber-600 dark:text-amber-400 shadow-sm"
-                  : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
-              }`}
-              data-testid={`settings-tab-${tab.id}`}
-            >
-              <Icon className="w-4 h-4" />
-              <span>{tab.label}</span>
-            </button>
-          );
-        })}
+        {(
+          [
+            { id: "roles", label: "Roles & Permissions", icon: Users },
+            { id: "stages", label: "Stage Templates", icon: Sliders },
+            { id: "thresholds", label: "Alert Thresholds", icon: Zap },
+            { id: "payg", label: "PAYG Automation", icon: PowerOff },
+            { id: "audit", label: `Audit Log (${auditLogs.length})`, icon: History }
+          ] as { id: SettingsTab; label: string; icon: React.ComponentType<{ className?: string }> }[]
+        )
+          .filter((tab) => canAccessSettingsTab(currentRole, tab.id))
+          .map((tab) => {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-1.5 py-2 px-3.5 rounded-xl text-xs font-bold transition-all ${
+                  activeTab === tab.id
+                    ? "bg-white dark:bg-slate-800 text-amber-600 dark:text-amber-400 shadow-sm"
+                    : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
+                }`}
+                data-testid={`settings-tab-${tab.id}`}
+              >
+                <Icon className="w-4 h-4" />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
       </div>
 
       {/* --- TAB 1: ROLES & PERMISSIONS --- */}

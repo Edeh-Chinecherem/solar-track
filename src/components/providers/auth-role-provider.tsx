@@ -3,12 +3,14 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { User, UserRole } from "@/lib/types";
 import { MOCK_USERS } from "@/lib/mock-data/users";
+import { canAccessRoute, canPerformAction } from "@/lib/rbac";
 
 interface AuthRoleContextType {
   currentUser: User;
   currentRole: UserRole;
   switchRole: (role: UserRole) => void;
   canPerform: (action: string) => boolean;
+  canAccess: (pathname: string) => boolean;
   availableUsers: User[];
 }
 
@@ -44,39 +46,9 @@ export function AuthRoleProvider({ children }: { children: React.ReactNode }) {
   /**
    * Role permissions enforcement matrix
    */
-  const canPerform = (action: string): boolean => {
-    const role = currentUser.role;
-    if (role === "super_admin") return true; // Super Admin has unrestricted authority
+  const canPerform = (action: string): boolean => canPerformAction(currentUser.role, action);
 
-    switch (action) {
-      case "CREATE_CUSTOMER":
-        return ["super_admin", "operations_manager", "sales"].includes(role);
-
-      case "ADVANCE_STAGE":
-        return ["super_admin", "operations_manager", "technician"].includes(role);
-
-      case "DISCONNECT_PAYG":
-        return ["super_admin", "operations_manager", "finance"].includes(role);
-
-      case "APPROVE_BULK_DISCONNECT":
-        return ["super_admin", "operations_manager"].includes(role);
-
-      case "GRANT_EXTENSION":
-        return ["super_admin", "operations_manager", "finance"].includes(role);
-
-      case "RESOLVE_TICKET":
-        return ["super_admin", "operations_manager", "support_agent", "technician"].includes(role);
-
-      case "VIEW_SETTINGS":
-        return ["super_admin", "operations_manager", "finance"].includes(role);
-
-      case "EXPORT_REPORTS":
-        return ["super_admin", "operations_manager", "finance", "sales"].includes(role);
-
-      default:
-        return true;
-    }
-  };
+  const canAccess = (pathname: string): boolean => canAccessRoute(currentUser.role, pathname);
 
   return (
     <AuthRoleContext.Provider
@@ -85,6 +57,7 @@ export function AuthRoleProvider({ children }: { children: React.ReactNode }) {
         currentRole: currentUser.role,
         switchRole,
         canPerform,
+        canAccess,
         availableUsers: MOCK_USERS
       }}
     >

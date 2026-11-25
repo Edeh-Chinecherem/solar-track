@@ -1,11 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { AdminHeader } from "@/components/admin/admin-header";
+import { useAuthRole } from "@/components/providers/auth-role-provider";
+import { canAccessRoute } from "@/lib/rbac";
+import { AccessRestricted } from "@/components/ui/access-restricted";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const { currentRole } = useAuthRole();
+  const hasAccess = canAccessRoute(currentRole, pathname);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
@@ -18,7 +25,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </React.Suspense>
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto animate-in fade-in-50 duration-200">
           <React.Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading view...</div>}>
-            {children}
+            {hasAccess ? children : <AccessRestricted role={currentRole} areaName="this Operations section" />}
           </React.Suspense>
         </main>
       </div>

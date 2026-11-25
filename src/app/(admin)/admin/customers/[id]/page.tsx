@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
@@ -53,12 +53,13 @@ import { QrCodeModal } from "@/components/customers/qr-code-modal";
 import { useAuthRole } from "@/components/providers/auth-role-provider";
 import { useToast } from "@/components/providers/toast-provider";
 import { api } from "@/lib/api";
+import { canAccessCustomerTab, CustomerProfileTab } from "@/lib/rbac";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
 function CustomerProfileContent() {
   const params = useParams();
   const customerId = (params?.id as string) || "cust_001";
-  const { currentUser, canPerform } = useAuthRole();
+  const { currentUser, currentRole, canPerform, canAccess } = useAuthRole();
   const { toast } = useToast();
 
   const customer = MOCK_CUSTOMERS.find((c) => c.id === customerId) || MOCK_CUSTOMERS[0];
@@ -68,7 +69,13 @@ function CustomerProfileContent() {
   const tickets = MOCK_TICKETS.filter((t) => t.customerId === customer.id);
   const auditLogs = MOCK_AUDIT_LOGS.filter((a) => a.targetId === customer.id || a.targetId === system.id || a.targetId === payg?.id);
 
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState<CustomerProfileTab>("overview");
+
+  useEffect(() => {
+    if (!canAccessCustomerTab(currentRole, activeTab)) {
+      setActiveTab("overview");
+    }
+  }, [currentRole, activeTab]);
 
   // Modals
   const [qrModalOpen, setQrModalOpen] = useState(false);
@@ -183,12 +190,14 @@ function CustomerProfileContent() {
               <span>Send SMS</span>
             </Button>
 
-            <Link href="/admin/tickets">
-              <Button variant="outline" size="sm" className="text-xs border-slate-600 text-white hover:bg-slate-800">
-                <LifeBuoy className="w-3.5 h-3.5 mr-1.5 text-sky-400" />
-                <span>Create Ticket</span>
-              </Button>
-            </Link>
+            {canAccess("/admin/tickets") && (
+              <Link href="/admin/tickets">
+                <Button variant="outline" size="sm" className="text-xs border-slate-600 text-white hover:bg-slate-800">
+                  <LifeBuoy className="w-3.5 h-3.5 mr-1.5 text-sky-400" />
+                  <span>Create Ticket</span>
+                </Button>
+              </Link>
+            )}
 
             {canPerform("DISCONNECT_PAYG") && (
               <Button
@@ -214,17 +223,17 @@ function CustomerProfileContent() {
         </div>
       </Card>
 
-      {/* 8 Profile Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
+      {/* Role-scoped Profile Tabs */}
+      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as CustomerProfileTab)}>
         <TabsList className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-1 flex-wrap">
-          <TabsTrigger value="overview">1. Overview</TabsTrigger>
-          <TabsTrigger value="timeline">2. Installation Pipeline</TabsTrigger>
-          <TabsTrigger value="telemetry">3. Live System</TabsTrigger>
-          <TabsTrigger value="usage">4. Usage Graphs</TabsTrigger>
-          <TabsTrigger value="payments">5. PAYG & Ledger</TabsTrigger>
-          <TabsTrigger value="tickets">6. Support Tickets ({tickets.length})</TabsTrigger>
-          <TabsTrigger value="documents">7. Documents ({customer.documents.length})</TabsTrigger>
-          <TabsTrigger value="audit">8. Activity Log</TabsTrigger>
+          {canAccessCustomerTab(currentRole, "overview") && <TabsTrigger value="overview">Overview</TabsTrigger>}
+          {canAccessCustomerTab(currentRole, "timeline") && <TabsTrigger value="timeline">Installation Pipeline</TabsTrigger>}
+          {canAccessCustomerTab(currentRole, "telemetry") && <TabsTrigger value="telemetry">Live System</TabsTrigger>}
+          {canAccessCustomerTab(currentRole, "usage") && <TabsTrigger value="usage">Usage Graphs</TabsTrigger>}
+          {canAccessCustomerTab(currentRole, "payments") && <TabsTrigger value="payments">PAYG & Ledger</TabsTrigger>}
+          {canAccessCustomerTab(currentRole, "tickets") && <TabsTrigger value="tickets">Support Tickets ({tickets.length})</TabsTrigger>}
+          {canAccessCustomerTab(currentRole, "documents") && <TabsTrigger value="documents">Documents ({customer.documents.length})</TabsTrigger>}
+          {canAccessCustomerTab(currentRole, "audit") && <TabsTrigger value="audit">Activity Log</TabsTrigger>}
         </TabsList>
 
         {/* TAB 1: OVERVIEW */}

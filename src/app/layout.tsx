@@ -10,8 +10,8 @@ import { OfflineBanner } from "@/components/ui/offline-banner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GreenerAfrik - Energy Powered Solar & Agricultural Operations",
-  description: "GreenerAfrik Energies Limited (RC 9402141) — Energy Powered Agricultural Clusters (EPAC), residential & commercial solar installations, IoT telemetry, and PAYG metering.",
+  title: "GreenerAfrik - Solar Operations & Fleet Telemetry",
+  description: "GreenerAfrik Energies Limited (RC 9402141) — Enterprise, residential & commercial solar installations, 10-stage tracking, IoT telemetry, and PAYG metering.",
   manifest: "/manifest.json"
 };
 

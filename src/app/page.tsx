@@ -46,7 +46,7 @@ export default function Home() {
         <div className="max-w-3xl space-y-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-emerald-500/30 text-emerald-400 text-xs font-semibold shadow-inner">
             <Leaf className="w-3.5 h-3.5 text-[#10B981]" />
-            <span>Energy Powered Agricultural Clusters (EPAC) & Commercial Solar Telemetry</span>
+            <span>Residential, Commercial & Enterprise Solar Telemetry</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
@@ -164,7 +164,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="relative z-10 border-t border-slate-800/80 py-6 px-6 text-center text-xs text-slate-500">
-        GreenerAfrik Energies Limited (RC 9402141) — ...Powering Africa. Energy Powered Agricultural Clusters & Commercial Solar Infrastructure.
+        GreenerAfrik Energies Limited (RC 9402141) — ...Powering Africa. Residential, Commercial & Enterprise Solar Infrastructure.
       </footer>
     </div>
   );

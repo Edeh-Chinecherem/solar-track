@@ -20,6 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useAuthRole } from "@/components/providers/auth-role-provider";
 import { GreenerAfrikLogo } from "@/components/ui/greenerafrik-logo";
+import { canAccessRoute, ROLE_META } from "@/lib/rbac";
 
 const NAV_ITEMS = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
@@ -43,14 +44,9 @@ export function AdminSidebar({
   const pathname = usePathname();
   const { currentRole, currentUser } = useAuthRole();
 
-  const roleLabels: Record<string, string> = {
-    super_admin: "Super Admin",
-    operations_manager: "Ops Manager",
-    sales: "Sales",
-    technician: "Technician",
-    support_agent: "Support Agent",
-    finance: "Finance"
-  };
+  const visibleNavItems = NAV_ITEMS.filter((item) => canAccessRoute(currentRole, item.href));
+  const showTechLink = canAccessRoute(currentRole, "/tech");
+  const showPortalLink = canAccessRoute(currentRole, "/portal");
 
   const navContent = (
     <div className="flex h-full flex-col justify-between p-4 bg-slate-900 text-slate-100">
@@ -79,13 +75,13 @@ export function AdminSidebar({
               DEMO
             </span>
           </div>
-          <div className="mt-1 text-sm font-bold text-white">{roleLabels[currentRole] || currentRole}</div>
+          <div className="mt-1 text-sm font-bold text-white">{ROLE_META[currentRole]?.shortTitle || currentRole}</div>
           <div className="text-[11px] text-slate-400 truncate mt-0.5">{currentUser.name}</div>
         </div>
 
         {/* Navigation list */}
         <nav className="space-y-1">
-          {NAV_ITEMS.map((item) => {
+          {visibleNavItems.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href));
             const Icon = item.icon;
 
@@ -113,22 +109,28 @@ export function AdminSidebar({
       </div>
 
       {/* Footer quick links */}
-      <div className="pt-4 border-t border-slate-800/80 space-y-2">
-        <Link
-          href="/tech"
-          className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition"
-        >
-          <span>Switch to Technician View</span>
-          <ChevronRight className="w-3.5 h-3.5" />
-        </Link>
-        <Link
-          href="/portal"
-          className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition"
-        >
-          <span>Open Customer Portal</span>
-          <ChevronRight className="w-3.5 h-3.5" />
-        </Link>
-      </div>
+      {(showTechLink || showPortalLink) && (
+        <div className="pt-4 border-t border-slate-800/80 space-y-2">
+          {showTechLink && (
+            <Link
+              href="/tech"
+              className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition"
+            >
+              <span>Switch to Technician View</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          )}
+          {showPortalLink && (
+            <Link
+              href="/portal"
+              className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition"
+            >
+              <span>Open Customer Portal</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          )}
+        </div>
+      )}
     </div>
   );
 

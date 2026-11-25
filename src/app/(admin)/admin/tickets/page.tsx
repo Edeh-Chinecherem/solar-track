@@ -355,15 +355,17 @@ function TicketsContent() {
           </SheetContent>
 
           <SheetFooter className="flex items-center justify-between">
-            <Button
-              variant="success"
-              size="sm"
-              onClick={() => handleResolveTicket(activeTicket.id)}
-              className="text-xs font-bold gap-1"
-            >
-              <CheckCircle2 className="w-4 h-4" />
-              <span>Mark Ticket Resolved</span>
-            </Button>
+            {canPerform("RESOLVE_TICKET") && (
+              <Button
+                variant="success"
+                size="sm"
+                onClick={() => handleResolveTicket(activeTicket.id)}
+                className="text-xs font-bold gap-1"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                <span>Mark Ticket Resolved</span>
+              </Button>
+            )}
             <Button variant="outline" size="sm" onClick={() => setDrawerOpen(false)} className="text-xs">
               Close
             </Button>

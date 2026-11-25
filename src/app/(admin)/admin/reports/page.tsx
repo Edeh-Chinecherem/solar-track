@@ -34,6 +34,7 @@ import {
   CartesianGrid
 } from "recharts";
 import { formatNaira } from "@/lib/utils";
+import { useAuthRole } from "@/components/providers/auth-role-provider";
 
 const STAGE_TURNAROUND_DATA = [
   { stage: "Survey", actual: 2.1, target: 3.0 },
@@ -76,6 +77,8 @@ const TECHNICIANS_PRODUCTIVITY = [
 ];
 
 export default function AdminReportsPage() {
+  const { currentRole, canPerform } = useAuthRole();
+  const isFinanceOnly = currentRole === "finance";
   const [exportToast, setExportToast] = useState<string | null>(null);
 
   const handleExportCSV = () => {
@@ -116,53 +119,59 @@ export default function AdminReportsPage() {
         <div>
           <h1 className="text-2xl font-black tracking-tight flex items-center gap-2">
             <BarChart3 className="w-7 h-7 text-amber-500" />
-            Executive Reports & Analytics
+            {isFinanceOnly ? "PAYG Collections Reports" : "Executive Reports & Analytics"}
           </h1>
           <p className="text-sm text-slate-500">
-            Installation turnaround times, technician productivity, collections efficiency, and inverter reliability indexes.
+            {isFinanceOnly
+              ? "Monthly billing targets, collections efficiency, and Paystack / bank transfer recovery."
+              : "Installation turnaround times, technician productivity, collections efficiency, and inverter reliability indexes."}
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className="gap-1.5 text-xs font-bold"
-            onClick={handleExportCSV}
-            data-testid="export-csv-btn"
-          >
-            <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
-            Export CSV
-          </Button>
+        {canPerform("EXPORT_REPORTS") && (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-1.5 text-xs font-bold"
+              onClick={handleExportCSV}
+              data-testid="export-csv-btn"
+            >
+              <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+              Export CSV
+            </Button>
 
-          <Button
-            size="sm"
-            className="gap-1.5 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950"
-            onClick={handleExportPDF}
-            data-testid="export-pdf-btn"
-          >
-            <Download className="w-4 h-4" />
-            Download PDF
-          </Button>
-        </div>
+            <Button
+              size="sm"
+              className="gap-1.5 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950"
+              onClick={handleExportPDF}
+              data-testid="export-pdf-btn"
+            >
+              <Download className="w-4 h-4" />
+              Download PDF
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* KPI Overview */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-l-4 border-l-amber-500">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-xs font-bold text-slate-500 uppercase">Avg Turnaround Time</p>
-              <h3 className="text-2xl font-black mt-1 text-slate-900 dark:text-white">11.4 Days</h3>
-              <p className="text-xs font-bold text-emerald-600 mt-0.5">
-                ↓ 2.6 days faster than SLA
-              </p>
-            </div>
-            <div className="p-3 bg-amber-50 dark:bg-amber-950/40 text-amber-600 rounded-2xl">
-              <Clock className="w-6 h-6" />
-            </div>
-          </CardContent>
-        </Card>
+        {!isFinanceOnly && (
+          <Card className="border-l-4 border-l-amber-500">
+            <CardContent className="p-4 flex items-center justify-between">
+              <div>
+                <p className="text-xs font-bold text-slate-500 uppercase">Avg Turnaround Time</p>
+                <h3 className="text-2xl font-black mt-1 text-slate-900 dark:text-white">11.4 Days</h3>
+                <p className="text-xs font-bold text-emerald-600 mt-0.5">
+                  ↓ 2.6 days faster than SLA
+                </p>
+              </div>
+              <div className="p-3 bg-amber-50 dark:bg-amber-950/40 text-amber-600 rounded-2xl">
+                <Clock className="w-6 h-6" />
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         <Card className="border-l-4 border-l-emerald-500">
           <CardContent className="p-4 flex items-center justify-between">
@@ -179,39 +188,44 @@ export default function AdminReportsPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-sky-500">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-xs font-bold text-slate-500 uppercase">Fleet Uptime Index</p>
-              <h3 className="text-2xl font-black mt-1 text-sky-600">99.3%</h3>
-              <p className="text-xs font-semibold text-slate-500 mt-0.5">
-                Across 25 installations
-              </p>
-            </div>
-            <div className="p-3 bg-sky-50 dark:bg-sky-950/40 text-sky-600 rounded-2xl">
-              <Zap className="w-6 h-6" />
-            </div>
-          </CardContent>
-        </Card>
+        {!isFinanceOnly && (
+          <Card className="border-l-4 border-l-sky-500">
+            <CardContent className="p-4 flex items-center justify-between">
+              <div>
+                <p className="text-xs font-bold text-slate-500 uppercase">Fleet Uptime Index</p>
+                <h3 className="text-2xl font-black mt-1 text-sky-600">99.3%</h3>
+                <p className="text-xs font-semibold text-slate-500 mt-0.5">
+                  Across 25 installations
+                </p>
+              </div>
+              <div className="p-3 bg-sky-50 dark:bg-sky-950/40 text-sky-600 rounded-2xl">
+                <Zap className="w-6 h-6" />
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
-        <Card className="border-l-4 border-l-purple-500">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-xs font-bold text-slate-500 uppercase">Field Team Rating</p>
-              <h3 className="text-2xl font-black mt-1 text-purple-600">4.85 / 5.0</h3>
-              <p className="text-xs font-semibold text-slate-500 mt-0.5">
-                137 customer reviews
-              </p>
-            </div>
-            <div className="p-3 bg-purple-50 dark:bg-purple-950/40 text-purple-600 rounded-2xl">
-              <Award className="w-6 h-6" />
-            </div>
-          </CardContent>
-        </Card>
+        {!isFinanceOnly && (
+          <Card className="border-l-4 border-l-purple-500">
+            <CardContent className="p-4 flex items-center justify-between">
+              <div>
+                <p className="text-xs font-bold text-slate-500 uppercase">Field Team Rating</p>
+                <h3 className="text-2xl font-black mt-1 text-purple-600">4.85 / 5.0</h3>
+                <p className="text-xs font-semibold text-slate-500 mt-0.5">
+                  137 customer reviews
+                </p>
+              </div>
+              <div className="p-3 bg-purple-50 dark:bg-purple-950/40 text-purple-600 rounded-2xl">
+                <Award className="w-6 h-6" />
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       {/* Row 1: Stage Turnaround Time & Fault Categories Pie */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {!isFinanceOnly && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Stage Turnaround Chart */}
         <Card>
           <CardHeader>
@@ -297,7 +311,8 @@ export default function AdminReportsPage() {
             </div>
           </CardContent>
         </Card>
-      </div>
+        </div>
+      )}
 
       {/* Row 2: Monthly Collections Rate & Inverter Brand Reliability */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -340,42 +355,45 @@ export default function AdminReportsPage() {
         </Card>
 
         {/* Brand Reliability Index */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Inverter OEM Reliability & Uptime Index</CardTitle>
-            <CardDescription className="text-xs">
-              Hardware durability comparison based on field MTTR and telemetry alarms
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
-              {BRAND_RELIABILITY.map((b) => (
-                <div key={b.brand} className="py-3 flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <div className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                      <span>{b.brand}</span>
-                      <Badge variant="outline" className="text-[10px]">{b.score}</Badge>
+        {!isFinanceOnly && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Inverter OEM Reliability & Uptime Index</CardTitle>
+              <CardDescription className="text-xs">
+                Hardware durability comparison based on field MTTR and telemetry alarms
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+                {BRAND_RELIABILITY.map((b) => (
+                  <div key={b.brand} className="py-3 flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <div className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span>{b.brand}</span>
+                        <Badge variant="outline" className="text-[10px]">{b.score}</Badge>
+                      </div>
+                      <div className="text-[11px] text-slate-500">
+                        {b.systems} Active Fleets • MTTR: {b.meanTimeToRepair}
+                      </div>
                     </div>
-                    <div className="text-[11px] text-slate-500">
-                      {b.systems} Active Fleets • MTTR: {b.meanTimeToRepair}
-                    </div>
-                  </div>
 
-                  <div className="text-right">
-                    <span className="font-mono font-black text-emerald-600 text-sm">
-                      {b.uptime}
-                    </span>
-                    <div className="text-[10px] text-slate-400">Hardware Uptime</div>
+                    <div className="text-right">
+                      <span className="font-mono font-black text-emerald-600 text-sm">
+                        {b.uptime}
+                      </span>
+                      <div className="text-[10px] text-slate-400">Hardware Uptime</div>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       {/* Row 3: Technician Productivity Table */}
-      <Card>
+      {!isFinanceOnly && (
+        <Card>
         <CardHeader>
           <CardTitle className="text-base">Technician Field Productivity & Quality Leaderboard</CardTitle>
           <CardDescription className="text-xs">
@@ -415,7 +433,8 @@ export default function AdminReportsPage() {
             </table>
           </div>
         </CardContent>
-      </Card>
+        </Card>
+      )}
     </div>
   );
 }

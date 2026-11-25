@@ -11,24 +11,18 @@ import {
 } from "lucide-react";
 import { useAuthRole } from "@/components/providers/auth-role-provider";
 import { useTheme } from "@/components/providers/theme-provider";
-import { UserRole } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { GreenerAfrikTopBand, GreenerAfrikEmblem } from "@/components/ui/greenerafrik-logo";
+import { canAccessRoute, ROLE_META } from "@/lib/rbac";
 
 export function AdminHeader({ onMenuClick }: { onMenuClick: () => void }) {
-  const { currentUser, currentRole, switchRole, availableUsers } = useAuthRole();
+  const { currentRole, switchRole, availableUsers } = useAuthRole();
   const { theme, toggleTheme } = useTheme();
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
-
-  const roleDisplayNames: Record<UserRole, { title: string; badgeColor: string }> = {
-    super_admin: { title: "Super Admin", badgeColor: "bg-purple-100 dark:bg-purple-950/80 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800" },
-    operations_manager: { title: "Operations Manager", badgeColor: "bg-sky-100 dark:bg-sky-950/80 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800" },
-    sales: { title: "Sales Executive", badgeColor: "bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800" },
-    technician: { title: "Field Technician", badgeColor: "bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800" },
-    support_agent: { title: "Support Specialist", badgeColor: "bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800" },
-    finance: { title: "Finance & Accounts", badgeColor: "bg-rose-100 dark:bg-rose-950/80 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800" }
-  };
+  const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <header className="sticky top-0 z-30 flex flex-col w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur transition-colors">
@@ -53,7 +47,7 @@ export function AdminHeader({ onMenuClick }: { onMenuClick: () => void }) {
             <div className="hidden sm:flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
               <span className="font-bold text-[#0A5C36] dark:text-[#10B981]">GreenerAfrik Operations</span>
               <span>/</span>
-              <span>Energy Powered Agricultural Clusters (EPAC) & Solar Telemetry</span>
+              <span>Nigeria Solar Fleet & Telemetry</span>
             </div>
           </div>
         </div>
@@ -70,7 +64,7 @@ export function AdminHeader({ onMenuClick }: { onMenuClick: () => void }) {
                 <span className="w-2 h-2 rounded-full bg-[#0A5C36] dark:bg-[#10B981] animate-pulse" />
                 <span className="hidden md:inline text-slate-400 font-normal">Active Role:</span>
                 <span className="font-bold text-slate-900 dark:text-white">
-                  {roleDisplayNames[currentRole]?.title || currentRole}
+                  {ROLE_META[currentRole]?.title || currentRole}
                 </span>
               </div>
               <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
@@ -95,7 +89,7 @@ export function AdminHeader({ onMenuClick }: { onMenuClick: () => void }) {
                   <div className="mt-1 space-y-1">
                     {availableUsers.map((user) => {
                       const isSelected = user.role === currentRole;
-                      const meta = roleDisplayNames[user.role];
+                      const meta = ROLE_META[user.role];
 
                       return (
                         <button
@@ -104,6 +98,9 @@ export function AdminHeader({ onMenuClick }: { onMenuClick: () => void }) {
                           onClick={() => {
                             switchRole(user.role);
                             setRoleDropdownOpen(false);
+                            if (!canAccessRoute(user.role, pathname)) {
+                              router.push("/admin");
+                            }
                           }}
                           className={cn(
                             "w-full flex items-center justify-between rounded-xl px-3 py-2 text-left text-xs transition cursor-pointer",

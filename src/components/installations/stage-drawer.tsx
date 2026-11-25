@@ -44,7 +44,7 @@ export function StageDrawer({
   system,
   onStageUpdated
 }: StageDrawerProps) {
-  const { currentUser, canPerform } = useAuthRole();
+  const { currentUser, currentRole, canPerform } = useAuthRole();
   const { toast } = useToast();
 
   const [notes, setNotes] = useState("");
@@ -56,6 +56,11 @@ export function StageDrawer({
 
   const currentStageDef = INSTALLATION_STAGES.find((s) => s.id === installation.currentStage) || INSTALLATION_STAGES[0];
   const nextStageDef = INSTALLATION_STAGES.find((s) => s.order === currentStageDef.order + 1);
+  const canEditStage =
+    canPerform("ADVANCE_STAGE") &&
+    (currentRole === "super_admin" ||
+      currentRole === "operations_manager" ||
+      currentStageDef.requiredRole.includes(currentRole));
 
   const currentChecklist = installation.checklists[installation.currentStage] || [];
   const completedCount = currentChecklist.filter((c) => c.isCompleted).length;
@@ -185,7 +190,9 @@ export function StageDrawer({
             {currentChecklist.map((item) => (
               <label
                 key={item.id}
-                className={`flex items-start gap-3 p-3 rounded-xl border transition-colors cursor-pointer text-xs ${
+                className={`flex items-start gap-3 p-3 rounded-xl border transition-colors text-xs ${
+                  canEditStage ? "cursor-pointer" : "cursor-default opacity-80"
+                } ${
                   item.isCompleted
                     ? "bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800/60 text-emerald-950 dark:text-emerald-200 font-medium"
                     : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-amber-400 text-slate-700 dark:text-slate-300"
@@ -194,8 +201,9 @@ export function StageDrawer({
                 <input
                   type="checkbox"
                   checked={item.isCompleted}
-                  onChange={() => handleToggleChecklist(item.id)}
-                  className="mt-0.5 w-4 h-4 rounded text-amber-500 focus:ring-amber-500 cursor-pointer"
+                  disabled={!canEditStage}
+                  onChange={() => canEditStage && handleToggleChecklist(item.id)}
+                  className="mt-0.5 w-4 h-4 rounded text-amber-500 focus:ring-amber-500 cursor-pointer disabled:cursor-not-allowed"
                 />
                 <div className="flex-1">
                   <span>{item.text}</span>
@@ -244,63 +252,69 @@ export function StageDrawer({
           </div>
 
           {/* Upload trigger */}
-          <div className="flex gap-2">
-            <Input
-              placeholder="Caption (e.g. Earthing rod resistance reading)..."
-              value={newPhotoCaption}
-              onChange={(e) => setNewPhotoCaption(e.target.value)}
-              className="text-xs h-9"
-            />
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleSimulatePhotoUpload}
-              className="text-xs font-semibold shrink-0 gap-1"
-            >
-              <Upload className="w-3.5 h-3.5" />
-              <span>Attach Photo</span>
-            </Button>
-          </div>
+          {canEditStage && (
+            <div className="flex gap-2">
+              <Input
+                placeholder="Caption (e.g. Earthing rod resistance reading)..."
+                value={newPhotoCaption}
+                onChange={(e) => setNewPhotoCaption(e.target.value)}
+                className="text-xs h-9"
+              />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleSimulatePhotoUpload}
+                className="text-xs font-semibold shrink-0 gap-1"
+              >
+                <Upload className="w-3.5 h-3.5" />
+                <span>Attach Photo</span>
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Notes & Blocked Reason */}
-        <div className="space-y-3">
-          <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
-            Technician Stage Notes / Delay Reasons
-          </label>
-          <Textarea
-            rows={3}
-            placeholder="Record site remarks, customer requests, or contractor delays..."
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            className="text-xs"
-          />
-        </div>
+        {canEditStage && (
+          <div className="space-y-3">
+            <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+              Technician Stage Notes / Delay Reasons
+            </label>
+            <Textarea
+              rows={3}
+              placeholder="Record site remarks, customer requests, or contractor delays..."
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              className="text-xs"
+            />
+          </div>
+        )}
       </SheetContent>
 
       <SheetFooter>
         <Button variant="outline" size="sm" onClick={() => onOpenChange(false)} className="text-xs">
-          Cancel
+          {canEditStage ? "Cancel" : "Close"}
         </Button>
 
-        {nextStageDef ? (
-          <Button
-            variant="primary"
-            size="sm"
-            disabled={!allMandatoryChecked || !canPerform("ADVANCE_STAGE") || isUpdating}
-            isLoading={isUpdating}
-            onClick={handleAdvanceStage}
-            className="text-xs font-bold shadow-md shadow-amber-500/20"
-            title={!allMandatoryChecked ? "Complete all checklist items to unlock" : "Advance stage"}
-          >
-            <span>Advance to {nextStageDef.shortLabel}</span>
-            <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-          </Button>
-        ) : (
-          <Button variant="success" size="sm" disabled className="text-xs font-bold">
-            <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
-            <span>Installation Fully Completed</span>
-          </Button>
+        {canEditStage && (
+          nextStageDef ? (
+            <Button
+              variant="primary"
+              size="sm"
+              disabled={!allMandatoryChecked || isUpdating}
+              isLoading={isUpdating}
+              onClick={handleAdvanceStage}
+              className="text-xs font-bold shadow-md shadow-amber-500/20"
+              title={!allMandatoryChecked ? "Complete all checklist items to unlock" : "Advance stage"}
+            >
+              <span>Advance to {nextStageDef.shortLabel}</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+            </Button>
+          ) : (
+            <Button variant="success" size="sm" disabled className="text-xs font-bold">
+              <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
+              <span>Installation Fully Completed</span>
+            </Button>
+          )
         )}
       </SheetFooter>
     </Sheet>
