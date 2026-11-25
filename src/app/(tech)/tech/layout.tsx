@@ -8,7 +8,7 @@ import { useAuthRole } from "@/components/providers/auth-role-provider";
 import { canAccessRoute } from "@/lib/rbac";
 import { AccessRestricted } from "@/components/ui/access-restricted";
 
-export default function TechLayout({ children }: { children: React.ReactNode }) {
+function TechLayoutInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { currentRole } = useAuthRole();
   const hasAccess = canAccessRoute(currentRole, pathname);
@@ -29,5 +29,13 @@ export default function TechLayout({ children }: { children: React.ReactNode }) 
         </React.Suspense>
       )}
     </div>
+  );
+}
+
+export default function TechLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen bg-emerald-50/40 dark:bg-[#042414]" />}>
+      <TechLayoutInner>{children}</TechLayoutInner>
+    </React.Suspense>
   );
 }

@@ -8,7 +8,7 @@ import { useAuthRole } from "@/components/providers/auth-role-provider";
 import { canAccessRoute } from "@/lib/rbac";
 import { AccessRestricted } from "@/components/ui/access-restricted";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const { currentRole } = useAuthRole();
@@ -30,5 +30,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </main>
       </div>
     </div>
+  );
+}
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen bg-emerald-50/30 dark:bg-[#042414]" />}>
+      <AdminLayoutInner>{children}</AdminLayoutInner>
+    </React.Suspense>
   );
 }
