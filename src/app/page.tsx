@@ -5,10 +5,7 @@ import {
   Users,
   QrCode,
   ArrowRight,
-  Zap,
-  Leaf,
-  Activity,
-  CreditCard
+  Leaf
 } from "lucide-react";
 import { GreenerAfrikLogo, GreenerAfrikTopBand } from "@/components/ui/greenerafrik-logo";
 
@@ -70,9 +67,9 @@ export default function Home() {
                 <Users className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <div className="text-xs font-bold uppercase tracking-wider text-emerald-400">Staff Operations Desk</div>
+                <div className="text-xs font-bold uppercase tracking-wider text-emerald-400">Operations Team</div>
                 <h2 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">
-                  /admin
+                  Staff Operations Desk
                 </h2>
                 <p className="text-xs text-slate-400 leading-relaxed">
                   Persona switcher across 6 staff roles, 10-stage gated pipeline, fleet telemetry map, diagnosis card & PAYG defaulters queue.
@@ -95,9 +92,9 @@ export default function Home() {
                 <Smartphone className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <div className="text-xs font-bold uppercase tracking-wider text-emerald-400">Field Technician App</div>
+                <div className="text-xs font-bold uppercase tracking-wider text-emerald-400">Field Engineering</div>
                 <h2 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">
-                  /tech
+                  Field Technician App
                 </h2>
                 <p className="text-xs text-slate-400 leading-relaxed">
                   Mobile-first field worker view with Google Maps routing, WhatsApp triggers, stage checklists, and camera photo capture.
@@ -120,9 +117,9 @@ export default function Home() {
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <div className="text-xs font-bold uppercase tracking-wider text-orange-400">Customer Portal</div>
+                <div className="text-xs font-bold uppercase tracking-wider text-orange-400">Self-Service</div>
                 <h2 className="text-xl font-bold text-white group-hover:text-orange-400 transition-colors">
-                  /portal
+                  Customer Portal
                 </h2>
                 <p className="text-xs text-slate-400 leading-relaxed">
                   Mobile-friendly customer tracker, OTP login, daily kWh usage with Nigerian appliance tips, mock Paystack & self-help diagnosis.
@@ -145,9 +142,9 @@ export default function Home() {
                 <QrCode className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <div className="text-xs font-bold uppercase tracking-wider text-purple-400">Public QR Scan</div>
+                <div className="text-xs font-bold uppercase tracking-wider text-purple-400">Hardware Verification</div>
                 <h2 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
-                  /q/[token]
+                  Public QR Scan
                 </h2>
                 <p className="text-xs text-slate-400 leading-relaxed">
                   Strict privacy public sticker landing: shows equipment authenticity and warranty, without exposing customer PII or debts.
