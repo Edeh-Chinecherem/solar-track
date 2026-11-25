@@ -2,33 +2,33 @@
 
 @layer base {
   :root {
-    --background: #f8fafc;
-    --foreground: #0f172a;
-    /* GreenerAfrik Brand Colors */
+    --background: #ffffff;
+    --foreground: #05361e;
+    /* GreenerAfrik Brand Colors (Strictly Green, Orange & White) */
     --primary: #0A5C36;
     --primary-foreground: #ffffff;
     --primary-orange: #EA580C;
     --brand-green: #0A5C36;
     --brand-orange: #EA580C;
-    --navy: #0f172a;
+    --navy: #05361e;
     --card: #ffffff;
-    --card-foreground: #0f172a;
-    --border: #e2e8f0;
+    --card-foreground: #05361e;
+    --border: #d1fae5;
   }
 
   .dark {
-    --background: #090d16;
-    --foreground: #f8fafc;
+    --background: #042414;
+    --foreground: #ffffff;
     /* GreenerAfrik Brand Colors in Dark Theme */
     --primary: #10B981;
     --primary-foreground: #ffffff;
     --primary-orange: #F97316;
     --brand-green: #059669;
     --brand-orange: #F97316;
-    --navy: #0f172a;
-    --card: #0f172a;
-    --card-foreground: #f8fafc;
-    --border: #1e293b;
+    --navy: #05361e;
+    --card: #06361f;
+    --card-foreground: #ffffff;
+    --border: #065f46;
   }
 }
 

@@ -33,15 +33,15 @@ export function Sheet({ open, onOpenChange, children, side = "right" }: SheetPro
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
       <div
-        className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity animate-in fade-in"
+        className="fixed inset-0 bg-[#042414]/60 backdrop-blur-sm transition-opacity animate-in fade-in"
         onClick={() => onOpenChange(false)}
       />
       <div
         className={cn(
-          "fixed bg-white dark:bg-slate-900 shadow-2xl transition-transform duration-300 ease-in-out z-50 flex flex-col",
+          "fixed bg-white dark:bg-[#06361f] shadow-2xl transition-transform duration-300 ease-in-out z-50 flex flex-col",
           side === "right"
-            ? "inset-y-0 right-0 w-full sm:max-w-xl border-l border-slate-200 dark:border-slate-800 animate-in slide-in-from-right"
-            : "inset-x-0 bottom-0 max-h-[85vh] rounded-t-3xl border-t border-slate-200 dark:border-slate-800 animate-in slide-in-from-bottom"
+            ? "inset-y-0 right-0 w-full sm:max-w-xl border-l border-emerald-200 dark:border-emerald-800 animate-in slide-in-from-right"
+            : "inset-x-0 bottom-0 max-h-[85vh] rounded-t-3xl border-t border-emerald-200 dark:border-emerald-800 animate-in slide-in-from-bottom"
         )}
       >
         {children}
@@ -60,12 +60,12 @@ export function SheetHeader({
   onClose?: () => void;
 }) {
   return (
-    <div className={cn("flex items-center justify-between p-6 border-b border-slate-100 dark:border-slate-800", className)}>
+    <div className={cn("flex items-center justify-between p-6 border-b border-emerald-100 dark:border-emerald-800", className)}>
       <div className="flex-1">{children}</div>
       {onClose && (
         <button
           onClick={onClose}
-          className="rounded-lg p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+          className="rounded-lg p-2 text-emerald-600/80 hover:text-[#05361e] dark:text-emerald-300 dark:hover:text-white hover:bg-emerald-50 dark:hover:bg-[#084729] transition"
           aria-label="Close sheet"
         >
           <X className="w-5 h-5" />
@@ -76,11 +76,11 @@ export function SheetHeader({
 }
 
 export function SheetTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <h2 className={cn("text-lg font-bold text-slate-900 dark:text-slate-100", className)} {...props} />;
+  return <h2 className={cn("text-lg font-bold text-[#05361e] dark:text-white", className)} {...props} />;
 }
 
 export function SheetDescription({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p className={cn("text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1", className)} {...props} />;
+  return <p className={cn("text-xs sm:text-sm text-emerald-700/80 dark:text-emerald-200/80 mt-1", className)} {...props} />;
 }
 
 export function SheetContent({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
@@ -90,7 +90,7 @@ export function SheetContent({ className, ...props }: React.HTMLAttributes<HTMLD
 export function SheetFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-end gap-3", className)}
+      className={cn("p-6 border-t border-emerald-100 dark:border-emerald-800 bg-emerald-50/50 dark:bg-[#06361f]/50 flex items-center justify-end gap-3", className)}
       {...props}
     />
   );

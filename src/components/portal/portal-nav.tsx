@@ -18,7 +18,7 @@ export function PortalNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-t border-slate-200 dark:border-slate-800 px-2 py-2 flex items-center justify-around shadow-lg pb-safe">
+    <nav className="fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-[#06361f]/95 backdrop-blur border-t border-emerald-200 dark:border-emerald-900 px-2 py-2 flex items-center justify-around shadow-lg pb-safe">
       {PORTAL_NAV.map((item) => {
         const isActive = pathname === item.href;
         const Icon = item.icon;
@@ -31,7 +31,7 @@ export function PortalNav() {
               "flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all duration-150 min-w-[58px]",
               isActive
                 ? "text-[#0A5C36] dark:text-[#10B981] font-bold"
-                : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-300"
+                : "text-emerald-700/70 dark:text-emerald-200/70 hover:text-[#0A5C36] dark:hover:text-white"
             )}
           >
             <div className={cn("p-1 rounded-lg transition-transform", isActive && "scale-110")}>

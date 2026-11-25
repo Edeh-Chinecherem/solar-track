@@ -56,10 +56,10 @@ const REVENUE_COLLECTIONS_DATA = [
 ];
 
 const FAULT_DISTRIBUTION_DATA = [
-  { name: "Overload Surges", value: 42, color: "#EF4444" },
-  { name: "Under-charged Battery", value: 28, color: "#F59E0B" },
-  { name: "Breaker / Wiring Trips", value: 18, color: "#3B82F6" },
-  { name: "Hardware / Temperature", value: 12, color: "#8B5CF6" }
+  { name: "Overload Surges", value: 42, color: "#C2410C" },
+  { name: "Under-charged Battery", value: 28, color: "#EA580C" },
+  { name: "Breaker / Wiring Trips", value: 18, color: "#0A5C36" },
+  { name: "Hardware / Temperature", value: 12, color: "#10B981" }
 ];
 
 const BRAND_RELIABILITY = [
@@ -108,7 +108,7 @@ export default function AdminReportsPage() {
     <div className="space-y-6">
       {/* Toast */}
       {exportToast && (
-        <div className="fixed top-4 right-4 z-50 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2 border border-slate-700 animate-in fade-in">
+        <div className="fixed top-4 right-4 z-50 bg-[#05361e] text-white text-xs px-4 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-700 animate-in fade-in">
           <CheckCircle2 className="w-4 h-4 text-emerald-400" />
           <span>{exportToast}</span>
         </div>
@@ -118,10 +118,10 @@ export default function AdminReportsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-black tracking-tight flex items-center gap-2">
-            <BarChart3 className="w-7 h-7 text-amber-500" />
+            <BarChart3 className="w-7 h-7 text-[#0A5C36] dark:text-[#10B981]" />
             {isFinanceOnly ? "PAYG Collections Reports" : "Executive Reports & Analytics"}
           </h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-emerald-700/80 dark:text-emerald-200/80">
             {isFinanceOnly
               ? "Monthly billing targets, collections efficiency, and Paystack / bank transfer recovery."
               : "Installation turnaround times, technician productivity, collections efficiency, and inverter reliability indexes."}
@@ -143,7 +143,7 @@ export default function AdminReportsPage() {
 
             <Button
               size="sm"
-              className="gap-1.5 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950"
+              className="gap-1.5 text-xs font-bold bg-[#0A5C36] hover:bg-[#074728] text-white"
               onClick={handleExportPDF}
               data-testid="export-pdf-btn"
             >
@@ -157,16 +157,16 @@ export default function AdminReportsPage() {
       {/* KPI Overview */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {!isFinanceOnly && (
-          <Card className="border-l-4 border-l-amber-500">
+          <Card className="border-l-4 border-l-[#EA580C]">
             <CardContent className="p-4 flex items-center justify-between">
               <div>
-                <p className="text-xs font-bold text-slate-500 uppercase">Avg Turnaround Time</p>
-                <h3 className="text-2xl font-black mt-1 text-slate-900 dark:text-white">11.4 Days</h3>
+                <p className="text-xs font-bold text-emerald-700/80 dark:text-emerald-200/80 uppercase">Avg Turnaround Time</p>
+                <h3 className="text-2xl font-black mt-1 text-[#05361e] dark:text-white">11.4 Days</h3>
                 <p className="text-xs font-bold text-emerald-600 mt-0.5">
                   ↓ 2.6 days faster than SLA
                 </p>
               </div>
-              <div className="p-3 bg-amber-50 dark:bg-amber-950/40 text-amber-600 rounded-2xl">
+              <div className="p-3 bg-orange-50 dark:bg-orange-950/40 text-[#EA580C] rounded-2xl">
                 <Clock className="w-6 h-6" />
               </div>
             </CardContent>
@@ -176,9 +176,9 @@ export default function AdminReportsPage() {
         <Card className="border-l-4 border-l-emerald-500">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-xs font-bold text-slate-500 uppercase">PAYG Recovery Rate</p>
+              <p className="text-xs font-bold text-emerald-700/80 dark:text-emerald-200/80 uppercase">PAYG Recovery Rate</p>
               <h3 className="text-2xl font-black mt-1 text-emerald-600">93.8%</h3>
-              <p className="text-xs font-semibold text-slate-500 mt-0.5">
+              <p className="text-xs font-semibold text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">
                 ₦18.4M of ₦19.6M collected
               </p>
             </div>
@@ -189,16 +189,16 @@ export default function AdminReportsPage() {
         </Card>
 
         {!isFinanceOnly && (
-          <Card className="border-l-4 border-l-sky-500">
+          <Card className="border-l-4 border-l-[#0A5C36]">
             <CardContent className="p-4 flex items-center justify-between">
               <div>
-                <p className="text-xs font-bold text-slate-500 uppercase">Fleet Uptime Index</p>
-                <h3 className="text-2xl font-black mt-1 text-sky-600">99.3%</h3>
-                <p className="text-xs font-semibold text-slate-500 mt-0.5">
+                <p className="text-xs font-bold text-emerald-700/80 dark:text-emerald-200/80 uppercase">Fleet Uptime Index</p>
+                <h3 className="text-2xl font-black mt-1 text-[#0A5C36] dark:text-[#10B981]">99.3%</h3>
+                <p className="text-xs font-semibold text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">
                   Across 25 installations
                 </p>
               </div>
-              <div className="p-3 bg-sky-50 dark:bg-sky-950/40 text-sky-600 rounded-2xl">
+              <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 text-[#0A5C36] dark:text-[#10B981] rounded-2xl">
                 <Zap className="w-6 h-6" />
               </div>
             </CardContent>
@@ -206,16 +206,16 @@ export default function AdminReportsPage() {
         )}
 
         {!isFinanceOnly && (
-          <Card className="border-l-4 border-l-purple-500">
+          <Card className="border-l-4 border-l-[#EA580C]">
             <CardContent className="p-4 flex items-center justify-between">
               <div>
-                <p className="text-xs font-bold text-slate-500 uppercase">Field Team Rating</p>
-                <h3 className="text-2xl font-black mt-1 text-purple-600">4.85 / 5.0</h3>
-                <p className="text-xs font-semibold text-slate-500 mt-0.5">
+                <p className="text-xs font-bold text-emerald-700/80 dark:text-emerald-200/80 uppercase">Field Team Rating</p>
+                <h3 className="text-2xl font-black mt-1 text-[#EA580C]">4.85 / 5.0</h3>
+                <p className="text-xs font-semibold text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">
                   137 customer reviews
                 </p>
               </div>
-              <div className="p-3 bg-purple-50 dark:bg-purple-950/40 text-purple-600 rounded-2xl">
+              <div className="p-3 bg-orange-50 dark:bg-orange-950/40 text-[#EA580C] rounded-2xl">
                 <Award className="w-6 h-6" />
               </div>
             </CardContent>
@@ -226,91 +226,91 @@ export default function AdminReportsPage() {
       {/* Row 1: Stage Turnaround Time & Fault Categories Pie */}
       {!isFinanceOnly && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Stage Turnaround Chart */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-base">Stage Turnaround vs SLA Target (Days)</CardTitle>
-                <CardDescription className="text-xs">
-                  Average duration spent in each installation pipeline stage
-                </CardDescription>
+          {/* Stage Turnaround Chart */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-base">Stage Turnaround vs SLA Target (Days)</CardTitle>
+                  <CardDescription className="text-xs">
+                    Average duration spent in each installation pipeline stage
+                  </CardDescription>
+                </div>
+                <div className="flex items-center gap-3 text-xs font-bold">
+                  <span className="flex items-center gap-1 text-[#EA580C]">
+                    <span className="w-2 h-2 rounded-full bg-[#EA580C]" /> Actual
+                  </span>
+                  <span className="flex items-center gap-1 text-[#0A5C36] dark:text-[#10B981]">
+                    <span className="w-2 h-2 rounded-full bg-[#0A5C36] dark:bg-[#10B981]" /> SLA Target
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center gap-3 text-xs font-bold">
-                <span className="flex items-center gap-1 text-amber-500">
-                  <span className="w-2 h-2 rounded-full bg-amber-500" /> Actual
-                </span>
-                <span className="flex items-center gap-1 text-slate-400">
-                  <span className="w-2 h-2 rounded-full bg-slate-400" /> SLA Target
-                </span>
+            </CardHeader>
+            <CardContent>
+              <div className="h-64 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={STAGE_TURNAROUND_DATA} barGap={4}>
+                    <CartesianGrid strokeDasharray="3 3" opacity={0.15} />
+                    <XAxis dataKey="stage" tick={{ fontSize: 11 }} />
+                    <YAxis tick={{ fontSize: 11 }} />
+                    <Tooltip
+                      contentStyle={{
+                        borderRadius: "12px",
+                        fontSize: "12px",
+                        backgroundColor: "#05361e",
+                        color: "#fff",
+                        border: "1px solid #10B981"
+                      }}
+                    />
+                    <Bar dataKey="actual" name="Actual (Days)" fill="#EA580C" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="target" name="Target (Days)" fill="#0A5C36" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="h-64 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={STAGE_TURNAROUND_DATA} barGap={4}>
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.15} />
-                  <XAxis dataKey="stage" tick={{ fontSize: 11 }} />
-                  <YAxis tick={{ fontSize: 11 }} />
-                  <Tooltip
-                    contentStyle={{
-                      borderRadius: "12px",
-                      fontSize: "12px",
-                      backgroundColor: "#0F172A",
-                      color: "#fff",
-                      border: "none"
-                    }}
-                  />
-                  <Bar dataKey="actual" name="Actual (Days)" fill="#F59E0B" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="target" name="Target (Days)" fill="#94A3B8" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        {/* Fault Distribution Pie Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Technical Fault Categories Distribution</CardTitle>
-            <CardDescription className="text-xs">
-              Root-cause telemetry classification of 48 logged field issues
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-64 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={FAULT_DISTRIBUTION_DATA}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={50}
-                    outerRadius={80}
-                    paddingAngle={4}
-                    dataKey="value"
-                    label={({ name, percent = 0 }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
-                    labelLine={false}
-                  >
-                    {FAULT_DISTRIBUTION_DATA.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{
-                      borderRadius: "12px",
-                      fontSize: "12px",
-                      backgroundColor: "#0F172A",
-                      color: "#fff",
-                      border: "none"
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
+          {/* Fault Distribution Pie Chart */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Technical Fault Categories Distribution</CardTitle>
+              <CardDescription className="text-xs">
+                Root-cause telemetry classification of 48 logged field issues
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="h-64 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={FAULT_DISTRIBUTION_DATA}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={80}
+                      paddingAngle={4}
+                      dataKey="value"
+                      label={({ name, percent = 0 }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
+                      labelLine={false}
+                    >
+                      {FAULT_DISTRIBUTION_DATA.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      contentStyle={{
+                        borderRadius: "12px",
+                        fontSize: "12px",
+                        backgroundColor: "#05361e",
+                        color: "#fff",
+                        border: "1px solid #10B981"
+                      }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       )}
 
@@ -340,14 +340,14 @@ export default function AdminReportsPage() {
                     contentStyle={{
                       borderRadius: "12px",
                       fontSize: "12px",
-                      backgroundColor: "#0F172A",
+                      backgroundColor: "#05361e",
                       color: "#fff",
-                      border: "none"
+                      border: "1px solid #10B981"
                     }}
                     formatter={(val: any) => [`₦${val} Million`, "Revenue"]}
                   />
-                  <Bar dataKey="collected" name="Recovered" fill="#10B981" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="target" name="Target Billed" fill="#CBD5E1" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="collected" name="Recovered" fill="#0A5C36" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="target" name="Target Billed" fill="#F97316" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -364,15 +364,15 @@ export default function AdminReportsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+              <div className="divide-y divide-emerald-100 dark:divide-emerald-900 text-xs">
                 {BRAND_RELIABILITY.map((b) => (
                   <div key={b.brand} className="py-3 flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <div className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      <div className="font-bold text-[#05361e] dark:text-white flex items-center gap-2">
                         <span>{b.brand}</span>
                         <Badge variant="outline" className="text-[10px]">{b.score}</Badge>
                       </div>
-                      <div className="text-[11px] text-slate-500">
+                      <div className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80">
                         {b.systems} Active Fleets • MTTR: {b.meanTimeToRepair}
                       </div>
                     </div>
@@ -381,7 +381,7 @@ export default function AdminReportsPage() {
                       <span className="font-mono font-black text-emerald-600 text-sm">
                         {b.uptime}
                       </span>
-                      <div className="text-[10px] text-slate-400">Hardware Uptime</div>
+                      <div className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80">Hardware Uptime</div>
                     </div>
                   </div>
                 ))}
@@ -394,45 +394,45 @@ export default function AdminReportsPage() {
       {/* Row 3: Technician Productivity Table */}
       {!isFinanceOnly && (
         <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Technician Field Productivity & Quality Leaderboard</CardTitle>
-          <CardDescription className="text-xs">
-            Assigned regional leads, completion speed, and customer satisfaction index
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 font-bold border-b border-slate-200 dark:border-slate-800 uppercase tracking-wider">
-                <tr>
-                  <th className="p-3">Technician Lead</th>
-                  <th className="p-3">Coverage Region</th>
-                  <th className="p-3">Completed Installations</th>
-                  <th className="p-3">On-Time SLA Rate</th>
-                  <th className="p-3 text-right">Customer Rating</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
-                {TECHNICIANS_PRODUCTIVITY.map((tech) => (
-                  <tr key={tech.name} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40">
-                    <td className="p-3 font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-black text-[11px] flex items-center justify-center">
-                        {tech.name.split(" ").map((n) => n[0]).join("")}
-                      </div>
-                      <span>{tech.name}</span>
-                    </td>
-                    <td className="p-3 text-slate-600 dark:text-slate-400">{tech.region}</td>
-                    <td className="p-3 font-mono font-bold">{tech.completed} Systems</td>
-                    <td className="p-3 font-mono font-bold text-emerald-600">{tech.onTime}</td>
-                    <td className="p-3 text-right font-mono font-bold text-amber-600">
-                      {tech.rating} / 5.0 ★
-                    </td>
+          <CardHeader>
+            <CardTitle className="text-base">Technician Field Productivity & Quality Leaderboard</CardTitle>
+            <CardDescription className="text-xs">
+              Assigned regional leads, completion speed, and customer satisfaction index
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-emerald-50 dark:bg-[#084729]/60 text-emerald-700/80 dark:text-emerald-200/80 font-bold border-b border-emerald-200 dark:border-emerald-800 uppercase tracking-wider">
+                  <tr>
+                    <th className="p-3">Technician Lead</th>
+                    <th className="p-3">Coverage Region</th>
+                    <th className="p-3">Completed Installations</th>
+                    <th className="p-3">On-Time SLA Rate</th>
+                    <th className="p-3 text-right">Customer Rating</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
+                </thead>
+                <tbody className="divide-y divide-emerald-100 dark:divide-emerald-900 font-medium">
+                  {TECHNICIANS_PRODUCTIVITY.map((tech) => (
+                    <tr key={tech.name} className="hover:bg-emerald-50/80 dark:hover:bg-[#084729]/40">
+                      <td className="p-3 font-bold text-[#05361e] dark:text-white flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-full bg-orange-100 dark:bg-orange-950/60 text-[#EA580C] dark:text-orange-300 font-black text-[11px] flex items-center justify-center">
+                          {tech.name.split(" ").map((n) => n[0]).join("")}
+                        </div>
+                        <span>{tech.name}</span>
+                      </td>
+                      <td className="p-3 text-emerald-700/80 dark:text-emerald-200/80">{tech.region}</td>
+                      <td className="p-3 font-mono font-bold">{tech.completed} Systems</td>
+                      <td className="p-3 font-mono font-bold text-emerald-600">{tech.onTime}</td>
+                      <td className="p-3 text-right font-mono font-bold text-[#EA580C]">
+                        {tech.rating} / 5.0 ★
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
         </Card>
       )}
     </div>

@@ -42,31 +42,31 @@ export default function FleetMap({ systems, customers, selectedStatus }: FleetMa
       maxZoom: 18
     }).addTo(map);
 
-    // Custom status markers
+    // Custom status markers (Strictly Green, Orange & White)
     const createMarkerIcon = (status: string) => {
-      const colors: Record<string, string> = {
-        online: "#16A34A",
-        overload: "#DC2626",
-        low_battery: "#EAB308",
-        offline: "#64748B",
-        hardware_fault: "#9333EA"
+      const markerStyles: Record<string, { bg: string; border: string; text: string }> = {
+        online: { bg: "#0A5C36", border: "#FFFFFF", text: "#FFFFFF" },
+        overload: { bg: "#C2410C", border: "#FFFFFF", text: "#FFFFFF" },
+        low_battery: { bg: "#EA580C", border: "#FFFFFF", text: "#FFFFFF" },
+        offline: { bg: "#FFFFFF", border: "#0A5C36", text: "#0A5C36" },
+        hardware_fault: { bg: "#9A3412", border: "#FFFFFF", text: "#FFFFFF" }
       };
-      const color = colors[status] || "#F59E0B";
+      const style = markerStyles[status] || { bg: "#EA580C", border: "#FFFFFF", text: "#FFFFFF" };
 
       return L.divIcon({
         className: "custom-solar-marker",
         html: `
           <div style="
-            background-color: ${color};
+            background-color: ${style.bg};
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 3px solid ${style.border};
+            box-shadow: 0 4px 10px rgba(5,54,30,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: ${style.text};
             font-size: 10px;
             font-weight: bold;
           ">
@@ -100,26 +100,31 @@ export default function FleetMap({ systems, customers, selectedStatus }: FleetMa
 
       const popupContent = `
         <div style="font-family: system-ui, sans-serif; padding: 4px; min-width: 180px;">
-          <div style="font-weight: 800; font-size: 13px; color: #0F172A; margin-bottom: 2px;">
+          <div style="font-weight: 800; font-size: 13px; color: #05361e; margin-bottom: 2px;">
             ${cust.name}
           </div>
-          <div style="font-size: 11px; color: #64748B; margin-bottom: 6px;">
+          <div style="font-size: 11px; color: #0A5C36; margin-bottom: 6px;">
             ${cust.state} • ${cust.qrToken}
           </div>
-          <div style="font-size: 11px; font-weight: 600; margin-bottom: 4px;">
+          <div style="font-size: 11px; font-weight: 600; color: #05361e; margin-bottom: 4px;">
             ${sys.inverterBrand} ${sys.inverterCapacityKva}kVA (${sys.batteryCapacityKwh}kWh)
           </div>
-          <div style="display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 10px; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; background-color: ${
-            sys.status === "online" ? "#DCFCE7; color: #166534;" : sys.status === "overload" ? "#FEE2E2; color: #991B1B;" : "#FEF3C7; color: #92400E;"
-          }">
+          <div style="display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 10px; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; ${sys.status === "online"
+          ? "background-color: #DCFCE7; color: #0A5C36;"
+          : sys.status === "offline"
+            ? "background-color: #FFFFFF; color: #0A5C36; border: 1px solid #0A5C36;"
+            : sys.status === "overload" || sys.status === "hardware_fault"
+              ? "background-color: #EA580C; color: #FFFFFF;"
+              : "background-color: #FFEDD5; color: #9A3412;"
+        }">
             ${statusLabels[sys.status] || sys.status}
           </div>
           <div>
             <a href="/admin/monitoring/${sys.id}" style="
               display: block;
               text-align: center;
-              background-color: #F59E0B;
-              color: #0F172A;
+              background-color: #0A5C36;
+              color: #FFFFFF;
               text-decoration: none;
               font-weight: bold;
               font-size: 11px;
@@ -142,34 +147,34 @@ export default function FleetMap({ systems, customers, selectedStatus }: FleetMa
 
   if (!isMounted) {
     return (
-      <div className="h-[420px] w-full rounded-2xl bg-slate-100 dark:bg-slate-800 animate-pulse flex items-center justify-center text-xs text-slate-400">
+      <div className="h-[420px] w-full rounded-2xl bg-emerald-50 dark:bg-[#084729] animate-pulse flex items-center justify-center text-xs text-emerald-700/80 dark:text-emerald-200/80">
         Loading Nigeria Fleet Telemetry Map...
       </div>
     );
   }
 
   return (
-    <div className="relative w-full h-[420px] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm z-10">
+    <div className="relative w-full h-[420px] rounded-2xl overflow-hidden border border-emerald-200 dark:border-emerald-800 shadow-sm z-10">
       <div id="fleet-leaflet-map" className="w-full h-full" />
       {/* Map Legend Overlay */}
-      <div className="absolute bottom-3 left-3 z-[1000] bg-white/95 dark:bg-slate-900/95 backdrop-blur p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-lg text-[10px] space-y-1 font-semibold">
-        <div className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[9px] mb-1">
+      <div className="absolute bottom-3 left-3 z-[1000] bg-white/95 dark:bg-[#06361f]/95 backdrop-blur p-2.5 rounded-xl border border-emerald-200 dark:border-emerald-800 shadow-lg text-[10px] space-y-1 font-semibold text-[#05361e] dark:text-white">
+        <div className="font-bold text-[#05361e] dark:text-white uppercase tracking-wider text-[9px] mb-1">
           Marker Status
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#0A5C36]" />
           <span>Online (Healthy)</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-rose-600" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#C2410C]" />
           <span>Overload / Fault</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#EA580C]" />
           <span>Low Battery SOC</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-slate-500" />
+          <span className="w-2.5 h-2.5 rounded-full bg-white border-2 border-[#0A5C36]" />
           <span>Offline Datalogger</span>
         </div>
       </div>

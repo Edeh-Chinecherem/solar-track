@@ -14,11 +14,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       default: "bg-[#0A5C36] hover:bg-[#074728] active:bg-[#05361e] text-white font-semibold shadow-sm focus-visible:ring-[#0A5C36]",
       brand: "bg-[#0A5C36] hover:bg-[#074728] active:bg-[#05361e] text-white font-semibold shadow-sm focus-visible:ring-[#0A5C36]",
       orange: "bg-[#EA580C] hover:bg-[#C2410C] active:bg-[#9A3412] text-white font-semibold shadow-sm focus-visible:ring-[#EA580C]",
-      secondary: "bg-slate-800 hover:bg-slate-700 active:bg-slate-900 text-white font-medium focus-visible:ring-slate-400",
-      outline: "border border-slate-300 dark:border-slate-700 bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 focus-visible:ring-slate-400",
-      ghost: "bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300",
-      danger: "bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white font-semibold focus-visible:ring-rose-500",
-      destructive: "bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white font-semibold focus-visible:ring-rose-500",
+      secondary: "bg-[#074728] hover:bg-[#05361e] active:bg-[#042414] text-white font-medium focus-visible:ring-emerald-400",
+      outline: "border border-emerald-300 dark:border-emerald-700 bg-white dark:bg-transparent hover:bg-emerald-50 dark:hover:bg-emerald-900/60 text-[#0A5C36] dark:text-emerald-200 focus-visible:ring-[#0A5C36]",
+      ghost: "bg-transparent hover:bg-emerald-50 dark:hover:bg-emerald-900/60 text-[#0A5C36] dark:text-emerald-200",
+      danger: "bg-[#EA580C] hover:bg-[#C2410C] active:bg-[#9A3412] text-white font-semibold focus-visible:ring-[#EA580C]",
+      destructive: "bg-[#EA580C] hover:bg-[#C2410C] active:bg-[#9A3412] text-white font-semibold focus-visible:ring-[#EA580C]",
       success: "bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold focus-visible:ring-emerald-500"
     };
 

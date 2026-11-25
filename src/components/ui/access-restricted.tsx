@@ -23,17 +23,17 @@ export function AccessRestricted({
 
   return (
     <div className="flex items-center justify-center min-h-[60vh] px-4" data-testid="access-restricted">
-      <Card className="max-w-md w-full border-rose-200 dark:border-rose-900/60 shadow-lg">
+      <Card className="max-w-md w-full border-orange-300 dark:border-orange-800 shadow-lg">
         <CardContent className="p-8 text-center space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto">
+          <div className="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-orange-950/50 border border-orange-200 dark:border-orange-800 text-[#EA580C] dark:text-orange-400 flex items-center justify-center mx-auto">
             <ShieldAlert className="w-6 h-6" />
           </div>
           <div className="space-y-1.5">
-            <h2 className="text-lg font-black text-slate-900 dark:text-white">
+            <h2 className="text-lg font-black text-[#05361e] dark:text-white">
               Access Restricted
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-              Your active role (<strong className="text-slate-900 dark:text-white">{roleTitle}</strong>) does not have permission to view {areaName}.
+            <p className="text-xs sm:text-sm text-emerald-700/80 dark:text-emerald-200/80 leading-relaxed">
+              Your active role (<strong className="text-[#05361e] dark:text-white">{roleTitle}</strong>) does not have permission to view {areaName}.
             </p>
           </div>
           <Link href={returnHref} className="inline-block pt-2">

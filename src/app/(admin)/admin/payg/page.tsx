@@ -308,17 +308,17 @@ export default function AdminPAYGPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-black tracking-tight flex items-center gap-2">
-            <CreditCard className="w-7 h-7 text-amber-500" />
+            <CreditCard className="w-7 h-7 text-[#0A5C36] dark:text-[#10B981]" />
             PAYG & Defaulters Desk
           </h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-emerald-700/80 dark:text-emerald-200/80">
             Real-time metering credit management, grace tracking, and dual-approved remote contactor control.
           </p>
         </div>
 
         {/* Role permission status banner */}
         {!canManagePAYG ? (
-          <div className="flex items-center gap-2 text-xs font-bold text-amber-700 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 px-3 py-2 rounded-xl">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#EA580C] bg-orange-50 dark:bg-orange-950/40 border border-orange-300 dark:border-orange-800 px-3 py-2 rounded-xl">
             <ShieldAlert className="w-4 h-4 shrink-0" />
             <span>Role: {currentRole} (Read-Only Financial Operations)</span>
           </div>
@@ -341,48 +341,48 @@ export default function AdminPAYGPage() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-l-4 border-l-red-500">
+        <Card className="border-l-4 border-l-[#C2410C]">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-xs font-bold text-slate-500 uppercase">Defaulters Queue</p>
-              <h3 className="text-2xl font-black mt-1 text-red-600">{totalDefaulters.length} Accounts</h3>
-              <p className="text-xs font-semibold text-slate-500 mt-0.5">
+              <p className="text-xs font-bold text-emerald-700/80 dark:text-emerald-200/80 uppercase">Defaulters Queue</p>
+              <h3 className="text-2xl font-black mt-1 text-[#C2410C] dark:text-orange-400">{totalDefaulters.length} Accounts</h3>
+              <p className="text-xs font-semibold text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">
                 Total owed: {formatNaira(totalBalanceOwed)}
               </p>
             </div>
-            <div className="p-3 bg-red-50 dark:bg-red-950/40 text-red-600 rounded-2xl">
+            <div className="p-3 bg-orange-50 dark:bg-orange-950/40 text-[#C2410C] dark:text-orange-400 rounded-2xl">
               <AlertTriangle className="w-6 h-6" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-amber-500">
+        <Card className="border-l-4 border-l-[#EA580C]">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-xs font-bold text-slate-500 uppercase">In Grace Period</p>
-              <h3 className="text-2xl font-black mt-1 text-amber-600">{graceAccounts.length} Systems</h3>
-              <p className="text-xs font-semibold text-slate-500 mt-0.5">
+              <p className="text-xs font-bold text-emerald-700/80 dark:text-emerald-200/80 uppercase">In Grace Period</p>
+              <h3 className="text-2xl font-black mt-1 text-[#EA580C]">{graceAccounts.length} Systems</h3>
+              <p className="text-xs font-semibold text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">
                 Auto-disconnect in 1-3 days
               </p>
             </div>
-            <div className="p-3 bg-amber-50 dark:bg-amber-950/40 text-amber-600 rounded-2xl">
+            <div className="p-3 bg-orange-50 dark:bg-orange-950/40 text-[#EA580C] rounded-2xl">
               <Clock className="w-6 h-6" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-slate-700">
+        <Card className="border-l-4 border-l-[#074728]">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-xs font-bold text-slate-500 uppercase">Contactor Cutoff</p>
-              <h3 className="text-2xl font-black mt-1 text-slate-900 dark:text-white">
+              <p className="text-xs font-bold text-emerald-700/80 dark:text-emerald-200/80 uppercase">Contactor Cutoff</p>
+              <h3 className="text-2xl font-black mt-1 text-[#05361e] dark:text-white">
                 {disconnectedAccounts.length} Disconnected
               </h3>
-              <p className="text-xs font-semibold text-slate-500 mt-0.5">
+              <p className="text-xs font-semibold text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">
                 Hardware contactor open
               </p>
             </div>
-            <div className="p-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-2xl">
+            <div className="p-3 bg-emerald-50 dark:bg-[#084729] text-[#0A5C36] dark:text-emerald-200 rounded-2xl">
               <PowerOff className="w-6 h-6" />
             </div>
           </CardContent>
@@ -391,9 +391,9 @@ export default function AdminPAYGPage() {
         <Card className="border-l-4 border-l-emerald-500">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-xs font-bold text-slate-500 uppercase">Collection Rate</p>
+              <p className="text-xs font-bold text-emerald-700/80 dark:text-emerald-200/80 uppercase">Collection Rate</p>
               <h3 className="text-2xl font-black mt-1 text-emerald-600">93.8%</h3>
-              <p className="text-xs font-semibold text-slate-500 mt-0.5">
+              <p className="text-xs font-semibold text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">
                 ₦18.4M recovered this month
               </p>
             </div>
@@ -428,7 +428,7 @@ export default function AdminPAYGPage() {
         </div>
 
         <div className="relative w-full md:w-72">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-2.5 h-4 w-4 text-emerald-600/80" />
           <Input
             placeholder="Search customer, phone, system..."
             className="pl-9 h-9 text-xs"
@@ -442,12 +442,12 @@ export default function AdminPAYGPage() {
       <Card className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 font-bold border-b border-slate-200 dark:border-slate-800 uppercase tracking-wider">
+            <thead className="bg-emerald-50 dark:bg-[#084729]/60 text-emerald-700/80 dark:text-emerald-200/80 font-bold border-b border-emerald-200 dark:border-emerald-800 uppercase tracking-wider">
               <tr>
                 <th className="p-4 w-10">
                   <input
                     type="checkbox"
-                    className="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4"
+                    className="rounded border-emerald-300 accent-[#0A5C36] text-[#0A5C36] focus:ring-[#0A5C36] h-4 w-4"
                     checked={
                       filteredAccounts.length > 0 &&
                       selectedAccountIds.length === filteredAccounts.length
@@ -464,10 +464,10 @@ export default function AdminPAYGPage() {
                 <th className="p-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
+            <tbody className="divide-y divide-emerald-100 dark:divide-emerald-900 font-medium">
               {filteredAccounts.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="text-center p-8 text-slate-400">
+                  <td colSpan={8} className="text-center p-8 text-emerald-600/80 dark:text-emerald-300/80">
                     No matching PAYG accounts found.
                   </td>
                 </tr>
@@ -480,14 +480,13 @@ export default function AdminPAYGPage() {
                   return (
                     <tr
                       key={acc.id}
-                      className={`hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors ${
-                        isSelected ? "bg-amber-50/50 dark:bg-amber-950/20" : ""
-                      }`}
+                      className={`hover:bg-emerald-50/80 dark:hover:bg-[#084729]/40 transition-colors ${isSelected ? "bg-emerald-50/60 dark:bg-emerald-950/20" : ""
+                        }`}
                     >
                       <td className="p-4">
                         <input
                           type="checkbox"
-                          className="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4"
+                          className="rounded border-emerald-300 accent-[#0A5C36] text-[#0A5C36] focus:ring-[#0A5C36] h-4 w-4"
                           checked={isSelected}
                           onChange={() => toggleSelectAccount(acc.id)}
                         />
@@ -495,22 +494,22 @@ export default function AdminPAYGPage() {
 
                       {/* Customer Info */}
                       <td className="p-4">
-                        <div className="font-bold text-slate-900 dark:text-white text-sm">
+                        <div className="font-bold text-[#05361e] dark:text-white text-sm">
                           {cust?.name || "Customer"}
                         </div>
-                        <div className="text-slate-500 font-mono text-[11px]">{cust?.phone}</div>
-                        <div className="text-slate-400 text-[11px]">{cust?.state}, {cust?.lga}</div>
+                        <div className="text-emerald-700/80 dark:text-emerald-200/80 font-mono text-[11px]">{cust?.phone}</div>
+                        <div className="text-emerald-600/80 dark:text-emerald-300/80 text-[11px]">{cust?.state}, {cust?.lga}</div>
                       </td>
 
                       {/* Solar System */}
                       <td className="p-4">
-                        <div className="font-bold text-slate-800 dark:text-slate-200">
+                        <div className="font-bold text-[#05361e] dark:text-emerald-100">
                           {sys?.inverterBrand} {sys?.inverterCapacityKva}kVA
                         </div>
-                        <div className="text-[11px] text-slate-500 font-mono">
+                        <div className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80 font-mono">
                           SN: {sys?.inverterSerialNumber}
                         </div>
-                        <div className="text-[10px] text-slate-400 font-mono">
+                        <div className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80 font-mono">
                           SysID: {acc.systemId}
                         </div>
                       </td>
@@ -518,14 +517,13 @@ export default function AdminPAYGPage() {
                       {/* Balance Owed */}
                       <td className="p-4">
                         <div
-                          className={`font-black text-sm ${
-                            acc.balanceOwedNaira > 0 ? "text-red-600" : "text-emerald-600"
-                          }`}
+                          className={`font-black text-sm ${acc.balanceOwedNaira > 0 ? "text-[#C2410C] dark:text-orange-400" : "text-emerald-600"
+                            }`}
                         >
                           {formatNaira(acc.balanceOwedNaira)}
                         </div>
                         {(acc.daysOverdue || 0) > 0 && (
-                          <div className="text-[11px] text-red-500 font-semibold">
+                          <div className="text-[11px] text-[#EA580C] font-semibold">
                             {acc.daysOverdue} days overdue
                           </div>
                         )}
@@ -544,16 +542,16 @@ export default function AdminPAYGPage() {
                               <Clock className="w-3 h-3" />
                               Grace Period
                             </Badge>
-                            <div className="text-[10px] text-amber-700 dark:text-amber-400 font-bold">
+                            <div className="text-[10px] text-[#EA580C] dark:text-orange-400 font-bold">
                               Due: {formatDate(acc.nextDueDate)}
                             </div>
                           </div>
                         ) : acc.activeExtensionUntil ? (
                           <div className="space-y-1">
-                            <Badge variant="outline" className="text-sky-600 border-sky-300 bg-sky-50 dark:bg-sky-950/40">
+                            <Badge variant="outline" className="text-[#0A5C36] dark:text-[#10B981] border-[#0A5C36]/40 bg-emerald-50 dark:bg-emerald-950/40">
                               Extension: {formatDate(acc.activeExtensionUntil)}
                             </Badge>
-                            <div className="text-[10px] text-slate-500 truncate max-w-[130px]" title={acc.extensionReason}>
+                            <div className="text-[10px] text-emerald-700/80 dark:text-emerald-200/80 truncate max-w-[130px]" title={acc.extensionReason}>
                               {acc.extensionReason}
                             </div>
                           </div>
@@ -567,25 +565,25 @@ export default function AdminPAYGPage() {
                         <span
                           className={
                             acc.daysRemainingOfPower <= 3
-                              ? "text-red-600"
+                              ? "text-[#C2410C] dark:text-orange-400"
                               : acc.daysRemainingOfPower <= 7
-                              ? "text-amber-600"
-                              : "text-slate-700 dark:text-slate-300"
+                                ? "text-[#EA580C]"
+                                : "text-[#0A5C36] dark:text-emerald-200"
                           }
                         >
                           {acc.daysRemainingOfPower} days
                         </span>
-                        <div className="text-[10px] text-slate-400 font-sans">
+                        <div className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80 font-sans">
                           {acc.billingCycle} billing
                         </div>
                       </td>
 
                       {/* Last Payment */}
                       <td className="p-4">
-                        <div className="font-semibold text-slate-800 dark:text-slate-200">
+                        <div className="font-semibold text-[#05361e] dark:text-emerald-100">
                           {formatDate(acc.lastPaymentDate)}
                         </div>
-                        <div className="text-[11px] text-slate-500">
+                        <div className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80">
                           {formatNaira(acc.monthlyInstallmentNaira)}
                         </div>
                       </td>
@@ -610,7 +608,7 @@ export default function AdminPAYGPage() {
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  className="h-8 text-xs text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 dark:border-red-800 dark:hover:bg-red-950/50 gap-1"
+                                  className="h-8 text-xs text-[#C2410C] border-orange-300 hover:bg-orange-50 hover:text-[#9A3412] dark:text-orange-300 dark:border-orange-800 dark:hover:bg-orange-950/50 gap-1"
                                   onClick={() => openSingleDisconnect(acc)}
                                   data-testid={`disconnect-btn-${acc.id}`}
                                 >
@@ -634,7 +632,7 @@ export default function AdminPAYGPage() {
                               <Button
                                 size="sm"
                                 variant="outline"
-                                className="h-8 text-xs gap-1 bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800"
+                                className="h-8 text-xs gap-1 bg-orange-50 hover:bg-orange-100 text-[#EA580C] border-orange-200 dark:bg-orange-950/40 dark:text-orange-300 dark:border-orange-800"
                                 onClick={() => openManualPayment(acc)}
                                 title="Record Manual Payment"
                                 data-testid={`payment-btn-${acc.id}`}
@@ -644,7 +642,7 @@ export default function AdminPAYGPage() {
                               </Button>
                             </>
                           ) : (
-                            <span className="text-[11px] text-slate-400 italic">
+                            <span className="text-[11px] text-emerald-600/80 dark:text-emerald-300/80 italic">
                               Restricted (Finance only)
                             </span>
                           )}
@@ -663,7 +661,7 @@ export default function AdminPAYGPage() {
       <Dialog open={disconnectModalOpen} onOpenChange={setDisconnectModalOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <div className="flex items-center gap-2 text-red-600">
+            <div className="flex items-center gap-2 text-[#C2410C] dark:text-orange-400">
               <ShieldAlert className="w-6 h-6" />
               <DialogTitle>
                 {isBulkDisconnect
@@ -681,20 +679,20 @@ export default function AdminPAYGPage() {
           {/* Handshake Command Execution UI */}
           {commandStage !== "idle" ? (
             <div className="py-6 space-y-4">
-              <div className="p-4 rounded-2xl bg-slate-900 text-white space-y-3 font-mono text-xs">
-                <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-                  <span className="text-slate-400">TELEMETRY HANDSHAKE PROTOCOL</span>
-                  <span className="text-amber-400">GSM/MQTT CH: 0x88F</span>
+              <div className="p-4 rounded-2xl bg-[#05361e] text-white space-y-3 font-mono text-xs border border-emerald-800">
+                <div className="flex items-center justify-between pb-2 border-b border-emerald-800">
+                  <span className="text-emerald-200/80">TELEMETRY HANDSHAKE PROTOCOL</span>
+                  <span className="text-[#EA580C]">GSM/MQTT CH: 0x88F</span>
                 </div>
 
                 {/* Step 1: Sent */}
                 <div className="flex items-center gap-3">
                   {commandStage === "sent" ? (
-                    <Loader2 className="w-4 h-4 text-amber-400 animate-spin" />
+                    <Loader2 className="w-4 h-4 text-[#EA580C] animate-spin" />
                   ) : (
                     <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   )}
-                  <span className={commandStage === "sent" ? "text-amber-300 font-bold" : "text-slate-300"}>
+                  <span className={commandStage === "sent" ? "text-orange-300 font-bold" : "text-emerald-100"}>
                     Step 1: Queued & Transmitted to Remote Contactor Gateway
                   </span>
                 </div>
@@ -702,13 +700,13 @@ export default function AdminPAYGPage() {
                 {/* Step 2: Acknowledged */}
                 <div className="flex items-center gap-3">
                   {commandStage === "acknowledged" ? (
-                    <Loader2 className="w-4 h-4 text-amber-400 animate-spin" />
+                    <Loader2 className="w-4 h-4 text-[#EA580C] animate-spin" />
                   ) : commandStage === "confirmed" ? (
                     <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   ) : (
-                    <div className="w-4 h-4 rounded-full border border-slate-700" />
+                    <div className="w-4 h-4 rounded-full border border-emerald-700" />
                   )}
-                  <span className={commandStage === "acknowledged" ? "text-amber-300 font-bold" : "text-slate-400"}>
+                  <span className={commandStage === "acknowledged" ? "text-orange-300 font-bold" : "text-emerald-200/80"}>
                     Step 2: Inverter Telemetry Gateway Acknowledged (ACK 200)
                   </span>
                 </div>
@@ -718,9 +716,9 @@ export default function AdminPAYGPage() {
                   {commandStage === "confirmed" ? (
                     <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   ) : (
-                    <div className="w-4 h-4 rounded-full border border-slate-700" />
+                    <div className="w-4 h-4 rounded-full border border-emerald-700" />
                   )}
-                  <span className={commandStage === "confirmed" ? "text-emerald-300 font-bold" : "text-slate-400"}>
+                  <span className={commandStage === "confirmed" ? "text-emerald-300 font-bold" : "text-emerald-200/80"}>
                     Step 3: Contactor Open Confirmed | Load Cutoff Verified
                   </span>
                 </div>
@@ -735,7 +733,7 @@ export default function AdminPAYGPage() {
             </div>
           ) : (
             <div className="space-y-4 py-2 text-xs">
-              <div className="p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-300">
+              <div className="p-3 rounded-xl bg-orange-50 dark:bg-orange-950/40 border border-orange-300 dark:border-orange-800 text-[#9A3412] dark:text-orange-300">
                 <p className="font-bold">⚠️ Contactor Tripping Warning:</p>
                 <p className="mt-1">
                   This command triggers the mechanical relay contactor inside the inverter. The customer will lose AC output power immediately until balance regularization.
@@ -743,13 +741,13 @@ export default function AdminPAYGPage() {
               </div>
 
               {isBulkDisconnect && (
-                <div className="space-y-2 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800">
-                  <label className="font-bold text-amber-900 dark:text-amber-300 flex items-center gap-1.5">
+                <div className="space-y-2 p-3 rounded-xl bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-800">
+                  <label className="font-bold text-orange-900 dark:text-orange-300 flex items-center gap-1.5">
                     <UserCheck className="w-4 h-4" />
                     Mandatory Second Approver (GreenerAfrik Dual-Key Rule)
                   </label>
                   <select
-                    className="w-full bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-700 rounded-lg p-2 text-xs font-medium"
+                    className="w-full bg-white dark:bg-[#06361f] border border-orange-300 dark:border-orange-700 rounded-lg p-2 text-xs font-medium"
                     value={secondApproverId}
                     onChange={(e) => setSecondApproverId(e.target.value)}
                   >
@@ -759,18 +757,18 @@ export default function AdminPAYGPage() {
                       </option>
                     ))}
                   </select>
-                  <p className="text-[10px] text-amber-700">
+                  <p className="text-[10px] text-[#EA580C] dark:text-orange-400">
                     Primary operator: {currentUser.name} ({currentRole})
                   </p>
                 </div>
               )}
 
               <div className="space-y-1">
-                <label className="font-bold text-slate-700 dark:text-slate-300">
+                <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                   Disconnection Reason / Note:
                 </label>
                 <textarea
-                  className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-xs font-mono"
+                  className="w-full bg-emerald-50/50 dark:bg-[#084729] border border-emerald-200 dark:border-emerald-700 rounded-lg p-2 text-xs font-mono"
                   rows={2}
                   value={disconnectReason}
                   onChange={(e) => setDisconnectReason(e.target.value)}
@@ -783,7 +781,7 @@ export default function AdminPAYGPage() {
           <DialogFooter className="gap-2">
             {commandStage === "confirmed" ? (
               <Button
-                className="w-full bg-slate-900 text-white hover:bg-slate-800"
+                className="w-full bg-[#0A5C36] text-white hover:bg-[#074728]"
                 onClick={() => setDisconnectModalOpen(false)}
                 data-testid="disconnect-done-btn"
               >
@@ -838,9 +836,9 @@ export default function AdminPAYGPage() {
 
           {commandStage !== "idle" ? (
             <div className="py-6 space-y-4">
-              <div className="p-4 rounded-2xl bg-slate-900 text-white space-y-3 font-mono text-xs">
-                <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-                  <span className="text-slate-400">TELEMETRY RECONNECTION</span>
+              <div className="p-4 rounded-2xl bg-[#05361e] text-white space-y-3 font-mono text-xs border border-emerald-800">
+                <div className="flex items-center justify-between pb-2 border-b border-emerald-800">
+                  <span className="text-emerald-200/80">TELEMETRY RECONNECTION</span>
                   <span className="text-emerald-400">RELAY CLOSE: 0x99A</span>
                 </div>
 
@@ -850,7 +848,7 @@ export default function AdminPAYGPage() {
                   ) : (
                     <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   )}
-                  <span className={commandStage === "sent" ? "text-emerald-300 font-bold" : "text-slate-300"}>
+                  <span className={commandStage === "sent" ? "text-emerald-300 font-bold" : "text-emerald-100"}>
                     Step 1: Queuing Contactor Reclose Packet
                   </span>
                 </div>
@@ -861,9 +859,9 @@ export default function AdminPAYGPage() {
                   ) : commandStage === "confirmed" ? (
                     <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   ) : (
-                    <div className="w-4 h-4 rounded-full border border-slate-700" />
+                    <div className="w-4 h-4 rounded-full border border-emerald-700" />
                   )}
-                  <span className={commandStage === "acknowledged" ? "text-emerald-300 font-bold" : "text-slate-400"}>
+                  <span className={commandStage === "acknowledged" ? "text-emerald-300 font-bold" : "text-emerald-200/80"}>
                     Step 2: Inverter Microcontroller Handshake Received
                   </span>
                 </div>
@@ -872,9 +870,9 @@ export default function AdminPAYGPage() {
                   {commandStage === "confirmed" ? (
                     <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   ) : (
-                    <div className="w-4 h-4 rounded-full border border-slate-700" />
+                    <div className="w-4 h-4 rounded-full border border-emerald-700" />
                   )}
-                  <span className={commandStage === "confirmed" ? "text-emerald-300 font-bold" : "text-slate-400"}>
+                  <span className={commandStage === "confirmed" ? "text-emerald-300 font-bold" : "text-emerald-200/80"}>
                     Step 3: Output Contactor Closed | Power Restored (230V AC Live)
                   </span>
                 </div>
@@ -901,7 +899,7 @@ export default function AdminPAYGPage() {
           <DialogFooter>
             {commandStage === "confirmed" ? (
               <Button
-                className="w-full bg-slate-900 text-white hover:bg-slate-800"
+                className="w-full bg-[#0A5C36] text-white hover:bg-[#074728]"
                 onClick={() => setReconnectModalOpen(false)}
                 data-testid="reconnect-done-btn"
               >
@@ -944,7 +942,7 @@ export default function AdminPAYGPage() {
       <Dialog open={extensionModalOpen} onOpenChange={setExtensionModalOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <div className="flex items-center gap-2 text-sky-600">
+            <div className="flex items-center gap-2 text-[#0A5C36] dark:text-[#10B981]">
               <Calendar className="w-6 h-6" />
               <DialogTitle>Grant PAYG Grace Extension</DialogTitle>
             </div>
@@ -955,7 +953,7 @@ export default function AdminPAYGPage() {
 
           <div className="space-y-4 py-2 text-xs">
             <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-300">
+              <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                 Extension Duration (Days)
               </label>
               <div className="grid grid-cols-4 gap-2">
@@ -975,11 +973,11 @@ export default function AdminPAYGPage() {
             </div>
 
             <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-300">
+              <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                 Extension Justification (Required for Audit Trail)
               </label>
               <select
-                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-xs font-medium"
+                className="w-full bg-emerald-50/50 dark:bg-[#084729] border border-emerald-200 dark:border-emerald-700 rounded-lg p-2 text-xs font-medium"
                 value={extensionReason}
                 onChange={(e) => setExtensionReason(e.target.value)}
               >
@@ -997,7 +995,7 @@ export default function AdminPAYGPage() {
               Cancel
             </Button>
             <Button
-              className="bg-sky-600 hover:bg-sky-700 text-white gap-2"
+              className="bg-[#0A5C36] hover:bg-[#074728] text-white gap-2"
               onClick={handleGrantExtension}
               disabled={isExecutingCommand}
               data-testid="confirm-extension-btn"
@@ -1013,7 +1011,7 @@ export default function AdminPAYGPage() {
       <Dialog open={paymentModalOpen} onOpenChange={setPaymentModalOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <div className="flex items-center gap-2 text-amber-600">
+            <div className="flex items-center gap-2 text-[#EA580C]">
               <CreditCard className="w-6 h-6" />
               <DialogTitle>Record Manual Payment</DialogTitle>
             </div>
@@ -1024,7 +1022,7 @@ export default function AdminPAYGPage() {
 
           <div className="space-y-4 py-2 text-xs">
             <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-300">
+              <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                 Payment Amount (₦ Naira)
               </label>
               <Input
@@ -1036,7 +1034,7 @@ export default function AdminPAYGPage() {
             </div>
 
             <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-300">
+              <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                 Payment Method
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -1056,7 +1054,7 @@ export default function AdminPAYGPage() {
             </div>
 
             <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-300">
+              <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                 Reference / Narration
               </label>
               <Input
@@ -1072,7 +1070,7 @@ export default function AdminPAYGPage() {
               Cancel
             </Button>
             <Button
-              className="bg-amber-600 hover:bg-amber-700 text-white gap-2"
+              className="bg-[#0A5C36] hover:bg-[#074728] text-white gap-2"
               onClick={handleRecordPayment}
               disabled={isExecutingCommand || !paymentAmount}
               data-testid="confirm-manual-payment-btn"

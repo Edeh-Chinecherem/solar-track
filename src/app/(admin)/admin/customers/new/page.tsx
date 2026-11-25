@@ -173,23 +173,23 @@ export default function AddCustomerWizardPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <div className="flex items-center gap-2 text-xs text-slate-500 mb-1">
-            <Link href="/admin/customers" className="hover:text-amber-500">
+          <div className="flex items-center gap-2 text-xs text-emerald-700/80 dark:text-emerald-200/80 mb-1">
+            <Link href="/admin/customers" className="hover:text-[#0A5C36] dark:hover:text-[#10B981]">
               Customers
             </Link>
             <span>/</span>
             <span>New Customer Registration</span>
           </div>
-          <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
-            <UserPlus className="w-6 h-6 text-amber-500" />
+          <h1 className="text-2xl font-black text-[#05361e] dark:text-white tracking-tight flex items-center gap-2">
+            <UserPlus className="w-6 h-6 text-[#0A5C36] dark:text-[#10B981]" />
             <span>Onboard New Solar Customer</span>
           </h1>
         </div>
-        <Badge variant="amber">Step {currentStep} of 6</Badge>
+        <Badge variant="green">Step {currentStep} of 6</Badge>
       </div>
 
       {/* Stepper Wizard Indicator */}
-      <div className="grid grid-cols-6 gap-2 bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-x-auto">
+      <div className="grid grid-cols-6 gap-2 bg-white dark:bg-[#06361f] p-3 rounded-2xl border border-emerald-200 dark:border-emerald-800 shadow-sm overflow-x-auto">
         {STEPS.map((step) => {
           const isDone = currentStep > step.id;
           const isCurrent = currentStep === step.id;
@@ -201,10 +201,10 @@ export default function AddCustomerWizardPage() {
               onClick={() => setCurrentStep(step.id)}
               className={`flex flex-col items-center justify-center p-2 rounded-xl text-center transition-all ${
                 isCurrent
-                  ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold border border-amber-500/30"
+                  ? "bg-[#0A5C36]/10 text-[#0A5C36] dark:text-[#10B981] font-bold border border-[#0A5C36]/30"
                   : isDone
                   ? "text-emerald-600 dark:text-emerald-400 font-semibold"
-                  : "text-slate-400 hover:text-slate-600"
+                  : "text-emerald-600/70 dark:text-emerald-300/70 hover:text-[#05361e] dark:hover:text-white"
               }`}
             >
               <div className="w-7 h-7 rounded-lg flex items-center justify-center mb-1">
@@ -242,7 +242,7 @@ export default function AddCustomerWizardPage() {
           {currentStep === 1 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5 md:col-span-2">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Full Customer Name *
                 </label>
                 <Input
@@ -253,7 +253,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Nigerian Phone Number (+234) *
                 </label>
                 <Input
@@ -264,7 +264,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Email Address *
                 </label>
                 <Input
@@ -276,11 +276,11 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">State *</label>
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">State *</label>
                 <select
                   value={formData.state}
                   onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                  className="w-full h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3.5 text-sm"
+                  className="w-full h-11 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-[#06361f] px-3.5 text-sm text-[#05361e] dark:text-white"
                 >
                   <option value="Lagos">Lagos</option>
                   <option value="Abuja">Abuja (FCT)</option>
@@ -291,7 +291,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">LGA *</label>
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">LGA *</label>
                 <Input
                   value={formData.lga}
                   onChange={(e) => setFormData({ ...formData, lga: e.target.value })}
@@ -300,7 +300,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5 md:col-span-2">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Detailed Street Address *
                 </label>
                 <Textarea
@@ -316,11 +316,11 @@ export default function AddCustomerWizardPage() {
           {currentStep === 2 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Roof Type</label>
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">Roof Type</label>
                 <select
                   value={formData.roofType}
                   onChange={(e) => setFormData({ ...formData, roofType: e.target.value })}
-                  className="w-full h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3.5 text-sm"
+                  className="w-full h-11 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-[#06361f] px-3.5 text-sm text-[#05361e] dark:text-white"
                 >
                   <option>Corrugated Metal (Longspan)</option>
                   <option>Stone-Coated Metal Tiles (Gerard)</option>
@@ -330,7 +330,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Roof Orientation & Azimuth
                 </label>
                 <Input
@@ -341,7 +341,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Avg DisCo Grid Availability (Hours/Day)
                 </label>
                 <Input
@@ -352,7 +352,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   GPS Latitude & Longitude
                 </label>
                 <div className="grid grid-cols-2 gap-2">
@@ -373,9 +373,9 @@ export default function AddCustomerWizardPage() {
                 </div>
               </div>
 
-              <div className="md:col-span-2 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 flex items-center justify-between text-xs text-amber-900 dark:text-amber-200">
+              <div className="md:col-span-2 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 flex items-center justify-between text-xs text-emerald-900 dark:text-emerald-200">
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-amber-500" />
+                  <MapPin className="w-4 h-4 text-[#0A5C36] dark:text-[#10B981]" />
                   <span>GPS Coordinates locked to Lekki Peninsula grid corridor.</span>
                 </div>
                 <button
@@ -396,11 +396,11 @@ export default function AddCustomerWizardPage() {
           {currentStep === 3 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Inverter Brand</label>
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">Inverter Brand</label>
                 <select
                   value={formData.inverterBrand}
                   onChange={(e) => setFormData({ ...formData, inverterBrand: e.target.value as InverterBrand })}
-                  className="w-full h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3.5 text-sm"
+                  className="w-full h-11 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-[#06361f] px-3.5 text-sm text-[#05361e] dark:text-white"
                 >
                   <option value="Deye">Deye Hybrid</option>
                   <option value="Sunsynk">Sunsynk Tri-Phase</option>
@@ -410,7 +410,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Inverter Capacity (kVA)
                 </label>
                 <Input
@@ -422,7 +422,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5 md:col-span-2">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Inverter Chassis Serial Number *
                 </label>
                 <Input
@@ -434,7 +434,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Battery Brand</label>
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">Battery Brand</label>
                 <Input
                   value={formData.batteryBrand}
                   onChange={(e) => setFormData({ ...formData, batteryBrand: e.target.value })}
@@ -442,7 +442,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Battery Capacity (kWh)
                 </label>
                 <Input
@@ -454,7 +454,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5 md:col-span-2">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Battery Serial Number *
                 </label>
                 <Input
@@ -465,7 +465,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Solar Panel Count</label>
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">Solar Panel Count</label>
                 <Input
                   type="number"
                   value={formData.solarPanelsCount}
@@ -474,7 +474,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Panel Wattage (W)</label>
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">Panel Wattage (W)</label>
                 <Input
                   type="number"
                   value={formData.solarPanelsWattage}
@@ -488,7 +488,7 @@ export default function AddCustomerWizardPage() {
           {currentStep === 4 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5 md:col-span-2">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Package Type</label>
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">Package Type</label>
                 <Input
                   value={formData.packageType}
                   onChange={(e) => setFormData({ ...formData, packageType: e.target.value })}
@@ -496,11 +496,11 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Payment Plan</label>
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">Payment Plan</label>
                 <select
                   value={formData.planName}
                   onChange={(e) => setFormData({ ...formData, planName: e.target.value })}
-                  className="w-full h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3.5 text-sm"
+                  className="w-full h-11 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-[#06361f] px-3.5 text-sm text-[#05361e] dark:text-white"
                 >
                   <option>PAYG 12 Months</option>
                   <option>PAYG 24 Months</option>
@@ -510,7 +510,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Total Contract Value (₦)
                 </label>
                 <Input
@@ -521,7 +521,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Down Payment Received (₦)
                 </label>
                 <Input
@@ -532,7 +532,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   Monthly Installment (₦)
                 </label>
                 <Input
@@ -543,7 +543,7 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   PAYG Default Grace Period (Days)
                 </label>
                 <Input
@@ -566,17 +566,17 @@ export default function AddCustomerWizardPage() {
               ].map((doc, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30"
+                  className="flex items-center justify-between p-4 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-[#084729]/30"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-xl bg-[#0A5C36]/10 text-[#0A5C36] dark:text-[#10B981] flex items-center justify-center">
                       <FileText className="w-5 h-5" />
                     </div>
                     <div>
-                      <div className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
+                      <div className="font-bold text-xs sm:text-sm text-[#05361e] dark:text-white">
                         {doc.name}
                       </div>
-                      <div className="text-[11px] text-slate-400">{doc.size} • PDF Document</div>
+                      <div className="text-[11px] text-emerald-600/80 dark:text-emerald-300/80">{doc.size} • PDF Document</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -593,9 +593,9 @@ export default function AddCustomerWizardPage() {
           {/* STEP 6: Review */}
           {currentStep === 6 && (
             <div className="space-y-4">
-              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-start gap-3">
-                <Sun className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                <div className="text-xs text-amber-900 dark:text-amber-200">
+              <div className="p-4 rounded-2xl bg-[#EA580C]/10 border border-[#EA580C]/20 flex items-start gap-3">
+                <Sun className="w-5 h-5 text-[#EA580C] shrink-0 mt-0.5" />
+                <div className="text-xs text-orange-950 dark:text-orange-200">
                   <div className="font-bold text-sm">Ready to Generate Weatherproof Hardware Seal</div>
                   <p className="mt-0.5">
                     Upon confirmation, a unique QR tag token will be cryptographically generated, registered in the immutable audit log, and ready for thermal sticker printing.
@@ -604,27 +604,27 @@ export default function AddCustomerWizardPage() {
               </div>
 
               <div className="grid grid-cols-2 gap-4 text-xs">
-                <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 space-y-2">
-                  <span className="font-bold uppercase tracking-wider text-slate-400 text-[10px]">
+                <div className="p-4 rounded-xl bg-emerald-50/60 dark:bg-[#084729]/50 space-y-2">
+                  <span className="font-bold uppercase tracking-wider text-emerald-600/80 dark:text-emerald-300/80 text-[10px]">
                     Customer & Site
                   </span>
                   <div>
-                    <div className="font-bold text-sm text-slate-900 dark:text-white">{formData.name}</div>
-                    <div className="text-slate-500">{formData.phone}</div>
-                    <div className="text-slate-500 mt-1">{formData.address}</div>
+                    <div className="font-bold text-sm text-[#05361e] dark:text-white">{formData.name}</div>
+                    <div className="text-emerald-700/80 dark:text-emerald-200/80">{formData.phone}</div>
+                    <div className="text-emerald-700/80 dark:text-emerald-200/80 mt-1">{formData.address}</div>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 space-y-2">
-                  <span className="font-bold uppercase tracking-wider text-slate-400 text-[10px]">
+                <div className="p-4 rounded-xl bg-emerald-50/60 dark:bg-[#084729]/50 space-y-2">
+                  <span className="font-bold uppercase tracking-wider text-emerald-600/80 dark:text-emerald-300/80 text-[10px]">
                     Equipment Sizing
                   </span>
                   <div>
-                    <div className="font-bold text-sm text-slate-900 dark:text-white">
+                    <div className="font-bold text-sm text-[#05361e] dark:text-white">
                       {formData.inverterBrand} {formData.inverterCapacityKva}kVA Inverter
                     </div>
-                    <div className="text-slate-500">{formData.batteryCapacityKwh}kWh LiFePO4 Battery</div>
-                    <div className="text-slate-500 font-mono mt-1">SN: {formData.inverterSerial}</div>
+                    <div className="text-emerald-700/80 dark:text-emerald-200/80">{formData.batteryCapacityKwh}kWh LiFePO4 Battery</div>
+                    <div className="text-emerald-700/80 dark:text-emerald-200/80 font-mono mt-1">SN: {formData.inverterSerial}</div>
                   </div>
                 </div>
               </div>
@@ -632,7 +632,7 @@ export default function AddCustomerWizardPage() {
           )}
         </CardContent>
 
-        <CardFooter className="flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-4">
+        <CardFooter className="flex items-center justify-between border-t border-emerald-100 dark:border-emerald-800 pt-4">
           <Button
             variant="outline"
             size="sm"
@@ -655,7 +655,7 @@ export default function AddCustomerWizardPage() {
               size="sm"
               onClick={handleSubmit}
               isLoading={isSubmitting}
-              className="text-xs font-bold gap-1.5 shadow-lg shadow-amber-500/20"
+              className="text-xs font-bold gap-1.5 shadow-lg shadow-[#0A5C36]/20"
             >
               <ShieldCheck className="w-4 h-4" />
               <span>Issue Tag & Complete Registration</span>

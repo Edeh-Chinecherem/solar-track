@@ -5,7 +5,7 @@ import { QrScannerView } from "@/components/scanner/qr-scanner-view";
 
 export default function AdminScanPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading scanner...</div>}>
+    <Suspense fallback={<div className="p-8 text-center text-xs text-emerald-600/80">Loading scanner...</div>}>
       <QrScannerView
         mode="admin"
         title="Admin Optical QR Scanner"

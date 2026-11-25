@@ -55,16 +55,16 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         {toasts.map((t) => {
           const icons = {
             success: <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />,
-            warning: <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />,
-            error: <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />,
-            info: <Info className="w-5 h-5 text-sky-500 shrink-0 mt-0.5" />
+            warning: <AlertTriangle className="w-5 h-5 text-[#EA580C] dark:text-orange-400 shrink-0 mt-0.5" />,
+            error: <AlertCircle className="w-5 h-5 text-[#EA580C] dark:text-orange-400 shrink-0 mt-0.5" />,
+            info: <Info className="w-5 h-5 text-[#0A5C36] dark:text-[#10B981] shrink-0 mt-0.5" />
           };
 
           const borderColors = {
             success: "border-emerald-200 dark:border-emerald-900 bg-emerald-50/95 dark:bg-emerald-950/90 text-emerald-900 dark:text-emerald-100",
-            warning: "border-amber-200 dark:border-amber-900 bg-amber-50/95 dark:bg-amber-950/90 text-amber-900 dark:text-amber-100",
-            error: "border-rose-200 dark:border-rose-900 bg-rose-50/95 dark:bg-rose-950/90 text-rose-900 dark:text-rose-100",
-            info: "border-sky-200 dark:border-sky-900 bg-sky-50/95 dark:bg-sky-950/90 text-sky-900 dark:text-sky-100"
+            warning: "border-orange-200 dark:border-orange-900 bg-orange-50/95 dark:bg-orange-950/90 text-orange-900 dark:text-orange-100",
+            error: "border-orange-300 dark:border-orange-800 bg-orange-100/95 dark:bg-orange-950/95 text-orange-950 dark:text-orange-100",
+            info: "border-[#0A5C36]/25 dark:border-emerald-900 bg-emerald-50/95 dark:bg-emerald-950/90 text-emerald-900 dark:text-emerald-100"
           };
 
           return (

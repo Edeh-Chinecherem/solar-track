@@ -17,7 +17,7 @@ export function TechBottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-2 py-2 flex items-center justify-around shadow-lg pb-safe">
+    <nav className="fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-[#06361f] border-t border-emerald-200 dark:border-emerald-900 px-2 py-2 flex items-center justify-around shadow-lg pb-safe">
       {TECH_NAV.map((item) => {
         const isActive = pathname === item.href;
         const Icon = item.icon;
@@ -30,7 +30,7 @@ export function TechBottomNav() {
               "flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all duration-150 min-w-[64px]",
               isActive
                 ? "text-[#0A5C36] dark:text-[#10B981] font-bold"
-                : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-300"
+                : "text-emerald-700/70 dark:text-emerald-200/70 hover:text-[#0A5C36] dark:hover:text-white"
             )}
           >
             <div className={cn("p-1 rounded-lg transition-transform", isActive && "scale-110")}>

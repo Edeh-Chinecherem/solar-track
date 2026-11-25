@@ -64,7 +64,7 @@ export default function PortalDocumentsPage() {
     <div className="space-y-6">
       {/* Toast */}
       {downloadToast && (
-        <div className="fixed top-4 right-4 z-50 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 border border-slate-700 animate-in fade-in">
+        <div className="fixed top-4 right-4 z-50 bg-[#05361e] text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 border border-emerald-700 animate-in fade-in">
           <CheckCircle2 className="w-4 h-4 text-emerald-400" />
           <span>{downloadToast}</span>
         </div>
@@ -72,11 +72,11 @@ export default function PortalDocumentsPage() {
 
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-          <FileText className="w-6 h-6 text-amber-500" />
+        <h1 className="text-2xl font-black tracking-tight text-[#05361e] dark:text-white flex items-center gap-2">
+          <FileText className="w-6 h-6 text-[#0A5C36] dark:text-[#10B981]" />
           Official System Documents
         </h1>
-        <p className="text-xs text-slate-500 mt-1">
+        <p className="text-xs text-emerald-700/80 dark:text-emerald-200/80 mt-1">
           Access your digital contracts, OEM warranty certificates, and equipment user guides.
         </p>
       </div>
@@ -84,11 +84,11 @@ export default function PortalDocumentsPage() {
       {/* Documents List */}
       <div className="space-y-3">
         {docs.map((d) => (
-          <Card key={d.id} className="overflow-hidden hover:border-amber-400 transition-colors">
+          <Card key={d.id} className="overflow-hidden hover:border-[#0A5C36] transition-colors">
             <CardContent className="p-4 flex items-center justify-between">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="text-[10px] font-bold text-slate-600">
+                  <Badge variant="outline" className="text-[10px] font-bold text-[#0A5C36] dark:text-emerald-200">
                     {d.category}
                   </Badge>
                   {d.verified && (
@@ -97,8 +97,8 @@ export default function PortalDocumentsPage() {
                     </span>
                   )}
                 </div>
-                <h3 className="font-bold text-xs text-slate-900 dark:text-white">{d.title}</h3>
-                <div className="text-[11px] text-slate-400">
+                <h3 className="font-bold text-xs text-[#05361e] dark:text-white">{d.title}</h3>
+                <div className="text-[11px] text-emerald-600/80 dark:text-emerald-300/80">
                   Issued: {d.date} • {d.size}
                 </div>
               </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
@@ -70,12 +70,9 @@ function CustomerProfileContent() {
   const auditLogs = MOCK_AUDIT_LOGS.filter((a) => a.targetId === customer.id || a.targetId === system.id || a.targetId === payg?.id);
 
   const [activeTab, setActiveTab] = useState<CustomerProfileTab>("overview");
-
-  useEffect(() => {
-    if (!canAccessCustomerTab(currentRole, activeTab)) {
-      setActiveTab("overview");
-    }
-  }, [currentRole, activeTab]);
+  const effectiveTab: CustomerProfileTab = canAccessCustomerTab(currentRole, activeTab)
+    ? activeTab
+    : "overview";
 
   // Modals
   const [qrModalOpen, setQrModalOpen] = useState(false);
@@ -134,25 +131,25 @@ function CustomerProfileContent() {
   return (
     <div className="space-y-6">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-xs text-slate-500">
-        <Link href="/admin/customers" className="hover:text-amber-500">
+      <div className="flex items-center gap-2 text-xs text-emerald-700/80 dark:text-emerald-200/80">
+        <Link href="/admin/customers" className="hover:text-[#EA580C]">
           Customers Registry
         </Link>
         <span>/</span>
-        <span className="text-slate-900 dark:text-white font-medium">{customer.name}</span>
+        <span className="text-[#05361e] dark:text-white font-medium">{customer.name}</span>
       </div>
 
       {/* Customer Header Banner */}
-      <Card className="overflow-hidden border-slate-200 dark:border-slate-800">
-        <div className="p-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <Card className="overflow-hidden border-emerald-200 dark:border-emerald-800">
+        <div className="p-6 bg-gradient-to-r from-[#042414] via-[#074728] to-[#05361e] text-white flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-4">
             {/* Clickable QR thumbnail */}
             <button
               onClick={() => setQrModalOpen(true)}
-              className="p-2 rounded-2xl bg-white text-slate-950 hover:scale-105 transition-transform shadow-lg cursor-pointer shrink-0"
+              className="p-2 rounded-2xl bg-white text-[#05361e] hover:scale-105 transition-transform shadow-lg cursor-pointer shrink-0"
               title="Click to view full printable QR hardware tag"
             >
-              <QrCode className="w-10 h-10 text-amber-500" />
+              <QrCode className="w-10 h-10 text-[#EA580C]" />
             </button>
 
             <div className="space-y-1">
@@ -168,8 +165,8 @@ function CustomerProfileContent() {
                 )}
               </div>
 
-              <div className="flex flex-wrap items-center gap-4 text-xs text-slate-300 font-mono">
-                <span>Tag: <strong className="text-amber-400">{customer.qrToken}</strong></span>
+              <div className="flex flex-wrap items-center gap-4 text-xs text-emerald-100 font-mono">
+                <span>Tag: <strong className="text-orange-400">{customer.qrToken}</strong></span>
                 <span>•</span>
                 <span>System: {system.inverterBrand} {system.inverterCapacityKva}kVA</span>
                 <span>•</span>
@@ -184,16 +181,16 @@ function CustomerProfileContent() {
               variant="outline"
               size="sm"
               onClick={() => setSmsModalOpen(true)}
-              className="text-xs border-slate-600 text-white hover:bg-slate-800"
+              className="text-xs border-emerald-500/60 bg-transparent text-white hover:bg-[#0A5C36]"
             >
-              <Send className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
+              <Send className="w-3.5 h-3.5 mr-1.5 text-orange-400" />
               <span>Send SMS</span>
             </Button>
 
             {canAccess("/admin/tickets") && (
               <Link href="/admin/tickets">
-                <Button variant="outline" size="sm" className="text-xs border-slate-600 text-white hover:bg-slate-800">
-                  <LifeBuoy className="w-3.5 h-3.5 mr-1.5 text-sky-400" />
+                <Button variant="outline" size="sm" className="text-xs border-emerald-500/60 bg-transparent text-white hover:bg-[#0A5C36]">
+                  <LifeBuoy className="w-3.5 h-3.5 mr-1.5 text-emerald-300" />
                   <span>Create Ticket</span>
                 </Button>
               </Link>
@@ -224,8 +221,8 @@ function CustomerProfileContent() {
       </Card>
 
       {/* Role-scoped Profile Tabs */}
-      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as CustomerProfileTab)}>
-        <TabsList className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-1 flex-wrap">
+      <Tabs value={effectiveTab} onValueChange={(v) => setActiveTab(v as CustomerProfileTab)}>
+        <TabsList className="bg-emerald-50 dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800 p-1 flex-wrap">
           {canAccessCustomerTab(currentRole, "overview") && <TabsTrigger value="overview">Overview</TabsTrigger>}
           {canAccessCustomerTab(currentRole, "timeline") && <TabsTrigger value="timeline">Installation Pipeline</TabsTrigger>}
           {canAccessCustomerTab(currentRole, "telemetry") && <TabsTrigger value="telemetry">Live System</TabsTrigger>}
@@ -247,44 +244,44 @@ function CustomerProfileContent() {
               <CardContent className="space-y-4 text-xs sm:text-sm">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <span className="text-slate-400 text-xs font-semibold uppercase">Phone Number</span>
-                    <div className="font-bold font-mono text-slate-900 dark:text-white mt-0.5">
+                    <span className="text-emerald-600/80 dark:text-emerald-300/80 text-xs font-semibold uppercase">Phone Number</span>
+                    <div className="font-bold font-mono text-[#05361e] dark:text-white mt-0.5">
                       {customer.phone}
                     </div>
                   </div>
                   <div>
-                    <span className="text-slate-400 text-xs font-semibold uppercase">Email Address</span>
-                    <div className="font-bold text-slate-900 dark:text-white mt-0.5">{customer.email}</div>
+                    <span className="text-emerald-600/80 dark:text-emerald-300/80 text-xs font-semibold uppercase">Email Address</span>
+                    <div className="font-bold text-[#05361e] dark:text-white mt-0.5">{customer.email}</div>
                   </div>
                   <div>
-                    <span className="text-slate-400 text-xs font-semibold uppercase">Nigerian State & LGA</span>
-                    <div className="font-bold text-slate-900 dark:text-white mt-0.5">
+                    <span className="text-emerald-600/80 dark:text-emerald-300/80 text-xs font-semibold uppercase">Nigerian State & LGA</span>
+                    <div className="font-bold text-[#05361e] dark:text-white mt-0.5">
                       {customer.state} ({customer.lga})
                     </div>
                   </div>
                   <div>
-                    <span className="text-slate-400 text-xs font-semibold uppercase">Registration Date</span>
-                    <div className="font-bold text-slate-900 dark:text-white mt-0.5">
+                    <span className="text-emerald-600/80 dark:text-emerald-300/80 text-xs font-semibold uppercase">Registration Date</span>
+                    <div className="font-bold text-[#05361e] dark:text-white mt-0.5">
                       {formatDate(customer.registeredDate)}
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
-                  <span className="text-slate-400 text-xs font-semibold uppercase">Full Physical Address</span>
-                  <div className="font-medium text-slate-700 dark:text-slate-300 mt-1 flex items-start gap-1.5">
-                    <MapPin className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                <div className="pt-2 border-t border-emerald-100 dark:border-emerald-800">
+                  <span className="text-emerald-600/80 dark:text-emerald-300/80 text-xs font-semibold uppercase">Full Physical Address</span>
+                  <div className="font-medium text-[#0A5C36] dark:text-emerald-100 mt-1 flex items-start gap-1.5">
+                    <MapPin className="w-4 h-4 text-[#EA580C] shrink-0 mt-0.5" />
                     <span>{customer.address}</span>
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 flex items-center justify-between text-xs font-mono">
+                <div className="p-3 rounded-xl bg-emerald-50/50 dark:bg-[#084729]/40 flex items-center justify-between text-xs font-mono">
                   <span>GPS Lat: {customer.gpsCoords.lat.toFixed(4)}, Lng: {customer.gpsCoords.lng.toFixed(4)}</span>
                   <a
                     href={`https://maps.google.com/?q=${customer.gpsCoords.lat},${customer.gpsCoords.lng}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-amber-600 dark:text-amber-400 font-bold hover:underline"
+                    className="text-[#EA580C] dark:text-orange-400 font-bold hover:underline"
                   >
                     Launch Google Maps ↗
                   </a>
@@ -298,29 +295,29 @@ function CustomerProfileContent() {
                 <CardDescription>Installed hardware components.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3 text-xs">
-                <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 space-y-1">
-                  <div className="font-bold text-amber-900 dark:text-amber-200 text-sm">
+                <div className="p-3 rounded-xl bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 space-y-1">
+                  <div className="font-bold text-orange-900 dark:text-orange-200 text-sm">
                     {system.inverterBrand} {system.inverterCapacityKva}kVA Inverter
                   </div>
-                  <div className="text-slate-500">Model: {system.inverterModel}</div>
-                  <div className="text-slate-500 font-mono">SN: {system.inverterSerialNumber}</div>
+                  <div className="text-emerald-700/80 dark:text-emerald-200/80">Model: {system.inverterModel}</div>
+                  <div className="text-emerald-700/80 dark:text-emerald-200/80 font-mono">SN: {system.inverterSerialNumber}</div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
-                  <div className="font-bold text-slate-900 dark:text-white text-sm">
+                <div className="p-3 rounded-xl bg-emerald-50/50 dark:bg-[#084729]/40 space-y-1">
+                  <div className="font-bold text-[#05361e] dark:text-white text-sm">
                     {system.batteryBrand} {system.batteryCapacityKwh}kWh LiFePO4
                   </div>
-                  <div className="text-slate-500 font-mono">SN: {system.batterySerialNumber}</div>
+                  <div className="text-emerald-700/80 dark:text-emerald-200/80 font-mono">SN: {system.batterySerialNumber}</div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 space-y-1">
-                  <div className="font-bold text-slate-900 dark:text-white text-sm">
+                <div className="p-3 rounded-xl bg-emerald-50/50 dark:bg-[#084729]/40 space-y-1">
+                  <div className="font-bold text-[#05361e] dark:text-white text-sm">
                     {system.solarPanelsCount}x 550W Solar Panels
                   </div>
-                  <div className="text-slate-500">Total Harvest: {system.totalPvCapacityKw} kW Peak</div>
+                  <div className="text-emerald-700/80 dark:text-emerald-200/80">Total Harvest: {system.totalPvCapacityKw} kW Peak</div>
                 </div>
 
-                <div className="pt-2 text-slate-500 flex items-center justify-between">
+                <div className="pt-2 text-emerald-700/80 dark:text-emerald-200/80 flex items-center justify-between">
                   <span>Warranty Active Until:</span>
                   <strong className="text-emerald-600 dark:text-emerald-400">
                     {formatDate(system.warrantyExpiryDate)}
@@ -337,11 +334,11 @@ function CustomerProfileContent() {
             <CardHeader>
               <CardTitle className="text-base">10-Stage Pipeline Lifecycle</CardTitle>
               <CardDescription>
-                Current Stage: <strong className="text-amber-500 capitalize">{installation.currentStage.replace("_", " ")}</strong> ({installation.daysInCurrentStage} days in current stage)
+                Current Stage: <strong className="text-[#EA580C] capitalize">{installation.currentStage.replace("_", " ")}</strong> ({installation.daysInCurrentStage} days in current stage)
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-6 relative pl-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200 dark:before:bg-slate-800">
+              <div className="space-y-6 relative pl-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-emerald-200 dark:before:bg-emerald-800">
                 {INSTALLATION_STAGES.map((stg) => {
                   const isCompleted = installation.stageHistory.some((h) => h.stageId === stg.id && h.completedAt);
                   const isCurrent = installation.currentStage === stg.id;
@@ -353,8 +350,8 @@ function CustomerProfileContent() {
                           isCompleted
                             ? "bg-emerald-500 text-white"
                             : isCurrent
-                            ? "bg-amber-500 text-slate-950 font-bold ring-4 ring-amber-500/20"
-                            : "bg-slate-200 dark:bg-slate-800 text-slate-400"
+                            ? "bg-[#EA580C] text-white font-bold ring-4 ring-[#EA580C]/20"
+                            : "bg-emerald-100 dark:bg-[#084729] text-emerald-600/80 dark:text-emerald-300/80"
                         }`}
                       >
                         {isCompleted ? <CheckCircle2 className="w-3.5 h-3.5" /> : stg.order}
@@ -362,13 +359,13 @@ function CustomerProfileContent() {
 
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <h4 className="font-bold text-sm text-slate-900 dark:text-white">
+                          <h4 className="font-bold text-sm text-[#05361e] dark:text-white">
                             {stg.order}. {stg.label}
                           </h4>
-                          {isCurrent && <Badge variant="amber">In Progress</Badge>}
+                          {isCurrent && <Badge variant="orange">In Progress</Badge>}
                           {isCompleted && <Badge variant="success">Completed</Badge>}
                         </div>
-                        <p className="text-xs text-slate-500 mt-0.5">{stg.description}</p>
+                        <p className="text-xs text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">{stg.description}</p>
                       </div>
                     </div>
                   );
@@ -383,11 +380,11 @@ function CustomerProfileContent() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Card>
               <CardContent className="p-4 text-center space-y-1">
-                <Sun className="w-6 h-6 text-amber-500 mx-auto" />
-                <div className="text-2xl font-black text-slate-900 dark:text-white">
+                <Sun className="w-6 h-6 text-[#EA580C] mx-auto" />
+                <div className="text-2xl font-black text-[#05361e] dark:text-white">
                   {(telemetry.pvPowerWatts / 1000).toFixed(2)} kW
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-600/80 dark:text-emerald-300/80">
                   Solar PV Input
                 </div>
               </CardContent>
@@ -396,10 +393,10 @@ function CustomerProfileContent() {
             <Card>
               <CardContent className="p-4 text-center space-y-1">
                 <Battery className="w-6 h-6 text-emerald-500 mx-auto" />
-                <div className="text-2xl font-black text-slate-900 dark:text-white">
+                <div className="text-2xl font-black text-[#05361e] dark:text-white">
                   {telemetry.batterySocPercent}%
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-600/80 dark:text-emerald-300/80">
                   Battery SOC ({telemetry.batteryVoltageVolts.toFixed(1)}V)
                 </div>
               </CardContent>
@@ -407,11 +404,11 @@ function CustomerProfileContent() {
 
             <Card>
               <CardContent className="p-4 text-center space-y-1">
-                <Zap className="w-6 h-6 text-sky-500 mx-auto" />
-                <div className="text-2xl font-black text-slate-900 dark:text-white">
+                <Zap className="w-6 h-6 text-[#0A5C36] dark:text-[#10B981] mx-auto" />
+                <div className="text-2xl font-black text-[#05361e] dark:text-white">
                   {(telemetry.loadPowerWatts / 1000).toFixed(2)} kW
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-600/80 dark:text-emerald-300/80">
                   Home AC Load
                 </div>
               </CardContent>
@@ -419,11 +416,11 @@ function CustomerProfileContent() {
 
             <Card>
               <CardContent className="p-4 text-center space-y-1">
-                <Flame className="w-6 h-6 text-rose-500 mx-auto" />
-                <div className="text-2xl font-black text-slate-900 dark:text-white">
+                <Flame className="w-6 h-6 text-[#EA580C] mx-auto" />
+                <div className="text-2xl font-black text-[#05361e] dark:text-white">
                   {telemetry.inverterTempCelsius.toFixed(1)}°C
                 </div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-600/80 dark:text-emerald-300/80">
                   Inverter Heatsink
                 </div>
               </CardContent>
@@ -444,20 +441,20 @@ function CustomerProfileContent() {
                   <AreaChart data={hourlyData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                     <defs>
                       <linearGradient id="pvGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#EA580C" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="#EA580C" stopOpacity={0} />
                       </linearGradient>
                       <linearGradient id="loadGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#38bdf8" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#0A5C36" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="#0A5C36" stopOpacity={0} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" opacity={0.15} />
                     <XAxis dataKey="hour" tick={{ fontSize: 11 }} />
                     <YAxis unit="W" tick={{ fontSize: 11 }} />
                     <Tooltip />
-                    <Area type="monotone" dataKey="pvWatts" name="Solar PV (W)" stroke="#f59e0b" fillOpacity={1} fill="url(#pvGrad)" />
-                    <Area type="monotone" dataKey="loadWatts" name="Home Load (W)" stroke="#38bdf8" fillOpacity={1} fill="url(#loadGrad)" />
+                    <Area type="monotone" dataKey="pvWatts" name="Solar PV (W)" stroke="#EA580C" fillOpacity={1} fill="url(#pvGrad)" />
+                    <Area type="monotone" dataKey="loadWatts" name="Home Load (W)" stroke="#0A5C36" fillOpacity={1} fill="url(#loadGrad)" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -472,30 +469,30 @@ function CustomerProfileContent() {
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <Card>
                   <CardContent className="p-4 space-y-1">
-                    <span className="text-xs text-slate-500">Plan Type</span>
-                    <div className="text-lg font-bold text-slate-900 dark:text-white">{payg.planName}</div>
+                    <span className="text-xs text-emerald-700/80 dark:text-emerald-200/80">Plan Type</span>
+                    <div className="text-lg font-bold text-[#05361e] dark:text-white">{payg.planName}</div>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardContent className="p-4 space-y-1">
-                    <span className="text-xs text-slate-500">Total Contract</span>
-                    <div className="text-lg font-bold text-slate-900 dark:text-white">
+                    <span className="text-xs text-emerald-700/80 dark:text-emerald-200/80">Total Contract</span>
+                    <div className="text-lg font-bold text-[#05361e] dark:text-white">
                       {formatNaira(payg.totalCostNaira)}
                     </div>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardContent className="p-4 space-y-1">
-                    <span className="text-xs text-slate-500">Balance Owed</span>
-                    <div className="text-lg font-bold text-rose-600 dark:text-rose-400">
+                    <span className="text-xs text-emerald-700/80 dark:text-emerald-200/80">Balance Owed</span>
+                    <div className="text-lg font-bold text-[#EA580C] dark:text-orange-400">
                       {formatNaira(payg.balanceOwedNaira)}
                     </div>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardContent className="p-4 space-y-1">
-                    <span className="text-xs text-slate-500">Power Remaining</span>
-                    <div className="text-lg font-bold text-amber-500">
+                    <span className="text-xs text-emerald-700/80 dark:text-emerald-200/80">Power Remaining</span>
+                    <div className="text-lg font-bold text-[#EA580C]">
                       {payg.daysRemainingOfPower} Days
                     </div>
                   </CardContent>
@@ -503,7 +500,7 @@ function CustomerProfileContent() {
               </div>
             </div>
           ) : (
-            <Card className="p-8 text-center text-slate-500 text-xs">No PAYG contract on file.</Card>
+            <Card className="p-8 text-center text-emerald-700/80 dark:text-emerald-200/80 text-xs">No PAYG contract on file.</Card>
           )}
         </TabsContent>
 
@@ -522,21 +519,21 @@ function CustomerProfileContent() {
                   {tickets.map((t) => (
                     <div
                       key={t.id}
-                      className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20 space-y-2"
+                      className="p-4 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-[#084729]/20 space-y-2"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-mono text-xs font-bold text-amber-500">{t.ticketNumber}</span>
-                        <Badge variant={t.priority === "critical" ? "destructive" : "amber"}>
+                        <span className="font-mono text-xs font-bold text-[#EA580C]">{t.ticketNumber}</span>
+                        <Badge variant={t.priority === "critical" ? "destructive" : "orange"}>
                           {t.priority.toUpperCase()}
                         </Badge>
                       </div>
-                      <h4 className="font-bold text-sm text-slate-900 dark:text-white">{t.subject}</h4>
-                      <p className="text-xs text-slate-500">{t.description}</p>
+                      <h4 className="font-bold text-sm text-[#05361e] dark:text-white">{t.subject}</h4>
+                      <p className="text-xs text-emerald-700/80 dark:text-emerald-200/80">{t.description}</p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="p-8 text-center text-slate-500 text-xs">No active tickets for this customer.</div>
+                <div className="p-8 text-center text-emerald-700/80 dark:text-emerald-200/80 text-xs">No active tickets for this customer.</div>
               )}
             </CardContent>
           </Card>
@@ -554,15 +551,15 @@ function CustomerProfileContent() {
                 {customer.documents.map((doc) => (
                   <div
                     key={doc.id}
-                    className="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30"
+                    className="flex items-center justify-between p-4 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-[#084729]/30"
                   >
                     <div className="flex items-center gap-3">
-                      <FileText className="w-5 h-5 text-amber-500" />
+                      <FileText className="w-5 h-5 text-[#EA580C]" />
                       <div>
-                        <div className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
+                        <div className="font-bold text-xs sm:text-sm text-[#05361e] dark:text-white">
                           {doc.title}
                         </div>
-                        <div className="text-[11px] text-slate-400">
+                        <div className="text-[11px] text-emerald-600/80 dark:text-emerald-300/80">
                           {doc.fileSizeKb} KB • Uploaded {formatDate(doc.uploadedAt)}
                         </div>
                       </div>
@@ -590,16 +587,16 @@ function CustomerProfileContent() {
                 {auditLogs.map((log) => (
                   <div
                     key={log.id}
-                    className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex items-start justify-between text-xs"
+                    className="p-3 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-[#084729]/30 flex items-start justify-between text-xs"
                   >
                     <div>
-                      <div className="font-bold text-slate-900 dark:text-white">{log.action}</div>
-                      <div className="text-slate-500 mt-0.5">{log.details}</div>
-                      <div className="text-[10px] text-slate-400 mt-1">
+                      <div className="font-bold text-[#05361e] dark:text-white">{log.action}</div>
+                      <div className="text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">{log.details}</div>
+                      <div className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80 mt-1">
                         By {log.userName} ({log.userRole})
                       </div>
                     </div>
-                    <span className="text-[10px] text-slate-400 font-mono">
+                    <span className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80 font-mono">
                       {formatDateTime(log.timestamp)}
                     </span>
                   </div>
@@ -625,8 +622,8 @@ function CustomerProfileContent() {
       <Dialog open={disconnectModalOpen} onOpenChange={setDisconnectModalOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-rose-600">
-              <AlertTriangle className="w-5 h-5 text-rose-500" />
+            <DialogTitle className="flex items-center gap-2 text-[#C2410C] dark:text-orange-400">
+              <AlertTriangle className="w-5 h-5 text-[#EA580C]" />
               <span>Confirm Remote Power Contactor Action</span>
             </DialogTitle>
             <DialogDescription className="text-xs">
@@ -636,10 +633,10 @@ function CustomerProfileContent() {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 text-xs space-y-1.5 my-2">
+          <div className="p-4 rounded-xl bg-emerald-50/60 dark:bg-[#084729]/50 text-xs space-y-1.5 my-2">
             <div>Customer: <strong>{customer.name}</strong></div>
             <div>Inverter SN: <strong className="font-mono">{system.inverterSerialNumber}</strong></div>
-            <div>Balance Owed: <strong className="text-rose-500">{formatNaira(payg?.balanceOwedNaira || 0)}</strong></div>
+            <div>Balance Owed: <strong className="text-[#EA580C]">{formatNaira(payg?.balanceOwedNaira || 0)}</strong></div>
             <div>Audited Operator: <strong>{currentUser.name} ({currentUser.role})</strong></div>
           </div>
 
@@ -664,7 +661,7 @@ function CustomerProfileContent() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <Send className="w-5 h-5 text-amber-500" />
+              <Send className="w-5 h-5 text-[#EA580C]" />
               <span>Dispatch SMS to Customer</span>
             </DialogTitle>
             <DialogDescription className="text-xs">
@@ -673,7 +670,7 @@ function CustomerProfileContent() {
           </DialogHeader>
 
           <div className="space-y-2 my-2">
-            <label className="text-xs font-semibold text-slate-500">Message Text:</label>
+            <label className="text-xs font-semibold text-emerald-700/80 dark:text-emerald-200/80">Message Text:</label>
             <Textarea
               rows={4}
               value={smsContent}
@@ -698,7 +695,7 @@ function CustomerProfileContent() {
 
 export default function CustomerProfilePage() {
   return (
-    <React.Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading customer profile...</div>}>
+    <React.Suspense fallback={<div className="p-8 text-center text-xs text-emerald-600/80">Loading customer profile...</div>}>
       <CustomerProfileContent />
     </React.Suspense>
   );

@@ -121,31 +121,31 @@ function SystemHealthDetailContent() {
   return (
     <div className="space-y-6">
       {/* Breadcrumb Navigation */}
-      <div className="flex items-center gap-2 text-xs text-slate-500">
-        <Link href="/admin/monitoring" className="hover:text-amber-500 flex items-center gap-1">
+      <div className="flex items-center gap-2 text-xs text-emerald-700/80 dark:text-emerald-200/80">
+        <Link href="/admin/monitoring" className="hover:text-[#EA580C] flex items-center gap-1">
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Fleet Monitoring</span>
         </Link>
         <span>/</span>
-        <span className="text-slate-900 dark:text-white font-medium">
+        <span className="text-[#05361e] dark:text-white font-medium">
           {system.inverterBrand} {system.inverterCapacityKva}kVA ({customer.name})
         </span>
       </div>
 
       {/* Header Banner */}
-      <Card className="overflow-hidden border-slate-200 dark:border-slate-800">
-        <div className="p-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <Card className="overflow-hidden border-emerald-200 dark:border-emerald-800">
+        <div className="p-6 bg-gradient-to-r from-[#042414] via-[#074728] to-[#05361e] text-white flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex flex-wrap items-center gap-2.5">
               <h1 className="text-2xl font-black tracking-tight">{customer.name}</h1>
               <Badge variant={system.status === "online" ? "success" : "destructive"}>
                 {system.status.toUpperCase()}
               </Badge>
-              <span className="text-xs text-slate-400 font-mono">
+              <span className="text-xs text-emerald-200/80 font-mono">
                 Heartbeat: {formatRelativeTime(telemetry.timestamp)}
               </span>
             </div>
-            <div className="text-xs text-slate-300 font-mono">
+            <div className="text-xs text-emerald-100 font-mono">
               Inverter: {system.inverterBrand} {system.inverterModel} • SN: {system.inverterSerialNumber} • Battery: {system.batteryCapacityKwh}kWh
             </div>
           </div>
@@ -155,20 +155,20 @@ function SystemHealthDetailContent() {
               variant="outline"
               size="sm"
               onClick={() => setSmsModalOpen(true)}
-              className="text-xs border-slate-600 text-white hover:bg-slate-800"
+              className="text-xs border-emerald-500/60 bg-transparent text-white hover:bg-[#0A5C36]"
             >
-              <Send className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
+              <Send className="w-3.5 h-3.5 mr-1.5 text-orange-400" />
               <span>Send Advice SMS</span>
             </Button>
 
             <Button
               data-testid="attach-ticket-btn"
-              variant="primary"
+              variant="orange"
               size="sm"
               onClick={() => setTicketModalOpen(true)}
-              className="text-xs font-bold shadow-md shadow-amber-500/20"
+              className="text-xs font-bold shadow-md shadow-[#EA580C]/20"
             >
-              <LifeBuoy className="w-3.5 h-3.5 mr-1.5 text-slate-950" />
+              <LifeBuoy className="w-3.5 h-3.5 mr-1.5 text-white" />
               <span>Attach to Ticket</span>
             </Button>
           </div>
@@ -180,18 +180,18 @@ function SystemHealthDetailContent() {
         {/* PV Solar Input */}
         <Card>
           <CardContent className="p-5 text-center space-y-2">
-            <div className="mx-auto w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center">
-              <Sun className="w-6 h-6 fill-amber-500" />
+            <div className="mx-auto w-10 h-10 rounded-xl bg-orange-500/10 text-[#EA580C] flex items-center justify-center">
+              <Sun className="w-6 h-6 fill-[#EA580C]" />
             </div>
             <div>
-              <div className="text-3xl font-black text-slate-900 dark:text-white">
-                {(telemetry.pvPowerWatts / 1000).toFixed(2)} <span className="text-sm font-bold text-slate-400">kW</span>
+              <div className="text-3xl font-black text-[#05361e] dark:text-white">
+                {(telemetry.pvPowerWatts / 1000).toFixed(2)} <span className="text-sm font-bold text-emerald-600/80 dark:text-emerald-300/80">kW</span>
               </div>
-              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mt-0.5">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-600/80 dark:text-emerald-300/80 mt-0.5">
                 Solar PV Generation
               </div>
             </div>
-            <div className="text-[10px] text-slate-500">
+            <div className="text-[10px] text-emerald-700/80 dark:text-emerald-200/80">
               Array: {system.totalPvCapacityKw} kW Peak ({system.solarPanelsCount} Panels)
             </div>
           </CardContent>
@@ -204,14 +204,14 @@ function SystemHealthDetailContent() {
               <Battery className="w-6 h-6" />
             </div>
             <div>
-              <div className={`text-3xl font-black ${telemetry.batterySocPercent < 30 ? "text-rose-500" : "text-emerald-500"}`}>
+              <div className={`text-3xl font-black ${telemetry.batterySocPercent < 30 ? "text-[#EA580C]" : "text-emerald-500"}`}>
                 {telemetry.batterySocPercent}%
               </div>
-              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mt-0.5">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-600/80 dark:text-emerald-300/80 mt-0.5">
                 Battery State of Charge
               </div>
             </div>
-            <div className="text-[10px] text-slate-500 font-mono">
+            <div className="text-[10px] text-emerald-700/80 dark:text-emerald-200/80 font-mono">
               Pack Voltage: {telemetry.batteryVoltageVolts.toFixed(1)}V (LiFePO4)
             </div>
           </CardContent>
@@ -220,18 +220,18 @@ function SystemHealthDetailContent() {
         {/* Home AC Load */}
         <Card>
           <CardContent className="p-5 text-center space-y-2">
-            <div className="mx-auto w-10 h-10 rounded-xl bg-sky-500/10 text-sky-500 flex items-center justify-center">
+            <div className="mx-auto w-10 h-10 rounded-xl bg-[#0A5C36]/10 text-[#0A5C36] dark:text-[#10B981] flex items-center justify-center">
               <Zap className="w-6 h-6" />
             </div>
             <div>
-              <div className={`text-3xl font-black ${telemetry.loadPowerWatts > system.inverterCapacityKva * 1000 ? "text-rose-500" : "text-slate-900 dark:text-white"}`}>
-                {(telemetry.loadPowerWatts / 1000).toFixed(2)} <span className="text-sm font-bold text-slate-400">kW</span>
+              <div className={`text-3xl font-black ${telemetry.loadPowerWatts > system.inverterCapacityKva * 1000 ? "text-[#EA580C]" : "text-[#05361e] dark:text-white"}`}>
+                {(telemetry.loadPowerWatts / 1000).toFixed(2)} <span className="text-sm font-bold text-emerald-600/80 dark:text-emerald-300/80">kW</span>
               </div>
-              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mt-0.5">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-600/80 dark:text-emerald-300/80 mt-0.5">
                 Active AC Load
               </div>
             </div>
-            <div className="text-[10px] text-slate-500">
+            <div className="text-[10px] text-emerald-700/80 dark:text-emerald-200/80">
               Limit: {system.inverterCapacityKva} kVA ({((telemetry.loadPowerWatts / (system.inverterCapacityKva * 1000)) * 100).toFixed(0)}% Utilized)
             </div>
           </CardContent>
@@ -240,18 +240,18 @@ function SystemHealthDetailContent() {
         {/* Inverter Heatsink Temp */}
         <Card>
           <CardContent className="p-5 text-center space-y-2">
-            <div className="mx-auto w-10 h-10 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center">
+            <div className="mx-auto w-10 h-10 rounded-xl bg-orange-500/10 text-[#EA580C] flex items-center justify-center">
               <Flame className="w-6 h-6" />
             </div>
             <div>
-              <div className={`text-3xl font-black ${telemetry.inverterTempCelsius > 65 ? "text-rose-600 animate-pulse" : "text-slate-900 dark:text-white"}`}>
-                {telemetry.inverterTempCelsius.toFixed(1)} <span className="text-sm font-bold text-slate-400">°C</span>
+              <div className={`text-3xl font-black ${telemetry.inverterTempCelsius > 65 ? "text-[#C2410C] animate-pulse" : "text-[#05361e] dark:text-white"}`}>
+                {telemetry.inverterTempCelsius.toFixed(1)} <span className="text-sm font-bold text-emerald-600/80 dark:text-emerald-300/80">°C</span>
               </div>
-              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mt-0.5">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-600/80 dark:text-emerald-300/80 mt-0.5">
                 Inverter Temperature
               </div>
             </div>
-            <div className="text-[10px] text-slate-500">
+            <div className="text-[10px] text-emerald-700/80 dark:text-emerald-200/80">
               Grid Frequency: {telemetry.gridFrequencyHz.toFixed(1)} Hz
             </div>
           </CardContent>
@@ -263,13 +263,13 @@ function SystemHealthDetailContent() {
         diagnosis.cause === "NORMAL"
           ? "border-emerald-500/50 bg-emerald-50/20 dark:bg-emerald-950/10"
           : diagnosis.cause === "OVERLOAD"
-          ? "border-rose-500/60 bg-rose-50/20 dark:bg-rose-950/20"
-          : "border-amber-500/60 bg-amber-50/20 dark:bg-amber-950/20"
+          ? "border-[#C2410C]/60 bg-orange-50/30 dark:bg-orange-950/20"
+          : "border-[#EA580C]/60 bg-orange-50/20 dark:bg-orange-950/20"
       }`}>
         <CardHeader>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <ShieldAlert className="w-5 h-5 text-amber-500" />
+              <ShieldAlert className="w-5 h-5 text-[#EA580C]" />
               <CardTitle className="text-base sm:text-lg">
                 Automated Root-Cause Diagnostic Engine
               </CardTitle>
@@ -287,25 +287,25 @@ function SystemHealthDetailContent() {
 
         <CardContent className="space-y-4">
           {/* Headline & Analysis */}
-          <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
-            <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <div className="p-4 rounded-xl bg-white dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800 space-y-2">
+            <h3 className="text-base font-bold text-[#05361e] dark:text-white flex items-center gap-2">
               <span>{diagnosis.headline}</span>
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-[#0A5C36] dark:text-emerald-100 leading-relaxed font-medium">
               {diagnosis.detailedAnalysis}
             </p>
           </div>
 
           {/* Recommended Actions */}
           <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700/80 dark:text-emerald-200/80">
               Prescribed Field & Customer Actions
             </span>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               {diagnosis.recommendedActions.map((action, i) => (
                 <div
                   key={i}
-                  className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-2 text-xs font-medium text-slate-700 dark:text-slate-300"
+                  className="p-3 rounded-xl bg-white dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800 flex items-start gap-2 text-xs font-medium text-[#0A5C36] dark:text-emerald-100"
                 >
                   <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                   <span>{action}</span>
@@ -315,18 +315,18 @@ function SystemHealthDetailContent() {
           </div>
 
           {/* Generated Customer Advice SMS */}
-          <div className="p-3.5 rounded-xl bg-slate-900 text-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="p-3.5 rounded-xl bg-[#05361e] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs border border-emerald-700/60">
             <div className="space-y-1">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-orange-400">
                 Generated Plain-Language Customer SMS
               </span>
-              <p className="text-slate-300 italic">"{diagnosis.customerAdviceSms}"</p>
+              <p className="text-emerald-100 italic">"{diagnosis.customerAdviceSms}"</p>
             </div>
             <Button
               variant="primary"
               size="sm"
               onClick={() => setSmsModalOpen(true)}
-              className="shrink-0 text-xs font-bold"
+              className="shrink-0 text-xs font-bold border border-emerald-500/40"
             >
               <Send className="w-3.5 h-3.5 mr-1" />
               <span>Send to Customer</span>
@@ -340,7 +340,7 @@ function SystemHealthDetailContent() {
         <CardHeader>
           <CardTitle className="text-base">24-Hour Solar Production vs. Home Consumption Profile</CardTitle>
           <CardDescription>
-            Hourly solar curve (Amber) compared against household AC power draw (Sky Blue).
+            Hourly solar curve (Orange) compared against household AC power draw (Green).
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -349,12 +349,12 @@ function SystemHealthDetailContent() {
               <AreaChart data={hourlyData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="pvColor" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#EA580C" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#EA580C" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="loadColor" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#0284c7" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#0284c7" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#0A5C36" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#0A5C36" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" opacity={0.15} />
@@ -362,8 +362,8 @@ function SystemHealthDetailContent() {
                 <YAxis unit="W" tick={{ fontSize: 11 }} />
                 <Tooltip />
                 <Legend />
-                <Area type="monotone" dataKey="pvWatts" name="Solar PV Generation (W)" stroke="#f59e0b" fillOpacity={1} fill="url(#pvColor)" />
-                <Area type="monotone" dataKey="loadWatts" name="Household AC Load (W)" stroke="#0284c7" fillOpacity={1} fill="url(#loadColor)" />
+                <Area type="monotone" dataKey="pvWatts" name="Solar PV Generation (W)" stroke="#EA580C" fillOpacity={1} fill="url(#pvColor)" />
+                <Area type="monotone" dataKey="loadWatts" name="Household AC Load (W)" stroke="#0A5C36" fillOpacity={1} fill="url(#loadColor)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -398,7 +398,7 @@ function SystemHealthDetailContent() {
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <LifeBuoy className="w-5 h-5 text-amber-500" />
+              <LifeBuoy className="w-5 h-5 text-[#EA580C]" />
               <span>Log Support Ticket with Telemetric Snapshot</span>
             </DialogTitle>
             <DialogDescription className="text-xs">
@@ -408,7 +408,7 @@ function SystemHealthDetailContent() {
 
           <div className="space-y-3 my-2 text-xs">
             <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-300">Ticket Subject</label>
+              <label className="font-bold text-[#0A5C36] dark:text-emerald-200">Ticket Subject</label>
               <Input
                 value={ticketSubject}
                 onChange={(e) => setTicketSubject(e.target.value)}
@@ -417,7 +417,7 @@ function SystemHealthDetailContent() {
             </div>
 
             <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-300">
+              <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                 Diagnostic Description & Snapshot
               </label>
               <Textarea
@@ -450,7 +450,7 @@ function SystemHealthDetailContent() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <Send className="w-5 h-5 text-amber-500" />
+              <Send className="w-5 h-5 text-[#EA580C]" />
               <span>Dispatch Advice SMS</span>
             </DialogTitle>
             <DialogDescription className="text-xs">
@@ -483,7 +483,7 @@ function SystemHealthDetailContent() {
 
 export default function SystemHealthDetailPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-slate-400">Loading System Health...</div>}>
+    <Suspense fallback={<div className="p-8 text-center text-emerald-600/80">Loading System Health...</div>}>
       <SystemHealthDetailContent />
     </Suspense>
   );

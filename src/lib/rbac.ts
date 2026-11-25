@@ -24,37 +24,37 @@ export const ROLE_META: Record<
     title: "Super Admin",
     shortTitle: "Super Admin",
     badgeColor:
-      "bg-purple-100 dark:bg-purple-950/80 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800"
+      "bg-[#0A5C36]/15 dark:bg-emerald-950/80 text-[#0A5C36] dark:text-emerald-300 border-[#0A5C36]/30 dark:border-emerald-800"
   },
   operations_manager: {
     title: "Operations Manager",
     shortTitle: "Ops Manager",
     badgeColor:
-      "bg-sky-100 dark:bg-sky-950/80 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800"
+      "bg-emerald-100 dark:bg-emerald-950/80 text-[#0A5C36] dark:text-emerald-300 border-emerald-200 dark:border-emerald-800"
   },
   sales: {
     title: "Sales Executive",
     shortTitle: "Sales",
     badgeColor:
-      "bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800"
+      "bg-orange-100 dark:bg-orange-950/80 text-[#EA580C] dark:text-orange-300 border-orange-200 dark:border-orange-800"
   },
   technician: {
     title: "Field Technician",
     shortTitle: "Technician",
     badgeColor:
-      "bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800"
+      "bg-[#EA580C]/15 dark:bg-orange-950/80 text-[#EA580C] dark:text-orange-300 border-[#EA580C]/30 dark:border-orange-800"
   },
   support_agent: {
     title: "Support Specialist",
     shortTitle: "Support Agent",
     badgeColor:
-      "bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800"
+      "bg-emerald-50 dark:bg-emerald-900/60 text-[#0A5C36] dark:text-emerald-200 border-emerald-200 dark:border-emerald-700"
   },
   finance: {
     title: "Finance & Accounts",
     shortTitle: "Finance",
     badgeColor:
-      "bg-rose-100 dark:bg-rose-950/80 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800"
+      "bg-orange-100 dark:bg-orange-950/80 text-[#C2410C] dark:text-orange-300 border-orange-300 dark:border-orange-800"
   }
 };
 

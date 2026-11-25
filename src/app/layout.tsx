@@ -38,7 +38,7 @@ export default function RootLayout({
           crossOrigin=""
         />
       </head>
-      <body className={`${inter.className} antialiased bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col`}>
+      <body className={`${inter.className} antialiased bg-emerald-50/30 dark:bg-[#042414] text-[#05361e] dark:text-white min-h-screen flex flex-col`}>
         <ThemeProvider>
           <QueryProvider>
             <AuthRoleProvider>

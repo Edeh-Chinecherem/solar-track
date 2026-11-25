@@ -91,24 +91,24 @@ export default function PortalSupportPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-          <LifeBuoy className="w-6 h-6 text-amber-500" />
+        <h1 className="text-2xl font-black tracking-tight text-[#05361e] dark:text-white flex items-center gap-2">
+          <LifeBuoy className="w-6 h-6 text-[#0A5C36] dark:text-[#10B981]" />
           Customer Help Desk
         </h1>
-        <p className="text-xs text-slate-500 mt-1">
+        <p className="text-xs text-emerald-700/80 dark:text-emerald-200/80 mt-1">
           Instant self-help diagnosis, automated breaker checks, and priority technical assistance.
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="grid grid-cols-3 gap-2 p-1 bg-slate-100 dark:bg-slate-900 rounded-2xl">
+      <div className="grid grid-cols-3 gap-2 p-1 bg-emerald-50 dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800 rounded-2xl">
         <button
           type="button"
           onClick={() => setActiveTab("self-help")}
           className={`py-2 px-3 rounded-xl text-xs font-bold transition-all ${
             activeTab === "self-help"
-              ? "bg-white dark:bg-slate-800 text-amber-600 dark:text-amber-400 shadow-sm"
-              : "text-slate-500 hover:text-slate-900"
+              ? "bg-white dark:bg-[#084729] text-[#0A5C36] dark:text-[#10B981] shadow-sm"
+              : "text-emerald-700/80 dark:text-emerald-200/80 hover:text-[#05361e] dark:hover:text-white"
           }`}
           data-testid="tab-self-help"
         >
@@ -119,8 +119,8 @@ export default function PortalSupportPage() {
           onClick={() => setActiveTab("raise-ticket")}
           className={`py-2 px-3 rounded-xl text-xs font-bold transition-all ${
             activeTab === "raise-ticket"
-              ? "bg-white dark:bg-slate-800 text-amber-600 dark:text-amber-400 shadow-sm"
-              : "text-slate-500 hover:text-slate-900"
+              ? "bg-white dark:bg-[#084729] text-[#0A5C36] dark:text-[#10B981] shadow-sm"
+              : "text-emerald-700/80 dark:text-emerald-200/80 hover:text-[#05361e] dark:hover:text-white"
           }`}
           data-testid="tab-raise-ticket"
         >
@@ -131,8 +131,8 @@ export default function PortalSupportPage() {
           onClick={() => setActiveTab("tickets")}
           className={`py-2 px-3 rounded-xl text-xs font-bold transition-all ${
             activeTab === "tickets"
-              ? "bg-white dark:bg-slate-800 text-amber-600 dark:text-amber-400 shadow-sm"
-              : "text-slate-500 hover:text-slate-900"
+              ? "bg-white dark:bg-[#084729] text-[#0A5C36] dark:text-[#10B981] shadow-sm"
+              : "text-emerald-700/80 dark:text-emerald-200/80 hover:text-[#05361e] dark:hover:text-white"
           }`}
           data-testid="tab-my-tickets"
         >
@@ -143,13 +143,13 @@ export default function PortalSupportPage() {
       {/* --- TAB 1: SELF-HELP DIAGNOSIS FLOW --- */}
       {activeTab === "self-help" && (
         <div className="space-y-4">
-          <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-200 dark:border-amber-900 flex items-start gap-3">
-            <Sparkles className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-[#0A5C36]/10 to-[#EA580C]/10 border border-[#0A5C36]/20 dark:border-emerald-900 flex items-start gap-3">
+            <Sparkles className="w-5 h-5 text-[#EA580C] shrink-0 mt-0.5" />
             <div className="text-xs">
-              <h4 className="font-bold text-slate-900 dark:text-white">
+              <h4 className="font-bold text-[#05361e] dark:text-white">
                 "My System Isn't Working" Troubleshooter
               </h4>
-              <p className="text-slate-500 mt-0.5">
+              <p className="text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">
                 90% of solar outages in Nigeria are resolved instantly through these common breaker and load checks before requiring a technician visit.
               </p>
             </div>
@@ -194,36 +194,36 @@ export default function PortalSupportPage() {
             ].map((guide) => (
               <Card
                 key={guide.id}
-                className="overflow-hidden cursor-pointer hover:border-amber-400 transition-all"
+                className="overflow-hidden cursor-pointer hover:border-[#0A5C36] transition-all"
                 onClick={() => setSelectedIssue(selectedIssue === guide.id ? null : guide.id)}
               >
                 <div className="p-4 flex items-center justify-between">
                   <div>
-                    <h3 className="font-bold text-xs text-slate-900 dark:text-white">
+                    <h3 className="font-bold text-xs text-[#05361e] dark:text-white">
                       {guide.title}
                     </h3>
-                    <p className="text-[11px] text-slate-500 mt-0.5">{guide.symptom}</p>
+                    <p className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">{guide.symptom}</p>
                   </div>
                   <ChevronRight
-                    className={`w-4 h-4 text-slate-400 transition-transform ${
-                      selectedIssue === guide.id ? "rotate-90 text-amber-500" : ""
+                    className={`w-4 h-4 text-emerald-600/80 transition-transform ${
+                      selectedIssue === guide.id ? "rotate-90 text-[#0A5C36] dark:text-[#10B981]" : ""
                     }`}
                   />
                 </div>
 
                 {selectedIssue === guide.id && (
-                  <div className="px-4 pb-4 pt-2 border-t border-slate-100 dark:border-slate-800 space-y-3 bg-slate-50/50 dark:bg-slate-900/40 text-xs">
-                    <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 font-semibold text-[11px]">
+                  <div className="px-4 pb-4 pt-2 border-t border-emerald-100 dark:border-emerald-800 space-y-3 bg-emerald-50/40 dark:bg-[#084729]/40 text-xs">
+                    <div className="p-2.5 rounded-xl bg-orange-50 dark:bg-orange-950/40 text-orange-800 dark:text-orange-300 font-semibold text-[11px]">
                       Diagnosis: {guide.diagnosis}
                     </div>
 
                     <div className="space-y-2">
-                      <p className="font-bold text-slate-700 dark:text-slate-300">
+                      <p className="font-bold text-[#0A5C36] dark:text-emerald-200">
                         Self-Resolution Steps:
                       </p>
                       {guide.steps.map((step, idx) => (
-                        <div key={idx} className="flex items-start gap-2 text-slate-600 dark:text-slate-400">
-                          <span className="font-bold font-mono text-amber-600">{idx + 1}.</span>
+                        <div key={idx} className="flex items-start gap-2 text-emerald-800 dark:text-emerald-200/80">
+                          <span className="font-bold font-mono text-[#0A5C36] dark:text-[#10B981]">{idx + 1}.</span>
                           <span>{step}</span>
                         </div>
                       ))}
@@ -269,14 +269,14 @@ export default function PortalSupportPage() {
                   <CheckCircle2 className="w-7 h-7" />
                 </div>
                 <h3 className="font-bold text-sm">Complaint Logged Successfully!</h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-emerald-700/80 dark:text-emerald-200/80">
                   Ticket dispatched to field supervisor. An engineer has been notified.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleRaiseTicket} className="space-y-4 text-xs">
                 <div className="space-y-1">
-                  <label className="font-bold text-slate-700 dark:text-slate-300">
+                  <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                     Issue Summary
                   </label>
                   <Input
@@ -290,11 +290,11 @@ export default function PortalSupportPage() {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <label className="font-bold text-slate-700 dark:text-slate-300">
+                    <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                       Category
                     </label>
                     <select
-                      className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 font-medium"
+                      className="w-full bg-emerald-50/50 dark:bg-[#084729] border border-emerald-200 dark:border-emerald-700 rounded-lg p-2 font-medium"
                       value={category}
                       onChange={(e) => setCategory(e.target.value as any)}
                     >
@@ -307,11 +307,11 @@ export default function PortalSupportPage() {
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-bold text-slate-700 dark:text-slate-300">
+                    <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                       Urgency Level
                     </label>
                     <select
-                      className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 font-medium"
+                      className="w-full bg-emerald-50/50 dark:bg-[#084729] border border-emerald-200 dark:border-emerald-700 rounded-lg p-2 font-medium"
                       value={priority}
                       onChange={(e) => setPriority(e.target.value as any)}
                     >
@@ -324,12 +324,12 @@ export default function PortalSupportPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-bold text-slate-700 dark:text-slate-300">
+                  <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                     Detailed Symptoms & Observations
                   </label>
                   <textarea
                     rows={4}
-                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 font-sans"
+                    className="w-full bg-emerald-50/50 dark:bg-[#084729] border border-emerald-200 dark:border-emerald-700 rounded-lg p-2.5 font-sans"
                     placeholder="Describe what occurred, any error codes shown on the inverter screen, and what appliances were running..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
@@ -339,9 +339,9 @@ export default function PortalSupportPage() {
                 </div>
 
                 {/* Photo attachment mock */}
-                <div className="p-3 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-slate-500">
-                    <Camera className="w-5 h-5 text-amber-500" />
+                <div className="p-3 rounded-xl border border-dashed border-emerald-300 dark:border-emerald-700 flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-emerald-700/80 dark:text-emerald-200/80">
+                    <Camera className="w-5 h-5 text-[#0A5C36] dark:text-[#10B981]" />
                     <span>{photoUploaded ? "inverter_screen_error.jpg attached" : "Attach Photo of Inverter Display / Breaker"}</span>
                   </div>
                   <Button
@@ -357,7 +357,7 @@ export default function PortalSupportPage() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black h-11 rounded-xl shadow-lg gap-2"
+                  className="w-full bg-[#0A5C36] hover:bg-[#074728] text-white font-black h-11 rounded-xl shadow-lg gap-2"
                   data-testid="submit-ticket-btn"
                 >
                   <Send className="w-4 h-4" />
@@ -373,7 +373,7 @@ export default function PortalSupportPage() {
       {activeTab === "tickets" && (
         <div className="space-y-3">
           {tickets.length === 0 ? (
-            <p className="text-center p-8 text-xs text-slate-400">No support tickets found.</p>
+            <p className="text-center p-8 text-xs text-emerald-600/80 dark:text-emerald-300/80">No support tickets found.</p>
           ) : (
             tickets.map((t) => (
               <Card key={t.id} className="overflow-hidden">
@@ -390,7 +390,7 @@ export default function PortalSupportPage() {
                     >
                       {t.status.toUpperCase()}
                     </Badge>
-                    <span className="text-[10px] font-mono text-slate-400">
+                    <span className="text-[10px] font-mono text-emerald-600/80 dark:text-emerald-300/80">
                       Ticket #{t.id}
                     </span>
                   </div>
@@ -405,18 +405,18 @@ export default function PortalSupportPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-4 pt-2 space-y-3">
-                  <div className="divide-y divide-slate-100 dark:divide-slate-800">
+                  <div className="divide-y divide-emerald-100 dark:divide-emerald-900">
                     {t.messages.map((c) => (
                       <div key={c.id} className="py-2 space-y-1 text-xs">
                         <div className="flex items-center justify-between text-[11px] font-bold">
-                          <span className={c.senderRole === "customer" ? "text-slate-900 dark:text-white" : "text-amber-600"}>
+                          <span className={c.senderRole === "customer" ? "text-[#05361e] dark:text-white" : "text-[#0A5C36] dark:text-[#10B981]"}>
                             {c.senderName} ({c.senderRole})
                           </span>
-                          <span className="text-slate-400 font-mono text-[10px]">
+                          <span className="text-emerald-600/80 dark:text-emerald-300/80 font-mono text-[10px]">
                             {formatDate(c.createdAt)}
                           </span>
                         </div>
-                        <p className="text-slate-600 dark:text-slate-400 text-[11px]">{c.content}</p>
+                        <p className="text-emerald-700/80 dark:text-emerald-200/80 text-[11px]">{c.content}</p>
                       </div>
                     ))}
                   </div>

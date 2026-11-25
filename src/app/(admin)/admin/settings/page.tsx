@@ -51,6 +51,9 @@ const ROLE_PERMISSIONS: { [key in UserRole]: string[] } = {
 export default function AdminSettingsPage() {
   const { currentRole } = useAuthRole();
   const [activeTab, setActiveTab] = useState<SettingsTab>("roles");
+  const effectiveTab: SettingsTab = canAccessSettingsTab(currentRole, activeTab)
+    ? activeTab
+    : "roles";
   const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>([]);
   const [selectedAuditLog, setSelectedAuditLog] = useState<AuditLogEntry | null>(null);
   const [auditSearch, setAuditSearch] = useState("");
@@ -70,12 +73,6 @@ export default function AdminSettingsPage() {
     batteryMinSoc: "18",
     offlineHeartbeatMinutes: "30"
   });
-
-  useEffect(() => {
-    if (!canAccessSettingsTab(currentRole, activeTab)) {
-      setActiveTab("roles");
-    }
-  }, [currentRole, activeTab]);
 
   useEffect(() => {
     if (canAccessSettingsTab(currentRole, "audit")) {
@@ -105,7 +102,7 @@ export default function AdminSettingsPage() {
     <div className="space-y-6">
       {/* Toast */}
       {saveToast && (
-        <div className="fixed top-4 right-4 z-50 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2 border border-slate-700 animate-in fade-in">
+        <div className="fixed top-4 right-4 z-50 bg-[#05361e] text-white text-xs px-4 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-700 animate-in fade-in">
           <CheckCircle2 className="w-4 h-4 text-emerald-400" />
           <span>{saveToast}</span>
         </div>
@@ -114,16 +111,16 @@ export default function AdminSettingsPage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-black tracking-tight flex items-center gap-2">
-          <Settings className="w-7 h-7 text-amber-500" />
+          <Settings className="w-7 h-7 text-[#0A5C36] dark:text-[#10B981]" />
           Platform Settings & Governance
         </h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-emerald-700/80 dark:text-emerald-200/80">
           Configure multi-tenant roles, stage checklist templates, alert thresholds, PAYG rules, and inspect the immutable audit log.
         </p>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex flex-wrap gap-2 p-1 bg-slate-100 dark:bg-slate-900 rounded-2xl max-w-fit">
+      <div className="flex flex-wrap gap-2 p-1 bg-emerald-50 dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800 rounded-2xl max-w-fit">
         {(
           [
             { id: "roles", label: "Roles & Permissions", icon: Users },
@@ -140,11 +137,10 @@ export default function AdminSettingsPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-1.5 py-2 px-3.5 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === tab.id
-                    ? "bg-white dark:bg-slate-800 text-amber-600 dark:text-amber-400 shadow-sm"
-                    : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
-                }`}
+                className={`flex items-center gap-1.5 py-2 px-3.5 rounded-xl text-xs font-bold transition-all ${effectiveTab === tab.id
+                    ? "bg-white dark:bg-[#084729] text-[#0A5C36] dark:text-[#10B981] shadow-sm"
+                    : "text-emerald-700/80 dark:text-emerald-200/80 hover:text-[#05361e] dark:hover:text-white"
+                  }`}
                 data-testid={`settings-tab-${tab.id}`}
               >
                 <Icon className="w-4 h-4" />
@@ -155,7 +151,7 @@ export default function AdminSettingsPage() {
       </div>
 
       {/* --- TAB 1: ROLES & PERMISSIONS --- */}
-      {activeTab === "roles" && (
+      {effectiveTab === "roles" && (
         <div className="space-y-4">
           <Card>
             <CardHeader>
@@ -173,10 +169,10 @@ export default function AdminSettingsPage() {
                   return (
                     <div
                       key={r}
-                      className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 space-y-3"
+                      className="p-4 rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-[#06361f]/50 space-y-3"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-bold text-sm capitalize text-slate-900 dark:text-white">
+                        <span className="font-bold text-sm capitalize text-[#05361e] dark:text-white">
                           {r.replace("_", " ")}
                         </span>
                         <Badge variant="outline" className="text-[10px] font-mono">
@@ -186,7 +182,7 @@ export default function AdminSettingsPage() {
 
                       <div className="space-y-1.5 text-xs">
                         {perms.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+                          <div key={i} className="flex items-center gap-2 text-[#0A5C36] dark:text-emerald-200">
                             <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
                             <span>{p}</span>
                           </div>
@@ -202,7 +198,7 @@ export default function AdminSettingsPage() {
       )}
 
       {/* --- TAB 2: STAGE TEMPLATES --- */}
-      {activeTab === "stages" && (
+      {effectiveTab === "stages" && (
         <Card>
           <CardHeader>
             <CardTitle className="text-base">10-Stage Installation Workflow Templates</CardTitle>
@@ -214,24 +210,24 @@ export default function AdminSettingsPage() {
             {INSTALLATION_STAGES.map((stg) => (
               <div
                 key={stg.id}
-                className="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-start justify-between gap-4"
+                className="p-3.5 rounded-2xl border border-emerald-200 dark:border-emerald-800 flex items-start justify-between gap-4"
               >
                 <div className="space-y-1 flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-black text-amber-500">
+                    <span className="font-mono text-xs font-black text-[#EA580C] dark:text-orange-400">
                       Step {stg.order}
                     </span>
-                    <h4 className="font-bold text-sm text-slate-900 dark:text-white">{stg.label}</h4>
+                    <h4 className="font-bold text-sm text-[#05361e] dark:text-white">{stg.label}</h4>
                     <Badge variant="outline" className="text-[10px]">
                       SLA: {stg.slaDays} Days
                     </Badge>
                   </div>
-                  <p className="text-xs text-slate-500">{stg.description}</p>
+                  <p className="text-xs text-emerald-700/80 dark:text-emerald-200/80">{stg.description}</p>
                   <div className="pt-1.5 flex flex-wrap gap-1.5">
                     {stg.mandatoryChecklist.map((chk, i) => (
                       <span
                         key={i}
-                        className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded-md font-medium"
+                        className="text-[10px] bg-emerald-50 dark:bg-[#084729] text-[#0A5C36] dark:text-emerald-200 px-2 py-0.5 rounded-md font-medium"
                       >
                         ✓ {chk}
                       </span>
@@ -245,7 +241,7 @@ export default function AdminSettingsPage() {
       )}
 
       {/* --- TAB 3: ALERT THRESHOLDS --- */}
-      {activeTab === "thresholds" && (
+      {effectiveTab === "thresholds" && (
         <Card>
           <CardHeader>
             <CardTitle className="text-base">Inverter Telemetry Trigger Thresholds</CardTitle>
@@ -255,8 +251,8 @@ export default function AdminSettingsPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              <div className="space-y-1.5 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <label className="font-bold text-slate-700 dark:text-slate-300">
+              <div className="space-y-1.5 p-3 rounded-2xl bg-emerald-50/50 dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800">
+                <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                   Surge Overload Cutoff Limit (% of Inverter Rating)
                 </label>
                 <Input
@@ -264,11 +260,11 @@ export default function AdminSettingsPage() {
                   onChange={(e) => setThresholds({ ...thresholds, maxLoadPercent: e.target.value })}
                   className="font-mono text-xs"
                 />
-                <p className="text-[10px] text-slate-400">Triggers instantaneous trip on 5kVA / 10kVA inverters</p>
+                <p className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80">Triggers instantaneous trip on 5kVA / 10kVA inverters</p>
               </div>
 
-              <div className="space-y-1.5 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <label className="font-bold text-slate-700 dark:text-slate-300">
+              <div className="space-y-1.5 p-3 rounded-2xl bg-emerald-50/50 dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800">
+                <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                   Inverter Enclosure Thermal Alarm (°C)
                 </label>
                 <Input
@@ -276,11 +272,11 @@ export default function AdminSettingsPage() {
                   onChange={(e) => setThresholds({ ...thresholds, maxTempCelsius: e.target.value })}
                   className="font-mono text-xs"
                 />
-                <p className="text-[10px] text-slate-400">Dispatches high heat-sink alert to regional technician</p>
+                <p className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80">Dispatches high heat-sink alert to regional technician</p>
               </div>
 
-              <div className="space-y-1.5 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <label className="font-bold text-slate-700 dark:text-slate-300">
+              <div className="space-y-1.5 p-3 rounded-2xl bg-emerald-50/50 dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800">
+                <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                   Battery Critical Depth of Discharge Minimum (% SOC)
                 </label>
                 <Input
@@ -288,11 +284,11 @@ export default function AdminSettingsPage() {
                   onChange={(e) => setThresholds({ ...thresholds, batteryMinSoc: e.target.value })}
                   className="font-mono text-xs"
                 />
-                <p className="text-[10px] text-slate-400">Triggers "Under-charged" alert if held under limit for 3 days</p>
+                <p className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80">Triggers "Under-charged" alert if held under limit for 3 days</p>
               </div>
 
-              <div className="space-y-1.5 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <label className="font-bold text-slate-700 dark:text-slate-300">
+              <div className="space-y-1.5 p-3 rounded-2xl bg-emerald-50/50 dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800">
+                <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                   GSM Telemetry Heartbeat Timeout (Minutes)
                 </label>
                 <Input
@@ -300,13 +296,13 @@ export default function AdminSettingsPage() {
                   onChange={(e) => setThresholds({ ...thresholds, offlineHeartbeatMinutes: e.target.value })}
                   className="font-mono text-xs"
                 />
-                <p className="text-[10px] text-slate-400">Marks fleet system status as "Offline" after missed pings</p>
+                <p className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80">Marks fleet system status as "Offline" after missed pings</p>
               </div>
             </div>
 
             <div className="flex justify-end pt-2">
               <Button
-                className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs gap-1.5"
+                className="bg-[#0A5C36] hover:bg-[#074728] text-white font-black text-xs gap-1.5"
                 onClick={() => handleSaveSettings("Telemetry Thresholds")}
                 data-testid="save-thresholds-btn"
               >
@@ -319,7 +315,7 @@ export default function AdminSettingsPage() {
       )}
 
       {/* --- TAB 4: PAYG AUTOMATION RULES --- */}
-      {activeTab === "payg" && (
+      {effectiveTab === "payg" && (
         <Card>
           <CardHeader>
             <CardTitle className="text-base">Pay-As-You-Go (PAYG) Metering & Contactor Rules</CardTitle>
@@ -329,12 +325,12 @@ export default function AdminSettingsPage() {
           </CardHeader>
           <CardContent className="space-y-4 text-xs">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <label className="font-bold text-slate-700 dark:text-slate-300">
+              <div className="space-y-1.5 p-3 rounded-2xl bg-emerald-50/50 dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800">
+                <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                   Grace Period Window (Days after due date)
                 </label>
                 <select
-                  className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 font-mono"
+                  className="w-full bg-white dark:bg-[#084729] border border-emerald-200 dark:border-emerald-700 rounded-lg p-2 font-mono"
                   value={graceDays}
                   onChange={(e) => setGraceDays(e.target.value)}
                 >
@@ -344,15 +340,15 @@ export default function AdminSettingsPage() {
                   <option value="5">5 Days</option>
                   <option value="7">7 Days</option>
                 </select>
-                <p className="text-[10px] text-slate-400">Customer retains power before contactor disconnect</p>
+                <p className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80">Customer retains power before contactor disconnect</p>
               </div>
 
-              <div className="space-y-1.5 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <label className="font-bold text-slate-700 dark:text-slate-300">
+              <div className="space-y-1.5 p-3 rounded-2xl bg-emerald-50/50 dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800">
+                <label className="font-bold text-[#0A5C36] dark:text-emerald-200">
                   Automated SMS Reminder Schedule
                 </label>
                 <select
-                  className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 font-mono"
+                  className="w-full bg-white dark:bg-[#084729] border border-emerald-200 dark:border-emerald-700 rounded-lg p-2 font-mono"
                   value={smsSchedule}
                   onChange={(e) => setSmsSchedule(e.target.value)}
                 >
@@ -360,40 +356,40 @@ export default function AdminSettingsPage() {
                   <option value="5_days_before">5 Days Before + Daily Overdue</option>
                   <option value="due_date_only">Due Date Only</option>
                 </select>
-                <p className="text-[10px] text-slate-400">Dispatched via Nigerian SMS Gateway (Termii)</p>
+                <p className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80">Dispatched via Nigerian SMS Gateway (Termii)</p>
               </div>
             </div>
 
             <div className="space-y-3 pt-2">
-              <label className="flex items-center gap-3 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 cursor-pointer">
+              <label className="flex items-center gap-3 p-3 rounded-2xl border border-emerald-200 dark:border-emerald-800 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={dualApprovalRequired}
                   onChange={(e) => setDualApprovalRequired(e.target.checked)}
-                  className="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4"
+                  className="rounded border-emerald-300 accent-[#0A5C36] text-[#0A5C36] focus:ring-[#0A5C36] h-4 w-4"
                 />
                 <div className="space-y-0.5">
-                  <span className="font-bold text-slate-900 dark:text-white">
+                  <span className="font-bold text-[#05361e] dark:text-white">
                     Enforce Dual-Approval on Bulk Contactor Disconnection
                   </span>
-                  <p className="text-slate-500 text-[11px]">
+                  <p className="text-emerald-700/80 dark:text-emerald-200/80 text-[11px]">
                     Requires secondary authorization from Operations Manager or Super Admin before sending batch disconnect commands.
                   </p>
                 </div>
               </label>
 
-              <label className="flex items-center gap-3 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 cursor-pointer">
+              <label className="flex items-center gap-3 p-3 rounded-2xl border border-emerald-200 dark:border-emerald-800 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={autoCutoff}
                   onChange={(e) => setAutoCutoff(e.target.checked)}
-                  className="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4"
+                  className="rounded border-emerald-300 accent-[#0A5C36] text-[#0A5C36] focus:ring-[#0A5C36] h-4 w-4"
                 />
                 <div className="space-y-0.5">
-                  <span className="font-bold text-slate-900 dark:text-white">
+                  <span className="font-bold text-[#05361e] dark:text-white">
                     Automatic Remote Disconnect on Grace Expiry (00:00 Midnight UTC+1)
                   </span>
-                  <p className="text-slate-500 text-[11px]">
+                  <p className="text-emerald-700/80 dark:text-emerald-200/80 text-[11px]">
                     Automatically opens remote contactor for non-regularized accounts with no active extension.
                   </p>
                 </div>
@@ -402,7 +398,7 @@ export default function AdminSettingsPage() {
 
             <div className="flex justify-end pt-2">
               <Button
-                className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs gap-1.5"
+                className="bg-[#0A5C36] hover:bg-[#074728] text-white font-black text-xs gap-1.5"
                 onClick={() => handleSaveSettings("PAYG Automation Rules")}
                 data-testid="save-payg-rules-btn"
               >
@@ -415,14 +411,14 @@ export default function AdminSettingsPage() {
       )}
 
       {/* --- TAB 5: IMMUTABLE AUDIT LOG VIEWER --- */}
-      {activeTab === "audit" && (
+      {effectiveTab === "audit" && (
         <div className="space-y-4">
           <Card>
             <CardHeader className="pb-3">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                   <CardTitle className="text-base flex items-center gap-2">
-                    <History className="w-5 h-5 text-amber-500" />
+                    <History className="w-5 h-5 text-[#0A5C36] dark:text-[#10B981]" />
                     Immutable Audit Trail Viewer
                   </CardTitle>
                   <CardDescription className="text-xs">
@@ -432,7 +428,7 @@ export default function AdminSettingsPage() {
 
                 <div className="flex flex-wrap items-center gap-2">
                   <div className="relative w-48 sm:w-64">
-                    <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                    <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-emerald-600/80" />
                     <Input
                       placeholder="Search user, action, target..."
                       className="pl-8 text-xs h-8"
@@ -442,7 +438,7 @@ export default function AdminSettingsPage() {
                   </div>
 
                   <select
-                    className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-medium"
+                    className="bg-emerald-50/50 dark:bg-[#084729] border border-emerald-200 dark:border-emerald-700 rounded-lg px-2.5 py-1.5 text-xs font-medium"
                     value={auditActionFilter}
                     onChange={(e) => setAuditActionFilter(e.target.value)}
                   >
@@ -458,7 +454,7 @@ export default function AdminSettingsPage() {
             <CardContent>
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 font-bold border-b border-slate-200 dark:border-slate-800 uppercase tracking-wider">
+                  <thead className="bg-emerald-50 dark:bg-[#084729]/60 text-emerald-700/80 dark:text-emerald-200/80 font-bold border-b border-emerald-200 dark:border-emerald-800 uppercase tracking-wider">
                     <tr>
                       <th className="p-3">Timestamp</th>
                       <th className="p-3">Operator</th>
@@ -467,10 +463,10 @@ export default function AdminSettingsPage() {
                       <th className="p-3">Audit Details</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
+                  <tbody className="divide-y divide-emerald-100 dark:divide-emerald-900 font-medium">
                     {filteredLogs.length === 0 ? (
                       <tr>
-                        <td colSpan={5} className="text-center p-8 text-slate-400">
+                        <td colSpan={5} className="text-center p-8 text-emerald-600/80 dark:text-emerald-300/80">
                           No audit entries match filter.
                         </td>
                       </tr>
@@ -478,18 +474,18 @@ export default function AdminSettingsPage() {
                       filteredLogs.map((log) => (
                         <tr
                           key={log.id}
-                          className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 cursor-pointer"
+                          className="hover:bg-emerald-50/80 dark:hover:bg-[#084729]/40 cursor-pointer"
                           onClick={() => setSelectedAuditLog(log)}
                           data-testid={`audit-row-${log.id}`}
                         >
-                          <td className="p-3 font-mono text-slate-400 text-[11px] whitespace-nowrap">
+                          <td className="p-3 font-mono text-emerald-600/80 dark:text-emerald-300/80 text-[11px] whitespace-nowrap">
                             {formatDateTime(log.timestamp)}
                           </td>
                           <td className="p-3">
-                            <div className="font-bold text-slate-900 dark:text-white">
+                            <div className="font-bold text-[#05361e] dark:text-white">
                               {log.userName}
                             </div>
-                            <div className="text-[10px] text-slate-400 capitalize">
+                            <div className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80 capitalize">
                               {log.userRole?.replace("_", " ")}
                             </div>
                           </td>
@@ -499,20 +495,20 @@ export default function AdminSettingsPage() {
                                 log.action.includes("DISCONNECT")
                                   ? "destructive"
                                   : log.action.includes("RECONNECT")
-                                  ? "success"
-                                  : log.action.includes("EXTENSION")
-                                  ? "outline"
-                                  : "secondary"
+                                    ? "success"
+                                    : log.action.includes("EXTENSION")
+                                      ? "outline"
+                                      : "secondary"
                               }
                               className="font-mono text-[10px]"
                             >
                               {log.action}
                             </Badge>
                           </td>
-                          <td className="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                          <td className="p-3 font-mono text-[11px] text-[#0A5C36] dark:text-emerald-200">
                             {log.targetEntity}: {log.targetId}
                           </td>
-                          <td className="p-3 text-slate-600 dark:text-slate-400 max-w-xs truncate">
+                          <td className="p-3 text-emerald-700/80 dark:text-emerald-200/80 max-w-xs truncate">
                             {log.details}
                           </td>
                         </tr>
@@ -531,7 +527,7 @@ export default function AdminSettingsPage() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-sm font-mono flex items-center gap-2">
-              <History className="w-4 h-4 text-amber-500" />
+              <History className="w-4 h-4 text-[#0A5C36] dark:text-[#10B981]" />
               Audit Entry #{selectedAuditLog?.id}
             </DialogTitle>
             <DialogDescription className="text-xs">
@@ -541,12 +537,12 @@ export default function AdminSettingsPage() {
 
           {selectedAuditLog && (
             <div className="space-y-3 py-2 text-xs font-mono">
-              <div className="p-3 rounded-xl bg-slate-900 text-white space-y-2 overflow-x-auto text-[11px]">
-                <div><span className="text-slate-400">Action:</span> <span className="text-amber-400 font-bold">{selectedAuditLog.action}</span></div>
-                <div><span className="text-slate-400">Timestamp:</span> {selectedAuditLog.timestamp}</div>
-                <div><span className="text-slate-400">Operator:</span> {selectedAuditLog.userName} ({selectedAuditLog.userRole})</div>
-                <div><span className="text-slate-400">Target:</span> {selectedAuditLog.targetEntity} / {selectedAuditLog.targetId}</div>
-                <div className="pt-2 border-t border-slate-800 text-slate-300 font-sans">
+              <div className="p-3 rounded-xl bg-[#05361e] text-white space-y-2 overflow-x-auto text-[11px] border border-emerald-800">
+                <div><span className="text-emerald-200/80">Action:</span> <span className="text-[#EA580C] font-bold">{selectedAuditLog.action}</span></div>
+                <div><span className="text-emerald-200/80">Timestamp:</span> {selectedAuditLog.timestamp}</div>
+                <div><span className="text-emerald-200/80">Operator:</span> {selectedAuditLog.userName} ({selectedAuditLog.userRole})</div>
+                <div><span className="text-emerald-200/80">Target:</span> {selectedAuditLog.targetEntity} / {selectedAuditLog.targetId}</div>
+                <div className="pt-2 border-t border-emerald-800 text-emerald-100 font-sans">
                   {selectedAuditLog.details}
                 </div>
               </div>
@@ -555,7 +551,7 @@ export default function AdminSettingsPage() {
 
           <DialogFooter>
             <Button
-              className="w-full bg-slate-900 text-white text-xs font-bold"
+              className="w-full bg-[#0A5C36] hover:bg-[#074728] text-white text-xs font-bold"
               onClick={() => setSelectedAuditLog(null)}
             >
               Close Inspector

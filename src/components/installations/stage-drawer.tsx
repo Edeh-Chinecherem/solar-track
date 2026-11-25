@@ -136,52 +136,51 @@ export function StageDrawer({
       <SheetHeader onClose={() => onOpenChange(false)}>
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-500">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#EA580C] dark:text-orange-400">
               Stage {currentStageDef.order} of 10
             </span>
-            <Badge variant={installation.isOverdue ? "destructive" : "amber"}>
+            <Badge variant={installation.isOverdue ? "destructive" : "orange"}>
               {installation.isOverdue ? "Overdue SLA" : `${installation.daysInCurrentStage}d in stage`}
             </Badge>
           </div>
-          <SheetTitle className="text-xl font-black text-slate-900 dark:text-white">
+          <SheetTitle className="text-xl font-black text-[#05361e] dark:text-white">
             {currentStageDef.label}
           </SheetTitle>
-          <SheetDescription className="text-xs text-slate-500">
-            Customer: <strong className="text-slate-900 dark:text-slate-100">{customer.name}</strong> • {customer.state} ({customer.qrToken})
+          <SheetDescription className="text-xs text-emerald-700/80 dark:text-emerald-200/80">
+            Customer: <strong className="text-[#05361e] dark:text-white">{customer.name}</strong> • {customer.state} ({customer.qrToken})
           </SheetDescription>
         </div>
       </SheetHeader>
 
       <SheetContent className="space-y-6">
         {/* Stage Overview Banner */}
-        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
-          <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+        <div className="p-4 rounded-2xl bg-emerald-50/50 dark:bg-[#084729]/40 border border-emerald-200 dark:border-emerald-800 space-y-2 text-xs">
+          <p className="text-[#0A5C36] dark:text-emerald-100 leading-relaxed font-medium">
             {currentStageDef.description}
           </p>
-          <div className="flex flex-wrap items-center justify-between pt-2 border-t border-slate-200/60 dark:border-slate-700/60 text-slate-500 text-[11px]">
-            <span>Assigned Tech: <strong className="text-slate-900 dark:text-white">{installation.assignedTechnicianName || "Tunde Bakare"}</strong></span>
-            <span>Target SLA: <strong className="text-amber-500">{currentStageDef.slaDays} Days</strong></span>
+          <div className="flex flex-wrap items-center justify-between pt-2 border-t border-emerald-200/60 dark:border-emerald-700/60 text-emerald-700/80 dark:text-emerald-200/80 text-[11px]">
+            <span>Assigned Tech: <strong className="text-[#05361e] dark:text-white">{installation.assignedTechnicianName || "Tunde Bakare"}</strong></span>
+            <span>Target SLA: <strong className="text-[#EA580C] dark:text-orange-400">{currentStageDef.slaDays} Days</strong></span>
           </div>
         </div>
 
         {/* Mandatory Checklist Section */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-amber-500" />
+            <h3 className="font-bold text-sm text-[#05361e] dark:text-white flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4 text-[#0A5C36] dark:text-[#10B981]" />
               <span>Mandatory Stage Checklist</span>
             </h3>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-[#084729] text-[#0A5C36] dark:text-emerald-200">
               {completedCount} of {totalCount} Done
             </span>
           </div>
 
           {/* Progress Bar */}
-          <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+          <div className="h-1.5 w-full bg-emerald-100 dark:bg-[#084729] rounded-full overflow-hidden">
             <div
-              className={`h-full transition-all duration-300 ${
-                allMandatoryChecked ? "bg-emerald-500" : "bg-amber-500"
-              }`}
+              className={`h-full transition-all duration-300 ${allMandatoryChecked ? "bg-emerald-500" : "bg-[#EA580C]"
+                }`}
               style={{ width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 100}%` }}
             />
           </div>
@@ -190,20 +189,18 @@ export function StageDrawer({
             {currentChecklist.map((item) => (
               <label
                 key={item.id}
-                className={`flex items-start gap-3 p-3 rounded-xl border transition-colors text-xs ${
-                  canEditStage ? "cursor-pointer" : "cursor-default opacity-80"
-                } ${
-                  item.isCompleted
+                className={`flex items-start gap-3 p-3 rounded-xl border transition-colors text-xs ${canEditStage ? "cursor-pointer" : "cursor-default opacity-80"
+                  } ${item.isCompleted
                     ? "bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800/60 text-emerald-950 dark:text-emerald-200 font-medium"
-                    : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-amber-400 text-slate-700 dark:text-slate-300"
-                }`}
+                    : "bg-white dark:bg-[#06361f] border-emerald-200 dark:border-emerald-800 hover:border-[#0A5C36]/60 text-[#0A5C36] dark:text-emerald-100"
+                  }`}
               >
                 <input
                   type="checkbox"
                   checked={item.isCompleted}
                   disabled={!canEditStage}
                   onChange={() => canEditStage && handleToggleChecklist(item.id)}
-                  className="mt-0.5 w-4 h-4 rounded text-amber-500 focus:ring-amber-500 cursor-pointer disabled:cursor-not-allowed"
+                  className="mt-0.5 w-4 h-4 rounded accent-[#0A5C36] text-[#0A5C36] focus:ring-[#0A5C36] cursor-pointer disabled:cursor-not-allowed"
                 />
                 <div className="flex-1">
                   <span>{item.text}</span>
@@ -218,8 +215,8 @@ export function StageDrawer({
           </div>
 
           {!allMandatoryChecked && (
-            <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/80 text-[11px] text-amber-800 dark:text-amber-300 flex items-center gap-2">
-              <Lock className="w-4 h-4 shrink-0 text-amber-500" />
+            <div className="p-3 rounded-xl bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800/80 text-[11px] text-orange-800 dark:text-orange-300 flex items-center gap-2">
+              <Lock className="w-4 h-4 shrink-0 text-[#EA580C]" />
               <span>Advancing this stage is locked until all mandatory checklist items are verified.</span>
             </div>
           )}
@@ -228,11 +225,11 @@ export function StageDrawer({
         {/* Photo Gallery & Camera Upload */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-1.5">
-              <Camera className="w-4 h-4 text-amber-500" />
+            <h3 className="font-bold text-sm text-[#05361e] dark:text-white flex items-center gap-1.5">
+              <Camera className="w-4 h-4 text-[#0A5C36] dark:text-[#10B981]" />
               <span>Field Photo Documentation</span>
             </h3>
-            <span className="text-xs text-slate-500">{installation.photos.length} Photos</span>
+            <span className="text-xs text-emerald-700/80 dark:text-emerald-200/80">{installation.photos.length} Photos</span>
           </div>
 
           {/* Grid of uploaded photos */}
@@ -240,11 +237,11 @@ export function StageDrawer({
             {installation.photos.map((photo) => (
               <div
                 key={photo.id}
-                className="group relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-900 aspect-video flex items-end p-2"
+                className="group relative rounded-xl overflow-hidden border border-emerald-200 dark:border-emerald-800 bg-[#05361e] aspect-video flex items-end p-2"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={photo.url} alt={photo.caption} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                <div className="relative z-10 text-[10px] text-white bg-slate-950/70 p-1 rounded font-medium truncate w-full">
+                <div className="relative z-10 text-[10px] text-white bg-[#042414]/80 p-1 rounded font-medium truncate w-full">
                   {photo.caption}
                 </div>
               </div>
@@ -276,7 +273,7 @@ export function StageDrawer({
         {/* Notes & Blocked Reason */}
         {canEditStage && (
           <div className="space-y-3">
-            <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+            <label className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
               Technician Stage Notes / Delay Reasons
             </label>
             <Textarea
@@ -303,7 +300,7 @@ export function StageDrawer({
               disabled={!allMandatoryChecked || isUpdating}
               isLoading={isUpdating}
               onClick={handleAdvanceStage}
-              className="text-xs font-bold shadow-md shadow-amber-500/20"
+              className="text-xs font-bold shadow-md shadow-[#0A5C36]/20"
               title={!allMandatoryChecked ? "Complete all checklist items to unlock" : "Advance stage"}
             >
               <span>Advance to {nextStageDef.shortLabel}</span>

@@ -38,7 +38,7 @@ export function GreenerAfrikEmblem({ size = 36, className }: { size?: number; cl
       <defs>
         <radialGradient id="ga-center-glow" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#E2E8F0" stopOpacity="0" />
+          <stop offset="100%" stopColor="#DCFCE7" stopOpacity="0" />
         </radialGradient>
       </defs>
 
@@ -108,8 +108,8 @@ export function GreenerAfrikLogo({
               isLight
                 ? "text-white"
                 : isDark
-                ? "text-slate-900"
-                : "text-slate-900 dark:text-white"
+                ? "text-[#05361e]"
+                : "text-[#05361e] dark:text-white"
             )}
           >
             Afrik
@@ -123,10 +123,10 @@ export function GreenerAfrikLogo({
                 "italic font-medium tracking-normal",
                 sub,
                 isLight
-                  ? "text-slate-300"
+                  ? "text-emerald-100"
                   : isDark
-                  ? "text-slate-500"
-                  : "text-slate-500 dark:text-slate-400"
+                  ? "text-emerald-700"
+                  : "text-emerald-700 dark:text-emerald-200"
               )}
             >
               ...Powering Africa

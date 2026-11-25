@@ -104,11 +104,11 @@ function TicketsContent() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
-            <LifeBuoy className="w-7 h-7 text-amber-500" />
+          <h1 className="text-2xl sm:text-3xl font-black text-[#05361e] dark:text-white tracking-tight flex items-center gap-2.5">
+            <LifeBuoy className="w-7 h-7 text-[#0A5C36] dark:text-[#10B981]" />
             <span>Support & Maintenance Desk</span>
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-emerald-700/80 dark:text-emerald-200/80 mt-1">
             SLA-monitored customer complaints, telemetric snapshots, and field technician dispatch.
           </p>
         </div>
@@ -119,7 +119,7 @@ function TicketsContent() {
         <CardContent className="p-4 space-y-3">
           <div className="flex flex-col md:flex-row gap-3">
             <div className="relative flex-1">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
+              <Search className="w-4 h-4 text-emerald-600/80 absolute left-3.5 top-3.5 pointer-events-none" />
               <Input
                 placeholder="Search ticket number, customer name or issue..."
                 className="pl-10 h-10 text-xs"
@@ -132,7 +132,7 @@ function TicketsContent() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="h-10 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 text-xs font-medium text-slate-800 dark:text-slate-200"
+                className="h-10 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-[#06361f] px-3 text-xs font-medium text-[#05361e] dark:text-white"
               >
                 <option value="all">All Categories</option>
                 <option value="Overload">Overload Trips</option>
@@ -145,7 +145,7 @@ function TicketsContent() {
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
-                className="h-10 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 text-xs font-medium text-slate-800 dark:text-slate-200"
+                className="h-10 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-[#06361f] px-3 text-xs font-medium text-[#05361e] dark:text-white"
               >
                 <option value="all">All Statuses</option>
                 <option value="open">Open</option>
@@ -174,50 +174,50 @@ function TicketsContent() {
               }}
               className={`hover:shadow-md transition-all cursor-pointer border-l-4 ${
                 isCritical
-                  ? "border-l-rose-600 bg-rose-50/10 dark:bg-rose-950/10"
+                  ? "border-l-[#C2410C] bg-orange-50/30 dark:bg-orange-950/20"
                   : isHigh
-                  ? "border-l-amber-500"
-                  : "border-l-sky-500"
+                  ? "border-l-[#EA580C]"
+                  : "border-l-[#0A5C36]"
               }`}
             >
               <CardContent className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1.5 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-mono text-xs font-black text-amber-500">
+                    <span className="font-mono text-xs font-black text-[#EA580C] dark:text-orange-400">
                       {ticket.ticketNumber}
                     </span>
                     <Badge variant={isCritical ? "destructive" : isHigh ? "warning" : "secondary"}>
                       {ticket.priority.toUpperCase()}
                     </Badge>
                     <Badge variant="outline">{ticket.category}</Badge>
-                    <span className="text-xs text-slate-400 font-mono">
+                    <span className="text-xs text-emerald-600/80 dark:text-emerald-300/80 font-mono">
                       Logged {formatRelativeTime(ticket.createdAt)}
                     </span>
                   </div>
 
-                  <h3 className="font-bold text-base text-slate-900 dark:text-white leading-tight">
+                  <h3 className="font-bold text-base text-[#05361e] dark:text-white leading-tight">
                     {ticket.subject}
                   </h3>
 
-                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-emerald-700/80 dark:text-emerald-200/80 line-clamp-2 leading-relaxed">
                     {ticket.description}
                   </p>
 
-                  <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-1">
-                    <span>Customer: <strong className="text-slate-700 dark:text-slate-300">{ticket.customerName}</strong> ({ticket.customerPhone})</span>
+                  <div className="flex flex-wrap items-center gap-4 text-xs text-emerald-600/80 dark:text-emerald-300/80 pt-1">
+                    <span>Customer: <strong className="text-[#0A5C36] dark:text-emerald-200">{ticket.customerName}</strong> ({ticket.customerPhone})</span>
                     <span>•</span>
-                    <span>Assigned: <strong className="text-slate-700 dark:text-slate-300">{ticket.assignedToName || "Unassigned"}</strong></span>
+                    <span>Assigned: <strong className="text-[#0A5C36] dark:text-emerald-200">{ticket.assignedToName || "Unassigned"}</strong></span>
                   </div>
                 </div>
 
                 {/* SLA Timer & Actions */}
                 <div className="flex md:flex-col items-center md:items-end justify-between shrink-0 gap-2">
-                  <div className="flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                    <Clock className="w-3.5 h-3.5 text-amber-500" />
+                  <div className="flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl bg-emerald-50 dark:bg-[#084729] text-[#0A5C36] dark:text-emerald-200">
+                    <Clock className="w-3.5 h-3.5 text-[#EA580C]" />
                     <span>SLA: 24h Left</span>
                   </div>
 
-                  <Button variant="ghost" size="sm" className="text-xs text-amber-600 dark:text-amber-400 font-bold">
+                  <Button variant="ghost" size="sm" className="text-xs text-[#0A5C36] dark:text-[#10B981] font-bold">
                     <span>Inspect Ticket</span>
                     <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
@@ -234,7 +234,7 @@ function TicketsContent() {
           <SheetHeader onClose={() => setDrawerOpen(false)}>
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="font-mono text-xs font-black text-amber-500">
+                <span className="font-mono text-xs font-black text-[#EA580C] dark:text-orange-400">
                   {activeTicket.ticketNumber}
                 </span>
                 <Badge variant={activeTicket.priority === "critical" ? "destructive" : "warning"}>
@@ -242,10 +242,10 @@ function TicketsContent() {
                 </Badge>
                 <Badge variant="outline">{activeTicket.status.toUpperCase()}</Badge>
               </div>
-              <SheetTitle className="text-lg font-black text-slate-900 dark:text-white">
+              <SheetTitle className="text-lg font-black text-[#05361e] dark:text-white">
                 {activeTicket.subject}
               </SheetTitle>
-              <SheetDescription className="text-xs text-slate-500">
+              <SheetDescription className="text-xs text-emerald-700/80 dark:text-emerald-200/80">
                 Customer: {activeTicket.customerName} • {activeTicket.customerPhone}
               </SheetDescription>
             </div>
@@ -253,36 +253,36 @@ function TicketsContent() {
 
           <SheetContent className="space-y-6">
             {/* Description */}
-            <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 space-y-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+            <div className="p-4 rounded-xl bg-emerald-50/50 dark:bg-[#084729]/40 border border-emerald-200 dark:border-emerald-800 space-y-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600/80 dark:text-emerald-300/80">
                 Customer Complaint Statement
               </span>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+              <p className="text-xs sm:text-sm text-[#0A5C36] dark:text-emerald-100 leading-relaxed font-medium">
                 {activeTicket.description}
               </p>
             </div>
 
             {/* Linked Telemetric Diagnosis Snapshot */}
             {activeTicket.linkedDiagnosis && (
-              <div className="p-4 rounded-xl border-2 border-amber-500/40 bg-amber-50/30 dark:bg-amber-950/20 space-y-3">
+              <div className="p-4 rounded-xl border-2 border-[#EA580C]/40 bg-orange-50/40 dark:bg-orange-950/20 space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 font-bold text-xs text-amber-900 dark:text-amber-200">
-                    <ShieldCheck className="w-4 h-4 text-amber-500" />
+                  <div className="flex items-center gap-1.5 font-bold text-xs text-orange-950 dark:text-orange-200">
+                    <ShieldCheck className="w-4 h-4 text-[#EA580C]" />
                     <span>Frozen Telemetry Snapshot</span>
                   </div>
                   <Badge variant="destructive">{activeTicket.linkedDiagnosis.cause}</Badge>
                 </div>
 
-                <div className="text-xs font-semibold text-slate-800 dark:text-slate-200">
+                <div className="text-xs font-semibold text-[#05361e] dark:text-emerald-100">
                   {activeTicket.linkedDiagnosis.headline}
                 </div>
-                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p className="text-xs text-emerald-800 dark:text-emerald-200/80 leading-relaxed">
                   {activeTicket.linkedDiagnosis.detailedAnalysis}
                 </p>
 
-                <div className="pt-2 border-t border-amber-200 dark:border-amber-800/60 flex items-center justify-between text-[11px] font-mono">
+                <div className="pt-2 border-t border-orange-200 dark:border-orange-800/60 flex items-center justify-between text-[11px] font-mono">
                   <span>Confidence: {activeTicket.linkedDiagnosis.confidence}%</span>
-                  <Link href={`/admin/monitoring/${activeTicket.systemId}`} className="text-amber-600 font-bold hover:underline">
+                  <Link href={`/admin/monitoring/${activeTicket.systemId}`} className="text-[#0A5C36] dark:text-[#10B981] font-bold hover:underline">
                     View Live Stream →
                   </Link>
                 </div>
@@ -291,7 +291,7 @@ function TicketsContent() {
 
             {/* Messages / Conversation Thread */}
             <div className="space-y-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-600/80 dark:text-emerald-300/80">
                 Case Timeline & Notes
               </span>
               <div className="space-y-2.5 max-h-60 overflow-y-auto pr-1">
@@ -300,38 +300,38 @@ function TicketsContent() {
                     key={msg.id}
                     className={`p-3 rounded-xl text-xs space-y-1 ${
                       msg.isInternal
-                        ? "bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60"
+                        ? "bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800/60"
                         : msg.senderRole === "customer"
-                        ? "bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+                        ? "bg-white dark:bg-[#084729] border border-emerald-200 dark:border-emerald-700"
                         : "bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60"
                     }`}
                   >
                     <div className="flex items-center justify-between text-[11px]">
-                      <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1">
-                        {msg.isInternal && <Lock className="w-3 h-3 text-amber-500" />}
+                      <span className="font-bold text-[#05361e] dark:text-white flex items-center gap-1">
+                        {msg.isInternal && <Lock className="w-3 h-3 text-[#EA580C]" />}
                         <span>{msg.senderName}</span>
-                        {msg.isInternal && <span className="text-[10px] text-amber-600 font-bold">(Internal Note)</span>}
+                        {msg.isInternal && <span className="text-[10px] text-[#EA580C] font-bold">(Internal Note)</span>}
                       </span>
-                      <span className="text-slate-400 font-mono">{formatRelativeTime(msg.createdAt)}</span>
+                      <span className="text-emerald-600/80 dark:text-emerald-300/80 font-mono">{formatRelativeTime(msg.createdAt)}</span>
                     </div>
-                    <p className="text-slate-700 dark:text-slate-300 leading-relaxed">{msg.content}</p>
+                    <p className="text-[#0A5C36] dark:text-emerald-100 leading-relaxed">{msg.content}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Reply / Internal Note Composer */}
-            <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <div className="space-y-2 pt-2 border-t border-emerald-100 dark:border-emerald-800">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <span className="text-xs font-bold text-[#0A5C36] dark:text-emerald-200">
                   {isInternalNote ? "Compose Internal Staff Note" : "Send Customer Reply (SMS / App)"}
                 </span>
-                <label className="flex items-center gap-1.5 text-xs text-slate-500 cursor-pointer">
+                <label className="flex items-center gap-1.5 text-xs text-emerald-700/80 dark:text-emerald-200/80 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isInternalNote}
                     onChange={(e) => setIsInternalNote(e.target.checked)}
-                    className="w-3.5 h-3.5 text-amber-500 rounded"
+                    className="w-3.5 h-3.5 accent-[#0A5C36] text-[#0A5C36] rounded"
                   />
                   <span>Internal Note Only</span>
                 </label>
@@ -378,7 +378,7 @@ function TicketsContent() {
 
 export default function SupportTicketsPage() {
   return (
-    <React.Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading tickets desk...</div>}>
+    <React.Suspense fallback={<div className="p-8 text-center text-xs text-emerald-600/80">Loading tickets desk...</div>}>
       <TicketsContent />
     </React.Suspense>
   );

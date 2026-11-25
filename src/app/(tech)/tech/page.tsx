@@ -96,7 +96,7 @@ export default function TechJobsPage() {
     <div className="space-y-4">
       {/* Offline Toast */}
       {offlineToast && (
-        <div className="fixed top-4 inset-x-4 max-w-sm mx-auto z-50 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2 border border-slate-700 animate-in fade-in">
+        <div className="fixed top-4 inset-x-4 max-w-sm mx-auto z-50 bg-[#05361e] text-white text-xs px-4 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-700 animate-in fade-in">
           <Check className="w-4 h-4 text-emerald-400 shrink-0" />
           <span className="leading-tight">{offlineToast}</span>
         </div>
@@ -105,11 +105,11 @@ export default function TechJobsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
-            <Wrench className="w-5 h-5 text-amber-500" />
+          <h1 className="text-xl font-black text-[#05361e] dark:text-white flex items-center gap-2">
+            <Wrench className="w-5 h-5 text-[#0A5C36] dark:text-[#10B981]" />
             Field Operations
           </h1>
-          <p className="text-xs text-slate-500">Technician: Tunde Bakare (Lead Electrician)</p>
+          <p className="text-xs text-emerald-700/80 dark:text-emerald-200/80">Technician: Tunde Bakare (Lead Electrician)</p>
         </div>
         <div className="flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-[11px] font-bold px-2.5 py-1 rounded-full">
           <span className="w-2 h-2 rounded-full bg-emerald-500" />
@@ -129,37 +129,37 @@ export default function TechJobsPage() {
           const photos = uploadedPhotos[job.id] || [];
 
           return (
-            <Card key={job.id} className="border-l-4 border-l-amber-500 overflow-hidden shadow-sm">
+            <Card key={job.id} className="border-l-4 border-l-[#0A5C36] overflow-hidden shadow-sm">
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#EA580C] dark:text-orange-400">
                       Stage: {stageDef?.label || job.currentStage}
                     </span>
-                    <h3 className="font-bold text-base text-slate-900 dark:text-white leading-tight">
+                    <h3 className="font-bold text-base text-[#05361e] dark:text-white leading-tight">
                       {cust.name}
                     </h3>
-                    <p className="text-[11px] font-mono text-slate-400">Tag: {cust.qrToken}</p>
+                    <p className="text-[11px] font-mono text-emerald-600/80 dark:text-emerald-300/80">Tag: {cust.qrToken}</p>
                   </div>
                   <Badge variant={job.isOverdue ? "destructive" : "secondary"}>
                     {job.isOverdue ? "Overdue" : `${job.daysInCurrentStage}d in stage`}
                   </Badge>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                  <MapPin className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                <div className="flex items-center gap-1.5 text-xs text-emerald-700/80 dark:text-emerald-200/80">
+                  <MapPin className="w-3.5 h-3.5 text-[#EA580C] shrink-0" />
                   <span className="truncate">{cust.address}</span>
                 </div>
 
                 {/* Progress bar */}
                 <div className="space-y-1">
-                  <div className="flex justify-between text-[11px] font-semibold text-slate-500">
+                  <div className="flex justify-between text-[11px] font-semibold text-emerald-700/80 dark:text-emerald-200/80">
                     <span>Stage Checklist</span>
                     <span>{completedCount} of {stageChecklist.length} done</span>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                  <div className="w-full h-2 rounded-full bg-emerald-100 dark:bg-[#084729] overflow-hidden">
                     <div
-                      className="h-full bg-amber-500 transition-all duration-300"
+                      className="h-full bg-[#0A5C36] dark:bg-[#10B981] transition-all duration-300"
                       style={{
                         width: `${stageChecklist.length ? (completedCount / stageChecklist.length) * 100 : 0}%`
                       }}
@@ -168,15 +168,15 @@ export default function TechJobsPage() {
                 </div>
 
                 {/* Action Buttons: Maps & WhatsApp */}
-                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-emerald-100 dark:border-emerald-900">
                   <a
                     href={`https://maps.google.com/?q=${cust.gpsCoords.lat},${cust.gpsCoords.lng}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-200"
+                    className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-emerald-50 dark:bg-[#084729] text-xs font-semibold text-[#0A5C36] dark:text-emerald-100 hover:bg-emerald-100 dark:hover:bg-[#0A5C36]"
                     data-testid={`maps-btn-${job.id}`}
                   >
-                    <MapPin className="w-3.5 h-3.5 text-amber-500" />
+                    <MapPin className="w-3.5 h-3.5 text-[#EA580C]" />
                     <span>Maps Route</span>
                   </a>
                   <a
@@ -196,7 +196,7 @@ export default function TechJobsPage() {
                   <Button
                     variant="default"
                     size="sm"
-                    className="w-full text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 gap-1.5"
+                    className="w-full text-xs font-bold bg-[#0A5C36] hover:bg-[#074728] text-white gap-1.5"
                     onClick={() => openJobChecklist(job)}
                     data-testid={`open-checklist-${job.id}`}
                   >
@@ -211,7 +211,7 @@ export default function TechJobsPage() {
                     onClick={() => handleSimulatePhotoUpload(job.id)}
                     data-testid={`upload-photo-${job.id}`}
                   >
-                    <Camera className="w-3.5 h-3.5 text-amber-500" />
+                    <Camera className="w-3.5 h-3.5 text-[#EA580C]" />
                     Photo ({photos.length})
                   </Button>
                 </div>
@@ -245,7 +245,7 @@ export default function TechJobsPage() {
                   className={`p-3 rounded-xl border flex items-start gap-3 cursor-pointer transition-all ${
                     item.isCompleted
                       ? "bg-emerald-50 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800"
-                      : "bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700"
+                      : "bg-emerald-50/40 dark:bg-[#084729]/60 border-emerald-200 dark:border-emerald-700"
                   }`}
                   data-testid={`checklist-item-${item.id}`}
                 >
@@ -253,13 +253,13 @@ export default function TechJobsPage() {
                     className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center shrink-0 ${
                       item.isCompleted
                         ? "bg-emerald-600 border-emerald-600 text-white"
-                        : "border-slate-400"
+                        : "border-emerald-400"
                     }`}
                   >
                     {item.isCompleted && <Check className="w-3 h-3 stroke-[3]" />}
                   </div>
                   <div className="flex-1">
-                    <p className={`font-semibold ${item.isCompleted ? "line-through text-slate-400" : "text-slate-800 dark:text-slate-200"}`}>
+                    <p className={`font-semibold ${item.isCompleted ? "line-through text-emerald-600/70" : "text-[#05361e] dark:text-emerald-100"}`}>
                       {item.text}
                     </p>
                     {item.completedAt && (
@@ -275,7 +275,7 @@ export default function TechJobsPage() {
 
           <DialogFooter>
             <Button
-              className="w-full bg-slate-900 text-white hover:bg-slate-800 text-xs font-bold"
+              className="w-full bg-[#0A5C36] text-white hover:bg-[#074728] text-xs font-bold"
               onClick={() => setChecklistOpen(false)}
               data-testid="close-checklist-btn"
             >

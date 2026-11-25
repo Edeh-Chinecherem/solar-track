@@ -122,7 +122,7 @@ export default function PortalPaymentsPage() {
     <div className="space-y-6">
       {/* Toast */}
       {receiptToast && (
-        <div className="fixed top-4 right-4 z-50 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 border border-slate-700 animate-in fade-in">
+        <div className="fixed top-4 right-4 z-50 bg-[#05361e] text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 border border-emerald-700 animate-in fade-in">
           <Check className="w-4 h-4 text-emerald-400" />
           <span>{receiptToast}</span>
         </div>
@@ -130,44 +130,44 @@ export default function PortalPaymentsPage() {
 
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-          <CreditCard className="w-6 h-6 text-amber-500" />
+        <h1 className="text-2xl font-black tracking-tight text-[#05361e] dark:text-white flex items-center gap-2">
+          <CreditCard className="w-6 h-6 text-[#0A5C36] dark:text-[#10B981]" />
           PAYG Power Recharge
         </h1>
-        <p className="text-xs text-slate-500 mt-1">
+        <p className="text-xs text-emerald-700/80 dark:text-emerald-200/80 mt-1">
           Instant Paystack top-up with automatic GSM inverter contactor reactivation.
         </p>
       </div>
 
       {/* Disconnection or Grace Period Alert Banner */}
       {payg.status === "disconnected" ? (
-        <div className="p-4 rounded-2xl bg-red-500 text-white shadow-lg space-y-2">
+        <div className="p-4 rounded-2xl bg-[#C2410C] text-white shadow-lg space-y-2">
           <div className="flex items-center gap-2 font-black text-sm">
             <PowerOff className="w-5 h-5 animate-bounce" />
             <span>Power Contactor Cutoff Active</span>
           </div>
-          <p className="text-xs text-red-100 font-medium leading-relaxed">
+          <p className="text-xs text-orange-100 font-medium leading-relaxed">
             Your system power is currently paused due to an overdue balance. Pay now via Paystack to automatically send the reconnect signal and restore electricity within 60 seconds.
           </p>
         </div>
       ) : payg.status === "grace_period" ? (
-        <div className="p-4 rounded-2xl bg-amber-500 text-slate-950 shadow-lg space-y-2">
+        <div className="p-4 rounded-2xl bg-[#EA580C] text-white shadow-lg space-y-2">
           <div className="flex items-center gap-2 font-black text-sm">
             <Clock className="w-5 h-5" />
             <span>Grace Period Active (Auto-Cutoff in 2 Days)</span>
           </div>
-          <p className="text-xs text-slate-900 font-medium leading-relaxed">
+          <p className="text-xs text-orange-100 font-medium leading-relaxed">
             Your monthly PAYG subscription has expired. Re-energize your account now to prevent uninterrupted solar power cutoff.
           </p>
         </div>
       ) : null}
 
       {/* PAYG Balance Card */}
-      <div className="rounded-3xl bg-slate-900 text-white p-6 shadow-xl relative overflow-hidden">
-        <div className="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-amber-500/20 blur-2xl pointer-events-none" />
+      <div className="rounded-3xl bg-[#05361e] text-white p-6 shadow-xl relative overflow-hidden border border-emerald-800">
+        <div className="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-[#0A5C36]/40 blur-2xl pointer-events-none" />
         <div className="relative z-10 space-y-5">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-200/80">
               Meter ID: {payg.systemId}
             </span>
             <Badge
@@ -180,28 +180,28 @@ export default function PortalPaymentsPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-xs font-semibold text-slate-400">Days Power Remaining</p>
-              <div className="text-3xl font-black text-amber-400 mt-1 font-mono">
+              <p className="text-xs font-semibold text-emerald-200/80">Days Power Remaining</p>
+              <div className="text-3xl font-black text-[#EA580C] mt-1 font-mono">
                 {payg.daysRemainingOfPower} Days
               </div>
-              <p className="text-[11px] text-slate-400 mt-0.5">
+              <p className="text-[11px] text-emerald-200/80 mt-0.5">
                 Valid until {formatDate(payg.nextDueDate)}
               </p>
             </div>
 
             <div>
-              <p className="text-xs font-semibold text-slate-400">Outstanding Balance</p>
+              <p className="text-xs font-semibold text-emerald-200/80">Outstanding Balance</p>
               <div className="text-2xl font-black text-white mt-1">
                 {formatNaira(payg.balanceOwedNaira)}
               </div>
-              <p className="text-[11px] text-slate-400 mt-0.5">
+              <p className="text-[11px] text-emerald-200/80 mt-0.5">
                 {payg.monthlyInstallmentNaira ? `${formatNaira(payg.monthlyInstallmentNaira)} / mo` : "Subscription"}
               </p>
             </div>
           </div>
 
           <Button
-            className="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-sm h-12 rounded-2xl shadow-lg gap-2"
+            className="w-full bg-[#EA580C] hover:bg-[#C2410C] text-white font-black text-sm h-12 rounded-2xl shadow-lg gap-2"
             onClick={handleOpenPaystack}
             data-testid="pay-now-btn"
           >
@@ -220,20 +220,20 @@ export default function PortalPaymentsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3 text-xs">
-          <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
-            <span className="text-slate-500 font-medium">Customer</span>
+          <div className="flex justify-between py-1.5 border-b border-emerald-100 dark:border-emerald-900">
+            <span className="text-emerald-700/80 dark:text-emerald-200/80 font-medium">Customer</span>
             <span className="font-bold">{customer.name}</span>
           </div>
-          <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
-            <span className="text-slate-500 font-medium">Inverter Model</span>
+          <div className="flex justify-between py-1.5 border-b border-emerald-100 dark:border-emerald-900">
+            <span className="text-emerald-700/80 dark:text-emerald-200/80 font-medium">Inverter Model</span>
             <span className="font-bold">{system.inverterBrand} {system.inverterCapacityKva}kVA</span>
           </div>
-          <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
-            <span className="text-slate-500 font-medium">Monthly Installment</span>
-            <span className="font-bold font-mono text-amber-600">{formatNaira(payg.monthlyInstallmentNaira)}</span>
+          <div className="flex justify-between py-1.5 border-b border-emerald-100 dark:border-emerald-900">
+            <span className="text-emerald-700/80 dark:text-emerald-200/80 font-medium">Monthly Installment</span>
+            <span className="font-bold font-mono text-[#EA580C] dark:text-orange-400">{formatNaira(payg.monthlyInstallmentNaira)}</span>
           </div>
-          <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-slate-800">
-            <span className="text-slate-500 font-medium">Warranty & Service</span>
+          <div className="flex justify-between py-1.5 border-b border-emerald-100 dark:border-emerald-900">
+            <span className="text-emerald-700/80 dark:text-emerald-200/80 font-medium">Warranty & Service</span>
             <span className="font-bold text-emerald-600">Active (Full Coverage)</span>
           </div>
         </CardContent>
@@ -245,17 +245,17 @@ export default function PortalPaymentsPage() {
           <CardTitle className="text-sm">Payment History & Receipts</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="divide-y divide-slate-100 dark:divide-slate-800">
+          <div className="divide-y divide-emerald-100 dark:divide-emerald-900">
             {payments.map((p) => (
               <div key={p.id} className="py-3 flex items-center justify-between">
                 <div>
-                  <div className="font-bold text-xs text-slate-900 dark:text-white">
+                  <div className="font-bold text-xs text-[#05361e] dark:text-white">
                     {formatNaira(p.amount)}
                   </div>
-                  <div className="text-[11px] text-slate-500">
+                  <div className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80">
                     {formatDate(p.date)} • {p.method}
                   </div>
-                  <div className="text-[10px] font-mono text-slate-400">
+                  <div className="text-[10px] font-mono text-emerald-600/80 dark:text-emerald-300/80">
                     Ref: {p.reference}
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export default function PortalPaymentsPage() {
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="h-8 w-8 text-slate-500 hover:text-slate-900"
+                    className="h-8 w-8 text-[#0A5C36] dark:text-emerald-200 hover:text-[#05361e]"
                     onClick={() => handleDownloadReceipt(p.reference)}
                     title="Download Receipt"
                     data-testid={`download-receipt-${p.id}`}
@@ -285,7 +285,7 @@ export default function PortalPaymentsPage() {
       <Dialog open={paystackOpen} onOpenChange={setPaystackOpen}>
         <DialogContent className="max-w-sm p-0 overflow-hidden border-0 shadow-2xl">
           {/* Paystack Header */}
-          <div className="bg-[#0BA4DB] p-4 text-white">
+          <div className="bg-[#0A5C36] p-4 text-white">
             <div className="flex items-center justify-between">
               <span className="text-xs font-black tracking-widest uppercase">PAYSTACK SECURE</span>
               <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded font-mono">TEST MODE</span>
@@ -299,16 +299,16 @@ export default function PortalPaymentsPage() {
             </div>
           </div>
 
-          <div className="p-5 space-y-4 bg-white dark:bg-slate-900 text-xs">
+          <div className="p-5 space-y-4 bg-white dark:bg-[#06361f] text-xs">
             {paymentSuccess ? (
               <div className="py-6 text-center space-y-3">
                 <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
-                <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                <h3 className="text-lg font-black text-[#05361e] dark:text-white">
                   Payment Confirmed!
                 </h3>
-                <p className="text-slate-500 text-xs px-2">
+                <p className="text-emerald-700/80 dark:text-emerald-200/80 text-xs px-2">
                   ₦{selectedPlanAmount.toLocaleString()} credited successfully. 30 days of power added to meter {payg.systemId}.
                 </p>
                 <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 font-bold text-xs flex items-center justify-center gap-2">
@@ -316,7 +316,7 @@ export default function PortalPaymentsPage() {
                   <span>Contactor Signal: Engaged & Live</span>
                 </div>
                 <Button
-                  className="w-full bg-[#0BA4DB] hover:bg-[#098bb9] text-white font-bold h-10 mt-2"
+                  className="w-full bg-[#0A5C36] hover:bg-[#074728] text-white font-bold h-10 mt-2"
                   onClick={() => setPaystackOpen(false)}
                   data-testid="paystack-close-btn"
                 >
@@ -332,8 +332,8 @@ export default function PortalPaymentsPage() {
                     onClick={() => setPaymentChannel("card")}
                     className={`p-2.5 rounded-xl border text-center font-bold flex flex-col items-center gap-1 transition-all ${
                       paymentChannel === "card"
-                        ? "border-[#0BA4DB] bg-sky-50 dark:bg-sky-950/30 text-[#0BA4DB]"
-                        : "border-slate-200 dark:border-slate-800 text-slate-600"
+                        ? "border-[#0A5C36] bg-emerald-50 dark:bg-emerald-950/30 text-[#0A5C36] dark:text-[#10B981]"
+                        : "border-emerald-200 dark:border-emerald-800 text-[#0A5C36] dark:text-emerald-200"
                     }`}
                   >
                     <CreditCard className="w-4 h-4" />
@@ -345,8 +345,8 @@ export default function PortalPaymentsPage() {
                     onClick={() => setPaymentChannel("bank")}
                     className={`p-2.5 rounded-xl border text-center font-bold flex flex-col items-center gap-1 transition-all ${
                       paymentChannel === "bank"
-                        ? "border-[#0BA4DB] bg-sky-50 dark:bg-sky-950/30 text-[#0BA4DB]"
-                        : "border-slate-200 dark:border-slate-800 text-slate-600"
+                        ? "border-[#0A5C36] bg-emerald-50 dark:bg-emerald-950/30 text-[#0A5C36] dark:text-[#10B981]"
+                        : "border-emerald-200 dark:border-emerald-800 text-[#0A5C36] dark:text-emerald-200"
                     }`}
                   >
                     <Building className="w-4 h-4" />
@@ -358,8 +358,8 @@ export default function PortalPaymentsPage() {
                     onClick={() => setPaymentChannel("ussd")}
                     className={`p-2.5 rounded-xl border text-center font-bold flex flex-col items-center gap-1 transition-all ${
                       paymentChannel === "ussd"
-                        ? "border-[#0BA4DB] bg-sky-50 dark:bg-sky-950/30 text-[#0BA4DB]"
-                        : "border-slate-200 dark:border-slate-800 text-slate-600"
+                        ? "border-[#0A5C36] bg-emerald-50 dark:bg-emerald-950/30 text-[#0A5C36] dark:text-[#10B981]"
+                        : "border-emerald-200 dark:border-emerald-800 text-[#0A5C36] dark:text-emerald-200"
                     }`}
                   >
                     <Smartphone className="w-4 h-4" />
@@ -371,18 +371,18 @@ export default function PortalPaymentsPage() {
                 {paymentChannel === "card" && (
                   <div className="space-y-3 font-mono">
                     <div className="space-y-1">
-                      <label className="text-[11px] text-slate-500 font-sans font-bold">
+                      <label className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80 font-sans font-bold">
                         Card Number (Test Simulation)
                       </label>
                       <Input defaultValue="4084 0841 2981 9024" readOnly className="font-mono text-xs" />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
-                        <label className="text-[11px] text-slate-500 font-sans font-bold">Expires</label>
+                        <label className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80 font-sans font-bold">Expires</label>
                         <Input defaultValue="08/28" readOnly className="font-mono text-xs" />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-[11px] text-slate-500 font-sans font-bold">CVV</label>
+                        <label className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80 font-sans font-bold">CVV</label>
                         <Input defaultValue="381" readOnly className="font-mono text-xs" />
                       </div>
                     </div>
@@ -390,35 +390,35 @@ export default function PortalPaymentsPage() {
                 )}
 
                 {paymentChannel === "bank" && (
-                  <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 space-y-2">
-                    <p className="font-bold text-slate-700 dark:text-slate-300">
+                  <div className="p-3 rounded-xl bg-emerald-50/50 dark:bg-[#084729] space-y-2">
+                    <p className="font-bold text-[#0A5C36] dark:text-emerald-200">
                       Transfer to Wema Bank / Paystack:
                     </p>
-                    <div className="font-mono font-black text-base text-slate-900 dark:text-white">
+                    <div className="font-mono font-black text-base text-[#05361e] dark:text-white">
                       0291 8491 82
                     </div>
-                    <p className="text-[10px] text-slate-500">
+                    <p className="text-[10px] text-emerald-700/80 dark:text-emerald-200/80">
                       Account Name: Paystack Checkout / GreenerAfrik Energies Limited
                     </p>
                   </div>
                 )}
 
                 {paymentChannel === "ussd" && (
-                  <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 space-y-2">
-                    <p className="font-bold text-slate-700 dark:text-slate-300">
+                  <div className="p-3 rounded-xl bg-emerald-50/50 dark:bg-[#084729] space-y-2">
+                    <p className="font-bold text-[#0A5C36] dark:text-emerald-200">
                       Dial on your registered phone:
                     </p>
-                    <div className="font-mono font-black text-base text-slate-900 dark:text-white">
+                    <div className="font-mono font-black text-base text-[#05361e] dark:text-white">
                       *737*50*{selectedPlanAmount}*912#
                     </div>
-                    <p className="text-[10px] text-slate-500">
+                    <p className="text-[10px] text-emerald-700/80 dark:text-emerald-200/80">
                       GTBank, Access, Zenith, UBA supported
                     </p>
                   </div>
                 )}
 
                 <Button
-                  className="w-full bg-[#0BA4DB] hover:bg-[#098bb9] text-white font-black h-11 rounded-xl shadow-lg gap-2"
+                  className="w-full bg-[#0A5C36] hover:bg-[#074728] text-white font-black h-11 rounded-xl shadow-lg gap-2"
                   onClick={handleSimulatePayment}
                   disabled={isProcessing}
                   data-testid="paystack-submit-btn"
@@ -436,7 +436,7 @@ export default function PortalPaymentsPage() {
                   )}
                 </Button>
 
-                <div className="flex items-center justify-center gap-1.5 text-[10px] text-slate-400">
+                <div className="flex items-center justify-center gap-1.5 text-[10px] text-emerald-600/80 dark:text-emerald-300/80">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Secured by 256-bit SSL encryption</span>
                 </div>

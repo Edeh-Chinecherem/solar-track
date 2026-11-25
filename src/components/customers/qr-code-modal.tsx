@@ -63,15 +63,15 @@ export function QrCodeModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl">
+      <DialogContent className="max-w-md p-6 bg-white dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800 rounded-3xl shadow-2xl">
         <DialogHeader className="text-center pb-2">
-          <div className="mx-auto w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-2">
-            <Sun className="w-6 h-6 fill-amber-500" />
+          <div className="mx-auto w-12 h-12 rounded-2xl bg-[#EA580C]/10 text-[#EA580C] flex items-center justify-center mb-2">
+            <Sun className="w-6 h-6 fill-[#EA580C]" />
           </div>
-          <DialogTitle className="text-xl font-black text-slate-900 dark:text-white">
+          <DialogTitle className="text-xl font-black text-[#05361e] dark:text-white">
             Weatherproof Hardware Tag
           </DialogTitle>
-          <DialogDescription className="text-xs text-slate-500 dark:text-slate-400">
+          <DialogDescription className="text-xs text-emerald-700/80 dark:text-emerald-200/80">
             Scan to inspect warranty and telemetry. Affix this tag to the inverter casing.
           </DialogDescription>
         </DialogHeader>
@@ -79,10 +79,10 @@ export function QrCodeModal({
         {/* Printable Label Container */}
         <div
           ref={printRef}
-          className="my-4 p-5 rounded-2xl border-2 border-dashed border-amber-500/40 bg-amber-50/40 dark:bg-amber-950/20 flex flex-col items-center justify-center text-center space-y-4"
+          className="my-4 p-5 rounded-2xl border-2 border-dashed border-[#0A5C36]/40 bg-emerald-50/40 dark:bg-emerald-950/20 flex flex-col items-center justify-center text-center space-y-4"
         >
           {/* Brand header */}
-          <div className="flex items-center gap-2 text-slate-900 dark:text-white">
+          <div className="flex items-center gap-2 text-[#05361e] dark:text-white">
             <Sun className="w-5 h-5 text-[#EA580C] fill-[#EA580C]" />
             <span className="font-extrabold text-sm tracking-tight text-[#0A5C36] dark:text-[#10B981]">GreenerAfrik</span>
             <span className="text-[10px] bg-[#0A5C36] text-white font-bold px-1.5 py-0.5 rounded">
@@ -91,7 +91,7 @@ export function QrCodeModal({
           </div>
 
           {/* QR SVG */}
-          <div className="p-3 bg-white rounded-2xl shadow-md border border-slate-200 inline-block">
+          <div className="p-3 bg-white rounded-2xl shadow-md border border-emerald-200 inline-block">
             <QRCodeSVG
               id="customer-qr-svg"
               value={publicUrl}
@@ -111,16 +111,16 @@ export function QrCodeModal({
 
           {/* Tag Metadata */}
           <div className="space-y-1">
-            <div className="font-mono text-base font-black tracking-wider text-slate-900 dark:text-white">
+            <div className="font-mono text-base font-black tracking-wider text-[#05361e] dark:text-white">
               {token}
             </div>
-            <div className="text-xs font-semibold text-slate-600 dark:text-slate-300">
+            <div className="text-xs font-semibold text-[#0A5C36] dark:text-emerald-100">
               {systemModel} • {systemCapacity}kVA
             </div>
-            <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+            <div className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80 font-mono">
               Chassis SN: {systemSerial}
             </div>
-            <div className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+            <div className="text-[10px] text-emerald-700/80 dark:text-emerald-200/80 font-medium">
               Registered to: {customerName}
             </div>
           </div>
@@ -129,12 +129,12 @@ export function QrCodeModal({
         {/* Action Buttons */}
         <div className="grid grid-cols-2 gap-3 pt-2">
           <Button variant="outline" onClick={handleDownload} className="w-full text-xs font-bold gap-1.5">
-            <Download className="w-4 h-4 text-amber-500" />
+            <Download className="w-4 h-4 text-[#0A5C36] dark:text-[#10B981]" />
             <span>Download PNG</span>
           </Button>
 
           <Button variant="primary" onClick={handlePrint} className="w-full text-xs font-bold gap-1.5 shadow-md">
-            <Printer className="w-4 h-4 text-slate-950" />
+            <Printer className="w-4 h-4 text-white" />
             <span>Print Label</span>
           </Button>
         </div>

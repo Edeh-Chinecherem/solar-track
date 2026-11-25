@@ -30,7 +30,7 @@ import { formatRelativeTime } from "@/lib/utils";
 const FleetMap = dynamic(() => import("@/components/monitoring/fleet-map"), {
   ssr: false,
   loading: () => (
-    <div className="h-[420px] w-full rounded-2xl bg-slate-100 dark:bg-slate-800 animate-pulse flex items-center justify-center text-xs text-slate-400">
+    <div className="h-[420px] w-full rounded-2xl bg-emerald-50 dark:bg-[#084729] animate-pulse flex items-center justify-center text-xs text-emerald-700/80 dark:text-emerald-200/80">
       Initializing OpenStreetMap Telemetry Grid...
     </div>
   )
@@ -67,11 +67,11 @@ export default function FleetMonitoringPage() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
-            <Activity className="w-7 h-7 text-amber-500" />
+          <h1 className="text-2xl sm:text-3xl font-black text-[#05361e] dark:text-white tracking-tight flex items-center gap-2.5">
+            <Activity className="w-7 h-7 text-[#0A5C36] dark:text-[#10B981]" />
             <span>Fleet Telemetry Monitoring</span>
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-emerald-700/80 dark:text-emerald-200/80 mt-1">
             Real-time IoT heartbeat, generation curves, and automated fault diagnostics across Nigeria.
           </p>
         </div>
@@ -87,24 +87,23 @@ export default function FleetMonitoringPage() {
       {/* Status Filter Buttons */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1">
         {[
-          { id: "all", label: "All Systems", count: countByStatus.all, color: "hover:border-slate-400" },
+          { id: "all", label: "All Systems", count: countByStatus.all, color: "hover:border-emerald-400" },
           { id: "online", label: "Healthy Online", count: countByStatus.online, color: "text-emerald-600 border-emerald-300" },
-          { id: "overload", label: "Overload Trip", count: countByStatus.overload, color: "text-rose-600 border-rose-300" },
-          { id: "low_battery", label: "Low Battery SOC", count: countByStatus.low_battery, color: "text-amber-600 border-amber-300" },
-          { id: "offline", label: "Datalogger Offline", count: countByStatus.offline, color: "text-slate-600 border-slate-300" },
-          { id: "hardware_fault", label: "Hardware Fault", count: countByStatus.hardware_fault, color: "text-purple-600 border-purple-300" }
+          { id: "overload", label: "Overload Trip", count: countByStatus.overload, color: "text-[#C2410C] border-orange-400" },
+          { id: "low_battery", label: "Low Battery SOC", count: countByStatus.low_battery, color: "text-[#EA580C] border-orange-300" },
+          { id: "offline", label: "Datalogger Offline", count: countByStatus.offline, color: "text-emerald-700 border-emerald-300" },
+          { id: "hardware_fault", label: "Hardware Fault", count: countByStatus.hardware_fault, color: "text-[#C2410C] border-orange-400" }
         ].map((f) => (
           <button
             key={f.id}
             onClick={() => setSelectedStatus(f.id)}
-            className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition border ${
-              selectedStatus === f.id
-                ? "bg-slate-900 text-white dark:bg-white dark:text-slate-950 border-transparent shadow-sm"
-                : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800"
-            }`}
+            className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition border ${selectedStatus === f.id
+              ? "bg-[#0A5C36] text-white dark:bg-emerald-500 dark:text-[#042414] border-transparent shadow-sm"
+              : "bg-white dark:bg-[#06361f] text-[#0A5C36] dark:text-emerald-200 border-emerald-200 dark:border-emerald-800 hover:bg-emerald-50 dark:hover:bg-[#084729]"
+              }`}
           >
             <span>{f.label}</span>
-            <span className="ml-1.5 px-1.5 py-0.2 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold">
+            <span className={`ml-1.5 px-1.5 py-0.2 rounded-full text-[10px] font-bold ${selectedStatus === f.id ? "bg-white/20 text-white dark:bg-[#042414]/20 dark:text-[#042414]" : "bg-emerald-50 dark:bg-[#084729]"}`}>
               {f.count}
             </span>
           </button>
@@ -129,7 +128,7 @@ export default function FleetMonitoringPage() {
           </div>
 
           <div className="relative w-full sm:w-64">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
+            <Search className="w-4 h-4 text-emerald-600/80 absolute left-3 top-3 pointer-events-none" />
             <Input
               placeholder="Filter by customer, serial..."
               className="pl-9 h-9 text-xs"
@@ -142,7 +141,7 @@ export default function FleetMonitoringPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs sm:text-sm">
             <thead>
-              <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+              <tr className="border-b border-emerald-200 dark:border-emerald-800 bg-emerald-50/70 dark:bg-[#084729]/40 text-[11px] font-bold uppercase tracking-wider text-emerald-700/80 dark:text-emerald-200/80">
                 <th className="py-3 px-4">System & Serial</th>
                 <th className="py-3 px-4">Customer & State</th>
                 <th className="py-3 px-4">Solar PV</th>
@@ -154,52 +153,52 @@ export default function FleetMonitoringPage() {
                 <th className="py-3 px-4 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+            <tbody className="divide-y divide-emerald-100 dark:divide-emerald-900">
               {filteredSystems.map((sys) => {
                 const cust = MOCK_CUSTOMERS.find((c) => c.id === sys.customerId);
                 const tel = generateLiveTelemetry(sys);
 
                 return (
-                  <tr key={sys.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                  <tr key={sys.id} className="hover:bg-emerald-50/50 dark:hover:bg-[#084729]/30 transition-colors">
                     <td className="py-3 px-4">
-                      <div className="font-bold text-slate-900 dark:text-white">
+                      <div className="font-bold text-[#05361e] dark:text-white">
                         {sys.inverterBrand} {sys.inverterCapacityKva}kVA
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono">{sys.inverterSerialNumber}</div>
+                      <div className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80 font-mono">{sys.inverterSerialNumber}</div>
                     </td>
 
                     <td className="py-3 px-4">
-                      <div className="font-bold text-slate-800 dark:text-slate-200">{cust?.name}</div>
-                      <div className="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
-                        <MapPin className="w-3 h-3 text-amber-500" />
+                      <div className="font-bold text-[#05361e] dark:text-emerald-100">{cust?.name}</div>
+                      <div className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80 flex items-center gap-1 mt-0.5">
+                        <MapPin className="w-3 h-3 text-[#EA580C]" />
                         <span>{cust?.state}</span>
                       </div>
                     </td>
 
-                    <td className="py-3 px-4 font-mono font-semibold text-amber-600 dark:text-amber-400">
+                    <td className="py-3 px-4 font-mono font-semibold text-[#EA580C] dark:text-orange-400">
                       {(tel.pvPowerWatts / 1000).toFixed(2)} kW
                     </td>
 
                     <td className="py-3 px-4 font-mono font-semibold">
                       <div className="flex items-center gap-1">
-                        <span className={tel.batterySocPercent < 30 ? "text-rose-500" : "text-emerald-500"}>
+                        <span className={tel.batterySocPercent < 30 ? "text-[#EA580C]" : "text-emerald-500"}>
                           {tel.batterySocPercent}%
                         </span>
-                        <span className="text-[10px] text-slate-400">({tel.batteryVoltageVolts.toFixed(1)}V)</span>
+                        <span className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80">({tel.batteryVoltageVolts.toFixed(1)}V)</span>
                       </div>
                     </td>
 
-                    <td className="py-3 px-4 font-mono font-semibold text-slate-700 dark:text-slate-300">
+                    <td className="py-3 px-4 font-mono font-semibold text-[#0A5C36] dark:text-emerald-200">
                       {(tel.loadPowerWatts / 1000).toFixed(2)} kW
                     </td>
 
                     <td className="py-3 px-4 font-mono">
-                      <span className={tel.inverterTempCelsius > 65 ? "text-rose-500 font-bold" : "text-slate-600 dark:text-slate-300"}>
+                      <span className={tel.inverterTempCelsius > 65 ? "text-[#EA580C] font-bold" : "text-[#0A5C36] dark:text-emerald-200"}>
                         {tel.inverterTempCelsius.toFixed(1)}°C
                       </span>
                     </td>
 
-                    <td className="py-3 px-4 text-[11px] text-slate-500">
+                    <td className="py-3 px-4 text-[11px] text-emerald-700/80 dark:text-emerald-200/80">
                       {formatRelativeTime(tel.timestamp)}
                     </td>
 

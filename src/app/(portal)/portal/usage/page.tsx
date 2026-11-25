@@ -56,40 +56,40 @@ export default function PortalUsagePage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-          <Zap className="w-6 h-6 text-amber-500" />
+        <h1 className="text-2xl font-black tracking-tight text-[#05361e] dark:text-white flex items-center gap-2">
+          <Zap className="w-6 h-6 text-[#EA580C]" />
           Energy & Load Analytics
         </h1>
-        <p className="text-xs text-slate-500 mt-1">
+        <p className="text-xs text-emerald-700/80 dark:text-emerald-200/80 mt-1">
           Monitor your household solar generation vs consumption to optimize battery life and avoid overloads.
         </p>
       </div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 space-y-1">
-          <div className="flex items-center justify-between text-amber-600 text-xs font-bold">
+        <div className="p-4 rounded-2xl bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 space-y-1">
+          <div className="flex items-center justify-between text-[#EA580C] dark:text-orange-400 text-xs font-bold">
             <span>Weekly Solar Harvest</span>
             <Sun className="w-4 h-4" />
           </div>
-          <div className="text-2xl font-black text-slate-900 dark:text-white font-mono">
-            154.1 <span className="text-xs font-sans text-slate-500">kWh</span>
+          <div className="text-2xl font-black text-[#05361e] dark:text-white font-mono">
+            154.1 <span className="text-xs font-sans text-emerald-700/80 dark:text-emerald-200/80">kWh</span>
           </div>
-          <div className="text-[11px] text-emerald-600 font-bold flex items-center gap-1">
+          <div className="text-[11px] text-[#0A5C36] dark:text-emerald-400 font-bold flex items-center gap-1">
             <ArrowUpRight className="w-3.5 h-3.5" />
             +8.2% vs last week
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-800 space-y-1">
-          <div className="flex items-center justify-between text-sky-600 text-xs font-bold">
+        <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 space-y-1">
+          <div className="flex items-center justify-between text-[#0A5C36] dark:text-emerald-400 text-xs font-bold">
             <span>Weekly Home Load</span>
             <Zap className="w-4 h-4" />
           </div>
-          <div className="text-2xl font-black text-slate-900 dark:text-white font-mono">
-            120.1 <span className="text-xs font-sans text-slate-500">kWh</span>
+          <div className="text-2xl font-black text-[#05361e] dark:text-white font-mono">
+            120.1 <span className="text-xs font-sans text-emerald-700/80 dark:text-emerald-200/80">kWh</span>
           </div>
-          <div className="text-[11px] text-sky-600 font-bold">
+          <div className="text-[11px] text-[#0A5C36] dark:text-emerald-400 font-bold">
             Solar Self-Sufficiency: 88%
           </div>
         </div>
@@ -104,11 +104,11 @@ export default function PortalUsagePage() {
               <CardDescription className="text-xs">Measured in Kilowatt-Hours (kWh)</CardDescription>
             </div>
             <div className="flex items-center gap-2 text-[10px] font-bold">
-              <span className="flex items-center gap-1 text-amber-500">
-                <span className="w-2 h-2 rounded-full bg-amber-500" /> Solar
+              <span className="flex items-center gap-1 text-[#EA580C]">
+                <span className="w-2 h-2 rounded-full bg-[#EA580C]" /> Solar
               </span>
-              <span className="flex items-center gap-1 text-sky-500">
-                <span className="w-2 h-2 rounded-full bg-sky-500" /> Load
+              <span className="flex items-center gap-1 text-[#0A5C36] dark:text-[#10B981]">
+                <span className="w-2 h-2 rounded-full bg-[#0A5C36] dark:bg-[#10B981]" /> Load
               </span>
             </div>
           </div>
@@ -125,13 +125,13 @@ export default function PortalUsagePage() {
                     borderRadius: "12px",
                     fontSize: "11px",
                     fontWeight: 600,
-                    backgroundColor: "#0F172A",
+                    backgroundColor: "#05361e",
                     color: "#fff",
-                    border: "none"
+                    border: "1px solid #10B981"
                   }}
                 />
-                <Bar dataKey="generation" name="Solar (kWh)" fill="#F59E0B" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="consumption" name="Load (kWh)" fill="#38BDF8" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="generation" name="Solar (kWh)" fill="#EA580C" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="consumption" name="Load (kWh)" fill="#0A5C36" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -139,37 +139,37 @@ export default function PortalUsagePage() {
       </Card>
 
       {/* Smart Efficiency Tips */}
-      <Card className="border-amber-200 dark:border-amber-900/60 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent">
+      <Card className="border-orange-200 dark:border-orange-900/60 bg-gradient-to-br from-[#EA580C]/5 via-transparent to-transparent">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Lightbulb className="w-4 h-4 text-amber-500" />
+            <Lightbulb className="w-4 h-4 text-[#EA580C]" />
             Energy-Saving & Overload Prevention Tips
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-xs">
-          <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-            <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+          <div className="p-3 rounded-xl bg-white dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800 space-y-1">
+            <h4 className="font-bold text-[#05361e] dark:text-white flex items-center gap-1.5">
               <span>⚡</span> Avoid Simultaneous Heavy Resistive Loads
             </h4>
-            <p className="text-slate-500 leading-relaxed text-[11px]">
+            <p className="text-emerald-700/80 dark:text-emerald-200/80 leading-relaxed text-[11px]">
               Do not run an electric pressing iron, water heater, and microwave at the same time. Doing so can cause a temporary surge trip on your 5kVA inverter.
             </p>
           </div>
 
-          <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-            <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+          <div className="p-3 rounded-xl bg-white dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800 space-y-1">
+            <h4 className="font-bold text-[#05361e] dark:text-white flex items-center gap-1.5">
               <span>☀️</span> Run Pumping Machines at Solar Peak (11 AM - 2 PM)
             </h4>
-            <p className="text-slate-500 leading-relaxed text-[11px]">
+            <p className="text-emerald-700/80 dark:text-emerald-200/80 leading-relaxed text-[11px]">
               Water pumping draws direct power from the sun when your panels produce over 4 kW, saving battery reserve for nighttime illumination and cooling.
             </p>
           </div>
 
-          <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
-            <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+          <div className="p-3 rounded-xl bg-white dark:bg-[#06361f] border border-emerald-200 dark:border-emerald-800 space-y-1">
+            <h4 className="font-bold text-[#05361e] dark:text-white flex items-center gap-1.5">
               <span>🔋</span> Battery Health Preservation
             </h4>
-            <p className="text-slate-500 leading-relaxed text-[11px]">
+            <p className="text-emerald-700/80 dark:text-emerald-200/80 leading-relaxed text-[11px]">
               Your LiFePO4 battery is calibrated for 6,000+ cycles. Keeping overnight battery depth of discharge above 20% extends operating lifespan beyond 10 years.
             </p>
           </div>

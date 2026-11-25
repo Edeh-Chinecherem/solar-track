@@ -14,12 +14,12 @@ export default function TechLayout({ children }: { children: React.ReactNode }) 
   const hasAccess = canAccessRoute(currentRole, pathname);
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 flex flex-col pb-20">
-      <React.Suspense fallback={<div className="h-14 border-b border-slate-200 dark:border-slate-800" />}>
+    <div className="min-h-screen bg-emerald-50/40 dark:bg-[#042414] flex flex-col pb-20">
+      <React.Suspense fallback={<div className="h-14 border-b border-emerald-200 dark:border-emerald-900" />}>
         <TechHeader />
       </React.Suspense>
       <main className="flex-1 p-4 max-w-md w-full mx-auto animate-in fade-in-50 duration-150">
-        <React.Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading technician view...</div>}>
+        <React.Suspense fallback={<div className="p-8 text-center text-xs text-emerald-600/80">Loading technician view...</div>}>
           {hasAccess ? children : <AccessRestricted role={currentRole} areaName="the Field Technician interface" />}
         </React.Suspense>
       </main>

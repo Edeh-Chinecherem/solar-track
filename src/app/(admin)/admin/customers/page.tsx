@@ -92,11 +92,11 @@ export default function CustomersRegistryPage() {
       {/* Top Banner and Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
-            <Users className="w-7 h-7 text-amber-500" />
+          <h1 className="text-2xl sm:text-3xl font-black text-[#05361e] dark:text-white tracking-tight flex items-center gap-2.5">
+            <Users className="w-7 h-7 text-[#0A5C36] dark:text-[#10B981]" />
             <span>Customer Registry</span>
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-emerald-700/80 dark:text-emerald-200/80 mt-1">
             Official database of installed solar customers, hardware serial tags, and PAYG statuses.
           </p>
         </div>
@@ -104,14 +104,14 @@ export default function CustomersRegistryPage() {
         <div className="flex items-center gap-2.5">
           {canPerform("EXPORT_REPORTS") && (
             <Button variant="outline" size="sm" onClick={exportCSV} className="text-xs font-semibold gap-1.5">
-              <Download className="w-3.5 h-3.5 text-slate-500" />
+              <Download className="w-3.5 h-3.5 text-[#0A5C36] dark:text-[#10B981]" />
               <span>Export CSV</span>
             </Button>
           )}
 
           {canPerform("CREATE_CUSTOMER") && (
             <Link href="/admin/customers/new">
-              <Button variant="primary" size="sm" className="text-xs font-bold gap-1.5 shadow-md shadow-amber-500/20">
+              <Button variant="primary" size="sm" className="text-xs font-bold gap-1.5 shadow-md shadow-[#0A5C36]/20">
                 <Plus className="w-4 h-4" />
                 <span>Add Customer</span>
               </Button>
@@ -125,7 +125,7 @@ export default function CustomersRegistryPage() {
         <CardContent className="p-4 sm:p-5 space-y-3">
           <div className="flex flex-col md:flex-row gap-3">
             <div className="relative flex-1">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
+              <Search className="w-4 h-4 text-emerald-600/80 absolute left-3.5 top-3.5 pointer-events-none" />
               <Input
                 placeholder="Search by name, phone (+234), email, address or QR tag (e.g. ST-LGS-001)..."
                 className="pl-10 h-10"
@@ -139,7 +139,7 @@ export default function CustomersRegistryPage() {
               <select
                 value={selectedState}
                 onChange={(e) => setSelectedState(e.target.value)}
-                className="h-10 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 text-xs font-medium text-slate-800 dark:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+                className="h-10 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-[#06361f] px-3 text-xs font-medium text-[#05361e] dark:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A5C36]"
               >
                 <option value="all">All States (Nigeria)</option>
                 <option value="Lagos">Lagos State</option>
@@ -153,7 +153,7 @@ export default function CustomersRegistryPage() {
               <select
                 value={selectedBrand}
                 onChange={(e) => setSelectedBrand(e.target.value)}
-                className="h-10 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 text-xs font-medium text-slate-800 dark:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+                className="h-10 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-[#06361f] px-3 text-xs font-medium text-[#05361e] dark:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A5C36]"
               >
                 <option value="all">All Inverter Brands</option>
                 <option value="Deye">Deye Hybrid</option>
@@ -164,9 +164,9 @@ export default function CustomersRegistryPage() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-xs text-slate-500 pt-1">
+          <div className="flex items-center justify-between text-xs text-emerald-700/80 dark:text-emerald-200/80 pt-1">
             <span>
-              Showing <strong className="text-slate-900 dark:text-white">{filteredCustomers.length}</strong> of {MOCK_CUSTOMERS.length} total registered customers
+              Showing <strong className="text-[#05361e] dark:text-white">{filteredCustomers.length}</strong> of {MOCK_CUSTOMERS.length} total registered customers
             </span>
             {(searchTerm || selectedState !== "all" || selectedBrand !== "all") && (
               <button
@@ -175,7 +175,7 @@ export default function CustomersRegistryPage() {
                   setSelectedState("all");
                   setSelectedBrand("all");
                 }}
-                className="text-amber-600 dark:text-amber-400 font-semibold hover:underline"
+                className="text-[#0A5C36] dark:text-[#10B981] font-semibold hover:underline"
               >
                 Reset Filters
               </button>
@@ -189,7 +189,7 @@ export default function CustomersRegistryPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs sm:text-sm">
             <thead>
-              <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <tr className="border-b border-emerald-200 dark:border-emerald-800 bg-emerald-50/70 dark:bg-[#084729]/40 text-[11px] font-bold uppercase tracking-wider text-emerald-700/80 dark:text-emerald-200/80">
                 <th className="py-3.5 px-4">Customer Details</th>
                 <th className="py-3.5 px-4">Location</th>
                 <th className="py-3.5 px-4">Installed System</th>
@@ -198,7 +198,7 @@ export default function CustomersRegistryPage() {
                 <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+            <tbody className="divide-y divide-emerald-100 dark:divide-emerald-900">
               {filteredCustomers.map((cust) => {
                 const system = MOCK_SYSTEMS.find((s) => s.id === cust.systemId);
                 const install = MOCK_INSTALLATIONS.find((i) => i.customerId === cust.id);
@@ -207,36 +207,36 @@ export default function CustomersRegistryPage() {
                 return (
                   <tr
                     key={cust.id}
-                    className="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors group"
+                    className="hover:bg-emerald-50/60 dark:hover:bg-[#084729]/30 transition-colors group"
                   >
                     {/* Customer Info */}
                     <td className="py-3.5 px-4">
-                      <Link href={`/admin/customers/${cust.id}`} className="block group-hover:text-amber-600 dark:group-hover:text-amber-400">
-                        <div className="font-bold text-slate-900 dark:text-white text-sm">
+                      <Link href={`/admin/customers/${cust.id}`} className="block group-hover:text-[#0A5C36] dark:group-hover:text-[#10B981]">
+                        <div className="font-bold text-[#05361e] dark:text-white text-sm">
                           {cust.name}
                         </div>
-                        <div className="text-[11px] text-slate-500 font-mono mt-0.5">{cust.phone}</div>
-                        <div className="text-[11px] text-slate-400 truncate max-w-[180px]">{cust.email}</div>
+                        <div className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80 font-mono mt-0.5">{cust.phone}</div>
+                        <div className="text-[11px] text-emerald-600/80 dark:text-emerald-300/80 truncate max-w-[180px]">{cust.email}</div>
                       </Link>
                     </td>
 
                     {/* Location */}
                     <td className="py-3.5 px-4">
-                      <div className="flex items-center gap-1 font-semibold text-slate-800 dark:text-slate-200">
-                        <MapPin className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                      <div className="flex items-center gap-1 font-semibold text-[#05361e] dark:text-emerald-100">
+                        <MapPin className="w-3.5 h-3.5 text-[#EA580C] shrink-0" />
                         <span>{cust.state}</span>
                       </div>
-                      <div className="text-[11px] text-slate-500 truncate max-w-[200px] mt-0.5" title={cust.address}>
+                      <div className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80 truncate max-w-[200px] mt-0.5" title={cust.address}>
                         {cust.address}
                       </div>
                     </td>
 
                     {/* System specs */}
                     <td className="py-3.5 px-4">
-                      <div className="font-semibold text-slate-900 dark:text-white">
+                      <div className="font-semibold text-[#05361e] dark:text-white">
                         {system?.inverterBrand} {system?.inverterCapacityKva}kVA
                       </div>
-                      <div className="text-[11px] text-slate-500 mt-0.5">
+                      <div className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">
                         {system?.batteryCapacityKwh}kWh • {system?.solarPanelsCount}x 550W Panels
                       </div>
                     </td>
@@ -254,10 +254,10 @@ export default function CustomersRegistryPage() {
                             capacity: system?.inverterCapacityKva || 5
                           })
                         }
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-300 font-mono text-xs font-bold hover:bg-amber-100 transition cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-orange-50 dark:bg-orange-950/40 border border-orange-300 dark:border-orange-800 text-[#EA580C] dark:text-orange-300 font-mono text-xs font-bold hover:bg-orange-100 transition cursor-pointer"
                         title="Click to view and print QR label"
                       >
-                        <QrCode className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                        <QrCode className="w-3.5 h-3.5 text-[#EA580C] dark:text-orange-400" />
                         <span>{cust.qrToken}</span>
                       </button>
                     </td>
@@ -271,7 +271,7 @@ export default function CustomersRegistryPage() {
                         {system?.status === "offline" && <Badge variant="secondary">Offline</Badge>}
                         {system?.status === "hardware_fault" && <Badge variant="destructive">Hardware Fault</Badge>}
                       </div>
-                      <div className="text-[10px] text-slate-500 font-medium capitalize">
+                      <div className="text-[10px] text-emerald-700/80 dark:text-emerald-200/80 font-medium capitalize">
                         Stage: {install?.currentStage.replace("_", " ")}
                       </div>
                     </td>
@@ -279,7 +279,7 @@ export default function CustomersRegistryPage() {
                     {/* Actions */}
                     <td className="py-3.5 px-4 text-right">
                       <Link href={`/admin/customers/${cust.id}`}>
-                        <Button variant="ghost" size="sm" className="h-8 px-2 text-xs font-semibold text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40">
+                        <Button variant="ghost" size="sm" className="h-8 px-2 text-xs font-semibold text-[#0A5C36] dark:text-[#10B981] hover:bg-emerald-50 dark:hover:bg-emerald-950/40">
                           <span>Profile</span>
                           <ChevronRight className="w-4 h-4 ml-1" />
                         </Button>
