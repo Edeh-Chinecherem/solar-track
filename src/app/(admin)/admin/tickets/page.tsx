@@ -172,13 +172,12 @@ function TicketsContent() {
                 setActiveTicket(ticket);
                 setDrawerOpen(true);
               }}
-              className={`hover:shadow-md transition-all cursor-pointer border-l-4 ${
-                isCritical
-                  ? "border-l-[#C2410C] bg-orange-50/30 dark:bg-orange-950/20"
-                  : isHigh
+              className={`hover:shadow-md transition-all cursor-pointer border-l-4 ${isCritical
+                ? "border-l-[#C2410C] bg-orange-50/30 dark:bg-orange-950/20"
+                : isHigh
                   ? "border-l-[#EA580C]"
                   : "border-l-[#0A5C36]"
-              }`}
+                }`}
             >
               <CardContent className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1.5 flex-1">
@@ -298,13 +297,12 @@ function TicketsContent() {
                 {activeTicket.messages.map((msg) => (
                   <div
                     key={msg.id}
-                    className={`p-3 rounded-xl text-xs space-y-1 ${
-                      msg.isInternal
-                        ? "bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800/60"
-                        : msg.senderRole === "customer"
+                    className={`p-3 rounded-xl text-xs space-y-1 ${msg.isInternal
+                      ? "bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800/60"
+                      : msg.senderRole === "customer"
                         ? "bg-white dark:bg-[#084729] border border-emerald-200 dark:border-emerald-700"
                         : "bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center justify-between text-[11px]">
                       <span className="font-bold text-[#05361e] dark:text-white flex items-center gap-1">
