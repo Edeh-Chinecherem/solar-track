@@ -746,7 +746,7 @@ export default function AdminPAYGPage() {
                 <div className="space-y-2 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800">
                   <label className="font-bold text-amber-900 dark:text-amber-300 flex items-center gap-1.5">
                     <UserCheck className="w-4 h-4" />
-                    Mandatory Second Approver (SolarTrack Dual-Key Rule)
+                    Mandatory Second Approver (GreenerAfrik Dual-Key Rule)
                   </label>
                   <select
                     className="w-full bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-700 rounded-lg p-2 text-xs font-medium"

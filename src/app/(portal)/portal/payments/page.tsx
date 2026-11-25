@@ -216,7 +216,7 @@ export default function PortalPaymentsPage() {
         <CardHeader className="pb-3">
           <CardTitle className="text-sm">Subscription Details</CardTitle>
           <CardDescription className="text-xs">
-            SolarTrack Rent-To-Own (36 Months Tenure)
+            GreenerAfrik Rent-To-Own (36 Months Tenure)
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3 text-xs">
@@ -291,7 +291,7 @@ export default function PortalPaymentsPage() {
               <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded font-mono">TEST MODE</span>
             </div>
             <div className="mt-3">
-              <span className="text-xs text-white/80">Pay SolarTrack Nigeria Ltd</span>
+              <span className="text-xs text-white/80">Pay GreenerAfrik Energies Limited</span>
               <div className="text-2xl font-black tracking-tight mt-0.5">
                 {formatNaira(selectedPlanAmount)}
               </div>
@@ -398,7 +398,7 @@ export default function PortalPaymentsPage() {
                       0291 8491 82
                     </div>
                     <p className="text-[10px] text-slate-500">
-                      Account Name: Paystack Checkout / SolarTrack
+                      Account Name: Paystack Checkout / GreenerAfrik Energies Limited
                     </p>
                   </div>
                 )}

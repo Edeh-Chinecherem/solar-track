@@ -10,8 +10,8 @@ import { OfflineBanner } from "@/components/ui/offline-banner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SolarTrack - Solar Installation & Telemetry Management",
-  description: "Enterprise solar customer lifecycle, remote telemetry diagnostics, 10-stage installation tracking, and PAYG power control.",
+  title: "GreenerAfrik - Energy Powered Solar & Agricultural Operations",
+  description: "GreenerAfrik Energies Limited (RC 9402141) — Energy Powered Agricultural Clusters (EPAC), residential & commercial solar installations, IoT telemetry, and PAYG metering.",
   manifest: "/manifest.json"
 };
 
@@ -20,7 +20,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#F59E0B"
+  themeColor: "#0A5C36"
 };
 
 export default function RootLayout({

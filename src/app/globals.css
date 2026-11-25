@@ -4,8 +4,12 @@
   :root {
     --background: #f8fafc;
     --foreground: #0f172a;
-    --primary: #f59e0b;
-    --primary-foreground: #0f172a;
+    /* GreenerAfrik Brand Colors */
+    --primary: #0A5C36;
+    --primary-foreground: #ffffff;
+    --primary-orange: #EA580C;
+    --brand-green: #0A5C36;
+    --brand-orange: #EA580C;
     --navy: #0f172a;
     --card: #ffffff;
     --card-foreground: #0f172a;
@@ -15,8 +19,12 @@
   .dark {
     --background: #090d16;
     --foreground: #f8fafc;
-    --primary: #f59e0b;
-    --primary-foreground: #0f172a;
+    /* GreenerAfrik Brand Colors in Dark Theme */
+    --primary: #10B981;
+    --primary-foreground: #ffffff;
+    --primary-orange: #F97316;
+    --brand-green: #059669;
+    --brand-orange: #F97316;
     --navy: #0f172a;
     --card: #0f172a;
     --card-foreground: #f8fafc;
@@ -32,6 +40,12 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Signature GreenerAfrik Top Band */
+.ga-stripe {
+  height: 4px;
+  background: linear-gradient(90deg, #EA580C 33.33%, #0A5C36 33.33%);
+}
+
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
@@ -41,11 +55,11 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.4);
+  background: rgba(10, 92, 54, 0.3);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.6);
+  background: rgba(10, 92, 54, 0.6);
 }
 
 /* Leaflet map fix */

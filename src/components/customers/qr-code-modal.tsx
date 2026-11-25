@@ -28,7 +28,7 @@ export function QrCodeModal({
 }: QrCodeModalProps) {
   const { toast } = useToast();
   const printRef = useRef<HTMLDivElement>(null);
-  const publicUrl = typeof window !== "undefined" ? `${window.location.origin}/q/${token}` : `https://solartrack.ng/q/${token}`;
+  const publicUrl = typeof window !== "undefined" ? `${window.location.origin}/q/${token}` : `https://greenerafrik.com/q/${token}`;
 
   const handleDownload = () => {
     try {
@@ -44,7 +44,7 @@ export function QrCodeModal({
         ctx?.drawImage(img, 0, 0);
         const pngFile = canvas.toDataURL("image/png");
         const downloadLink = document.createElement("a");
-        downloadLink.download = `SolarTrack-${token}.png`;
+        downloadLink.download = `GreenerAfrik-${token}.png`;
         downloadLink.href = pngFile;
         downloadLink.click();
         toast("QR Code Downloaded", { description: `Saved ${token}.png to your downloads folder.`, type: "success" });
@@ -83,9 +83,9 @@ export function QrCodeModal({
         >
           {/* Brand header */}
           <div className="flex items-center gap-2 text-slate-900 dark:text-white">
-            <Sun className="w-5 h-5 text-amber-500 fill-amber-500" />
-            <span className="font-extrabold text-sm tracking-tight">SolarTrack NG</span>
-            <span className="text-[10px] bg-slate-900 text-amber-400 dark:bg-amber-400 dark:text-slate-950 font-bold px-1.5 py-0.5 rounded">
+            <Sun className="w-5 h-5 text-[#EA580C] fill-[#EA580C]" />
+            <span className="font-extrabold text-sm tracking-tight text-[#0A5C36] dark:text-[#10B981]">GreenerAfrik</span>
+            <span className="text-[10px] bg-[#0A5C36] text-white font-bold px-1.5 py-0.5 rounded">
               VERIFIED
             </span>
           </div>

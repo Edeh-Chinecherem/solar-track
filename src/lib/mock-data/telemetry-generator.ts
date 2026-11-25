@@ -168,7 +168,7 @@ export function diagnoseSystem(system: SolarSystem, telemetry: TelemetryReading)
         "Recommend upgrading inverter capacity to next tier",
         "Verify breaker ratings on sub-distribution panel"
       ],
-      customerAdviceSms: `SolarTrack Alert: Your inverter experienced an overload at ${(peak / 1000).toFixed(1)} kW (rated limit ${(ratedWatts / 1000).toFixed(1)} kW). Please switch off pressing irons or water heaters before starting the air conditioner.`
+      customerAdviceSms: `GreenerAfrik Alert: Your inverter experienced an overload at ${(peak / 1000).toFixed(1)} kW (rated limit ${(ratedWatts / 1000).toFixed(1)} kW). Please switch off pressing irons or water heaters before starting the air conditioner.`
     };
   }
 
@@ -189,7 +189,7 @@ export function diagnoseSystem(system: SolarSystem, telemetry: TelemetryReading)
         "Clear dust buildup from bottom heatsink air intake",
         "Advise customer to reduce heavy loads until service is completed"
       ],
-      customerAdviceSms: `URGENT SolarTrack Notice: Your inverter is running unusually warm (${telemetry.inverterTempCelsius}°C) due to a cooling fan obstruction. Our technical team has been notified. Please minimize power usage.`
+      customerAdviceSms: `URGENT GreenerAfrik Notice: Your inverter is running unusually warm (${telemetry.inverterTempCelsius}°C) due to a cooling fan obstruction. Our technical team has been notified. Please minimize power usage.`
     };
   }
 
@@ -210,7 +210,7 @@ export function diagnoseSystem(system: SolarSystem, telemetry: TelemetryReading)
         "Power-cycle Wi-Fi router / cellular antenna",
         "Request customer verify blue indicator LED status on datalogger"
       ],
-      customerAdviceSms: "SolarTrack Notice: Your solar monitoring stick is currently offline. Please check if your home Wi-Fi or router is active, or unplug and re-insert the blue datalogger stick."
+      customerAdviceSms: "GreenerAfrik Notice: Your solar monitoring stick is currently offline. Please check if your home Wi-Fi or router is active, or unplug and re-insert the blue datalogger stick."
     };
   }
 
@@ -233,7 +233,7 @@ export function diagnoseSystem(system: SolarSystem, telemetry: TelemetryReading)
         "Enable auxiliary grid charging during nighttime off-peak window",
         "Advise customer to power down non-essential chest freezers after midnight"
       ],
-      customerAdviceSms: `SolarTrack Advisory: Your battery is currently at ${telemetry.batterySocPercent}% due to low solar charging and high night loads. Please turn off deep freezers overnight or allow grid charging.`
+      customerAdviceSms: `GreenerAfrik Advisory: Your battery is currently at ${telemetry.batterySocPercent}% due to low solar charging and high night loads. Please turn off deep freezers overnight or allow grid charging.`
     };
   }
 
@@ -249,6 +249,6 @@ export function diagnoseSystem(system: SolarSystem, telemetry: TelemetryReading)
       inverterTempCelsius: telemetry.inverterTempCelsius
     },
     recommendedActions: ["Maintain routine quarterly panel dust cleaning schedule"],
-    customerAdviceSms: "SolarTrack Status: Your solar system is healthy and operating normally."
+    customerAdviceSms: "GreenerAfrik Status: Your solar system is healthy and operating normally."
   };
 }

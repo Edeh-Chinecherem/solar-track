@@ -28,7 +28,7 @@ export default function PortalDocumentsPage() {
   const docs = [
     {
       id: "doc_1",
-      title: "SolarTrack PAYG Lease Agreement",
+      title: "GreenerAfrik PAYG Lease Agreement",
       category: "Contract",
       date: "15 Jan 2026",
       size: "2.4 MB PDF",

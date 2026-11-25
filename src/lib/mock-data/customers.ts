@@ -970,7 +970,7 @@ export const MOCK_TICKETS: Ticket[] = [
         "Recommend upgrading to 5.0kVA hybrid inverter if full simultaneous load is required",
         "Inspect distribution box priority breaker separation"
       ],
-      customerAdviceSms: "SolarTrack Advice: Your solar inverter tripped because simultaneous power use reached 4.4 kW (limit is 3.5 kW). Please turn off your electric iron before running the bedroom AC."
+      customerAdviceSms: "GreenerAfrik Advice: Your solar inverter tripped because simultaneous power use reached 4.4 kW (limit is 3.5 kW). Please turn off your electric iron before running the bedroom AC."
     },
     messages: [
       {
@@ -1023,7 +1023,7 @@ export const MOCK_TICKETS: Ticket[] = [
         "Enable grid boost charge via customer app between 12 AM - 4 AM if DisCo is available",
         "Turn off secondary deep freezer after 10 PM"
       ],
-      customerAdviceSms: "SolarTrack Notice: Your battery is currently under-charged due to 3 days of heavy cloud cover and high night consumption. Please unplug deep freezers at night or enable grid boost charging."
+      customerAdviceSms: "GreenerAfrik Notice: Your battery is currently under-charged due to 3 days of heavy cloud cover and high night consumption. Please unplug deep freezers at night or enable grid boost charging."
     },
     messages: [
       {
@@ -1065,7 +1065,7 @@ export const MOCK_TICKETS: Ticket[] = [
         "Verify cellular SIM card data subscription balance",
         "Check antenna connection on inverter side port"
       ],
-      customerAdviceSms: "SolarTrack Update: Your solar monitor is currently offline. Please unplug and re-insert the small blue monitoring stick on the right side of your inverter."
+      customerAdviceSms: "GreenerAfrik Update: Your solar monitor is currently offline. Please unplug and re-insert the small blue monitoring stick on the right side of your inverter."
     },
     messages: []
   },
@@ -1099,7 +1099,7 @@ export const MOCK_TICKETS: Ticket[] = [
         "Replace 80mm cooling fan unit",
         "Instruct customer to reduce load until technician arrives"
       ],
-      customerAdviceSms: "URGENT SolarTrack Notice: Your inverter cooling fan has stopped and the system is overheating. Please switch off heavy appliances immediately while our technician is en route."
+      customerAdviceSms: "URGENT GreenerAfrik Notice: Your inverter cooling fan has stopped and the system is overheating. Please switch off heavy appliances immediately while our technician is en route."
     },
     messages: []
   }

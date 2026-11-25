@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "danger" | "success" | "default" | "destructive";
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "danger" | "success" | "default" | "destructive" | "orange" | "brand";
   size?: "sm" | "md" | "lg" | "icon";
   isLoading?: boolean;
 }
@@ -10,8 +10,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", size = "md", isLoading, children, disabled, ...props }, ref) => {
     const variants = {
-      primary: "bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 font-semibold shadow-sm focus-visible:ring-amber-500",
-      default: "bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 font-semibold shadow-sm focus-visible:ring-amber-500",
+      primary: "bg-[#0A5C36] hover:bg-[#074728] active:bg-[#05361e] text-white font-semibold shadow-sm focus-visible:ring-[#0A5C36]",
+      default: "bg-[#0A5C36] hover:bg-[#074728] active:bg-[#05361e] text-white font-semibold shadow-sm focus-visible:ring-[#0A5C36]",
+      brand: "bg-[#0A5C36] hover:bg-[#074728] active:bg-[#05361e] text-white font-semibold shadow-sm focus-visible:ring-[#0A5C36]",
+      orange: "bg-[#EA580C] hover:bg-[#C2410C] active:bg-[#9A3412] text-white font-semibold shadow-sm focus-visible:ring-[#EA580C]",
       secondary: "bg-slate-800 hover:bg-slate-700 active:bg-slate-900 text-white font-medium focus-visible:ring-slate-400",
       outline: "border border-slate-300 dark:border-slate-700 bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 focus-visible:ring-slate-400",
       ghost: "bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300",

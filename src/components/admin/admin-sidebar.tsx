@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Sun,
   LayoutDashboard,
   Users,
   KanbanSquare,
@@ -16,11 +15,11 @@ import {
   Settings,
   ChevronRight,
   ShieldCheck,
-  Menu,
   X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthRole } from "@/components/providers/auth-role-provider";
+import { GreenerAfrikLogo } from "@/components/ui/greenerafrik-logo";
 
 const NAV_ITEMS = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
@@ -58,18 +57,8 @@ export function AdminSidebar({
       <div className="space-y-6">
         {/* Brand header */}
         <div className="flex items-center justify-between px-2 pt-2">
-          <Link href="/admin" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-950 font-black shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
-              <Sun className="w-6 h-6 fill-slate-950" />
-            </div>
-            <div>
-              <span className="font-extrabold text-lg tracking-tight text-white block leading-tight">
-                Solar<span className="text-amber-500">Track</span>
-              </span>
-              <span className="text-[10px] uppercase font-semibold text-amber-400/80 tracking-widest block">
-                Enterprise NG
-              </span>
-            </div>
+          <Link href="/admin" className="group">
+            <GreenerAfrikLogo size="md" textColor="light" showTagline={true} showRc={true} />
           </Link>
           <button
             onClick={() => setMobileOpen(false)}
@@ -83,10 +72,10 @@ export function AdminSidebar({
         <div className="rounded-xl bg-slate-800/80 border border-slate-700/60 p-3 mx-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-amber-400" />
+              <ShieldCheck className="w-4 h-4 text-[#EA580C]" />
               <span className="text-xs font-semibold text-slate-300">Active Role</span>
             </div>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#0A5C36]/30 text-emerald-400 border border-[#0A5C36]">
               DEMO
             </span>
           </div>
@@ -108,15 +97,15 @@ export function AdminSidebar({
                 className={cn(
                   "flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all group",
                   isActive
-                    ? "bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20"
+                    ? "bg-[#0A5C36] text-white font-bold shadow-md shadow-[#0A5C36]/30"
                     : "text-slate-400 hover:text-slate-100 hover:bg-slate-800/60"
                 )}
               >
                 <div className="flex items-center gap-3">
-                  <Icon className={cn("w-4 h-4", isActive ? "text-slate-950" : "text-slate-400 group-hover:text-amber-400 transition-colors")} />
+                  <Icon className={cn("w-4 h-4", isActive ? "text-white" : "text-slate-400 group-hover:text-[#10B981] transition-colors")} />
                   <span>{item.label}</span>
                 </div>
-                {isActive && <ChevronRight className="w-4 h-4 text-slate-950" />}
+                {isActive && <ChevronRight className="w-4 h-4 text-white" />}
               </Link>
             );
           })}
@@ -127,14 +116,14 @@ export function AdminSidebar({
       <div className="pt-4 border-t border-slate-800/80 space-y-2">
         <Link
           href="/tech"
-          className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-slate-400 hover:text-amber-400 hover:bg-slate-800 transition"
+          className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition"
         >
           <span>Switch to Technician View</span>
           <ChevronRight className="w-3.5 h-3.5" />
         </Link>
         <Link
           href="/portal"
-          className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-slate-400 hover:text-amber-400 hover:bg-slate-800 transition"
+          className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition"
         >
           <span>Open Customer Portal</span>
           <ChevronRight className="w-3.5 h-3.5" />

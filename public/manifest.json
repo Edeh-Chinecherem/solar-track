@@ -1,12 +1,12 @@
 {
-  "name": "SolarTrack - Solar Operations & Telemetry",
-  "short_name": "SolarTrack",
+  "name": "GreenerAfrik - Solar Operations & EPAC Telemetry",
+  "short_name": "GreenerAfrik",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0F172A",
-  "theme_color": "#F59E0B",
+  "theme_color": "#0A5C36",
   "orientation": "portrait",
-  "description": "Enterprise solar customer lifecycle, remote telemetry diagnostics, 10-stage installation tracking, and PAYG power control.",
+  "description": "GreenerAfrik Energies Limited (RC 9402141) — Energy Powered Agricultural Clusters, solar customer lifecycle, remote telemetry diagnostics, and PAYG power control.",
   "icons": [
     {
       "src": "/favicon.ico",

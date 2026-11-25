@@ -37,7 +37,7 @@ export default function TechProfilePage() {
       {syncedToast && (
         <div className="fixed top-4 inset-x-4 max-w-sm mx-auto z-50 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2 border border-slate-700 animate-in fade-in">
           <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          <span>All local checklists and photos synced with SolarTrack HQ</span>
+          <span>All local checklists and photos synced with GreenerAfrik HQ</span>
         </div>
       )}
 
@@ -115,7 +115,7 @@ export default function TechProfilePage() {
             { title: "COREN Registered Electrical Contractor", year: "2022" },
             { title: "Victron Energy MultiPlus & Quattro Level 2", year: "2023" },
             { title: "Deye High-Voltage Hybrid Inverter Specialist", year: "2024" },
-            { title: "SolarTrack High-Voltage Safety Protocol (NEMSA)", year: "2025" }
+            { title: "GreenerAfrik High-Voltage Safety Protocol (NEMSA)", year: "2025" }
           ].map((cert, i) => (
             <div key={i} className="flex items-center justify-between py-1.5 border-b border-slate-100 dark:border-slate-800 last:border-0">
               <div className="flex items-center gap-2">

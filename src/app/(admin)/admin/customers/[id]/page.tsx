@@ -75,7 +75,7 @@ function CustomerProfileContent() {
   const [disconnectModalOpen, setDisconnectModalOpen] = useState(false);
   const [smsModalOpen, setSmsModalOpen] = useState(false);
   const [smsContent, setSmsContent] = useState(
-    `SolarTrack Alert: Dear ${customer.name}, your solar system (${system.inverterBrand} ${system.inverterCapacityKva}kVA) is operating under remote monitoring.`
+    `GreenerAfrik Alert: Dear ${customer.name}, your solar system (${system.inverterBrand} ${system.inverterCapacityKva}kVA) is operating under remote monitoring.`
   );
   const [isDisconnecting, setIsDisconnecting] = useState(false);
 

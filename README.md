@@ -1,7 +1,8 @@
-# SolarTrack ☀️🇳🇬
-### Enterprise Solar Fleet, 10-Stage Installation Tracking & PAYG Remote Contactor Platform
+# GreenerAfrik ☀️🌿🇳🇬
+### GreenerAfrik Energies Limited (RC 9402141) — ...Powering Africa
+#### Energy Powered Agricultural Clusters (EPAC), Enterprise Solar Fleet Registry, 10-Stage Installation Tracking & PAYG Remote Contactor Platform
 
-**SolarTrack** is a web platform designed for Nigerian solar engineering and installation companies. It manages the full lifecycle of residential and commercial solar installations: from inquiry and site survey to commissioning, remote IoT telemetry monitoring, automated fault diagnosis, and Pay-As-You-Go (PAYG) metering with remote hardware contactor control.
+**GreenerAfrik** is a web platform designed for Nigerian solar engineering and energy infrastructure companies. It manages the full lifecycle of agricultural clusters, residential, and commercial solar installations: from inquiry and site survey to commissioning, remote IoT telemetry monitoring, automated fault diagnosis, and Pay-As-You-Go (PAYG) metering with remote hardware contactor control.
 
 ---
 
@@ -10,7 +11,7 @@
 | Layer | Technologies |
 | :--- | :--- |
 | **Framework** | **Next.js 16 (App Router)** + React 19 + TypeScript |
-| **Styling & Design** | **Tailwind CSS**, Solar Amber (`#F59E0B`) primary, Navy (`#0F172A`) contrast, Emerald (`#10B981`) healthy, Crimson (`#EF4444`) fault/disconnected |
+| **Styling & Design** | **Tailwind CSS**, Forest Green (`#0A5C36`) primary, Sunburst Orange (`#EA580C`) energy accent, Navy (`#0F172A`) contrast, Leaf Green (`#10B981`) healthy, Crimson (`#EF4444`) fault/disconnected |
 | **State & Data** | **TanStack React Query**, localStorage persistence, synthetic latency simulation |
 | **Data Visualizations** | **Recharts** (24h PV-vs-Load area charts, SOC line charts, stage turnaround bars, collections trend, fault distribution pie) |
 | **Interactive Maps** | **Leaflet** + **OpenStreetMap** (Zero API keys required; custom status-colored SVG markers for Nigerian cities) |
@@ -53,7 +54,7 @@ The application is structured into four distinct route groups:
   - **Documents (`/portal/documents`)**: Downloadable PDF contracts, 10-year battery warranty certificates, and handover forms.
 
 ### 4. Public QR Landing Page (`/q/[token]`)
-- **Strict Privacy Guarantees**: Anyone scanning a physical inverter QR code without staff credentials sees **only** the SolarTrack verified hardware badge, system ID, inverter capacity, and warranty status. Customer name, phone number, and physical address are **strictly hidden**.
+- **Strict Privacy Guarantees**: Anyone scanning a physical inverter QR code without staff credentials sees **only** the GreenerAfrik verified hardware badge, system ID, inverter capacity, and warranty status. Customer name, phone number, and physical address are **strictly hidden**.
 - Includes a direct "Report a Fault" button and a deep-link for authorized staff login.
 
 ---
@@ -86,7 +87,7 @@ The frontend communicates exclusively through `src/lib/api/index.ts`. All method
 ### Step-by-Step Backend Integration:
 1. Set your backend base URL in `.env.local`:
    ```env
-   NEXT_PUBLIC_API_URL=https://api.solartrack.ng/v1
+   NEXT_PUBLIC_API_URL=https://api.greenerafrik.com/v1
    ```
 2. In `src/lib/api/index.ts`, replace the `loadFromStorage` and `saveToStorage` helpers with standard `fetch` or `axios` calls:
    ```typescript
@@ -136,6 +137,6 @@ The frontend communicates exclusively through `src/lib/api/index.ts`. All method
 
 1. **Grid Instability & High Surge Loads**: In Nigeria, public utility power (NEPA/DisCo) fluctuates heavily. Many households run high-wattage resistive appliances (electric pressing irons, boiling rings, pumping machines). The **Diagnosis Engine** specifically identifies simultaneous appliance surges exceeding inverter capacity (e.g. 6.1 kW on a 5.0 kVA inverter).
 2. **Inverter Ecosystem**: Most Nigerian installations utilize hybrid inverters from **Victron Energy**, **Deye**, **Sunsynk**, and **Growatt**, paired with LiFePO4 rack-mount lithium batteries.
-3. **Dual-Key Governance for Contactor Cutoff**: Disconnecting customer power in Nigeria is highly sensitive. SolarTrack enforces a **Dual-Approval Rule**: Bulk disconnections require secondary authorization from an Operations Manager or Super Admin, preventing accidental outages.
+3. **Dual-Key Governance for Contactor Cutoff**: Disconnecting customer power in Nigeria is highly sensitive. GreenerAfrik enforces a **Dual-Approval Rule**: Bulk disconnections require secondary authorization from an Operations Manager or Super Admin, preventing accidental outages.
 4. **Offline Resilience for Field Technicians**: Installation technicians frequently work in low-connectivity areas (e.g., outskirts of Ogun, Oyo, Delta). The Technician view caches all checklist updates and captured photos locally until connection is restored.
 5. **Strict Public Privacy**: In accordance with the Nigeria Data Protection Act (NDPA), public QR tags mounted on outdoor inverter casings never expose customer names, phone numbers, or addresses.

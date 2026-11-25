@@ -29,7 +29,7 @@ export function TechBottomNav() {
             className={cn(
               "flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all duration-150 min-w-[64px]",
               isActive
-                ? "text-amber-600 dark:text-amber-400 font-bold"
+                ? "text-[#0A5C36] dark:text-[#10B981] font-bold"
                 : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-300"
             )}
           >

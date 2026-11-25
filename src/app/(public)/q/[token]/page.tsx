@@ -43,20 +43,20 @@ function PublicQrContent() {
       <div className="max-w-md w-full mx-auto space-y-4 my-auto">
         {/* Main Hardware Card */}
         <Card className="border-slate-800 bg-slate-900 text-white shadow-2xl overflow-hidden">
-          <div className="bg-gradient-to-r from-amber-500 to-amber-600 p-6 text-slate-950 flex items-center justify-between">
+          <div className="bg-gradient-to-r from-[#0A5C36] via-[#074728] to-[#05361e] p-6 text-white flex items-center justify-between border-b-2 border-[#EA580C]">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-slate-950 flex items-center justify-center text-amber-400 font-black shadow-lg">
-                <Sun className="w-7 h-7 fill-amber-400" />
+              <div className="w-12 h-12 rounded-2xl bg-slate-950 flex items-center justify-center text-[#10B981] font-black shadow-lg">
+                <Sun className="w-7 h-7 fill-[#EA580C] text-[#EA580C]" />
               </div>
               <div>
-                <h1 className="text-xl font-black tracking-tight leading-none">SolarTrack</h1>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-900 mt-1 block">
-                  Official Hardware Seal
+                <h1 className="text-xl font-black tracking-tight leading-none text-white">GreenerAfrik</h1>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-300 mt-1 block">
+                  Official Hardware Seal • RC 9402141
                 </span>
               </div>
             </div>
             <div className="flex flex-col items-end">
-              <div className="flex items-center gap-1 text-[11px] font-black bg-slate-950/20 px-2 py-0.5 rounded-full">
+              <div className="flex items-center gap-1 text-[11px] font-black bg-white/20 px-2.5 py-0.5 rounded-full text-white">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>Verified</span>
               </div>
@@ -146,7 +146,7 @@ function PublicQrContent() {
       </div>
 
       <div className="max-w-md w-full mx-auto text-center text-xs text-slate-500 py-4">
-        © 2026 SolarTrack Enterprise NG. All hardware tags are cryptographically authenticated.
+        © 2026 GreenerAfrik Energies Limited (RC 9402141). ...Powering Africa. All hardware tags are cryptographically authenticated.
       </div>
     </div>
   );

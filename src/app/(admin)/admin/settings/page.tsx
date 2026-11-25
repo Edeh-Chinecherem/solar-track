@@ -146,7 +146,7 @@ export default function AdminSettingsPage() {
             <CardHeader>
               <CardTitle className="text-base">Role-Based Access Control (RBAC) Matrix</CardTitle>
               <CardDescription className="text-xs">
-                SolarTrack enforces strict separation of duties between field technicians, sales, operations, support, and financial controllers.
+                GreenerAfrik enforces strict separation of duties between field technicians, sales, operations, support, and financial controllers.
               </CardDescription>
             </CardHeader>
             <CardContent>

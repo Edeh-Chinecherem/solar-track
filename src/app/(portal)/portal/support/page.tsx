@@ -164,7 +164,7 @@ export default function PortalSupportPage() {
                 diagnosis: "Load exceeded inverter surge threshold.",
                 steps: [
                   "Turn off high-power heating appliances (electric iron, electric boiling ring, water heater).",
-                  "Locate the main inverter AC Output circuit breaker on your SolarTrack distribution board.",
+                  "Locate the main inverter AC Output circuit breaker on your GreenerAfrik distribution board.",
                   "Switch the breaker OFF, wait 10 seconds, then toggle it firmly back to the ON position.",
                   "Stagger high-load appliances one at a time during peak solar hours (11:00 AM - 2:00 PM)."
                 ]
