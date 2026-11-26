@@ -34,6 +34,12 @@ export function TechHeader() {
             <span>Synced</span>
           </div>
           <Link
+            href="/sign-in"
+            className="text-[11px] font-semibold text-emerald-200 hover:text-white px-2 py-1 rounded-lg hover:bg-[#0A5C36] transition"
+          >
+            Sign In
+          </Link>
+          <Link
             href="/admin"
             className="text-[11px] font-semibold text-emerald-200 hover:text-white px-2 py-1 rounded-lg hover:bg-[#0A5C36] transition"
           >

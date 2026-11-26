@@ -34,10 +34,10 @@ import {
 } from "@/components/ui/dialog";
 import { MOCK_USERS, INSTALLATION_STAGES } from "@/lib/mock-data";
 import { solarTrackApi } from "@/lib/api";
-import { AuditLogEntry, UserRole } from "@/lib/types";
+import { AuditLogEntry, StaffRegistration, UserRole } from "@/lib/types";
 import { formatDateTime } from "@/lib/utils";
 import { useAuthRole } from "@/components/providers/auth-role-provider";
-import { canAccessSettingsTab, SettingsTab } from "@/lib/rbac";
+import { canAccessSettingsTab, ROLE_META, SettingsTab } from "@/lib/rbac";
 
 const ROLE_PERMISSIONS: { [key in UserRole]: string[] } = {
   super_admin: ["All System Permissions", "User & Role Management", "Dual Contactor Override", "Audit Log Export"],
@@ -49,12 +49,14 @@ const ROLE_PERMISSIONS: { [key in UserRole]: string[] } = {
 };
 
 export default function AdminSettingsPage() {
-  const { currentRole } = useAuthRole();
+  const { currentRole, currentUser, canPerform, refreshUsers, availableUsers } = useAuthRole();
   const [activeTab, setActiveTab] = useState<SettingsTab>("roles");
   const effectiveTab: SettingsTab = canAccessSettingsTab(currentRole, activeTab)
     ? activeTab
     : "roles";
   const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>([]);
+  const [registrations, setRegistrations] = useState<StaffRegistration[]>([]);
+  const [processingRegId, setProcessingRegId] = useState<string | null>(null);
   const [selectedAuditLog, setSelectedAuditLog] = useState<AuditLogEntry | null>(null);
   const [auditSearch, setAuditSearch] = useState("");
   const [auditActionFilter, setAuditActionFilter] = useState("all");
@@ -75,10 +77,48 @@ export default function AdminSettingsPage() {
   });
 
   useEffect(() => {
+    solarTrackApi.getStaffRegistrations().then(setRegistrations);
     if (canAccessSettingsTab(currentRole, "audit")) {
       solarTrackApi.getAuditLogs().then(setAuditLogs);
     }
   }, [currentRole]);
+
+  const handleApproveRegistration = async (regId: string) => {
+    setProcessingRegId(regId);
+    try {
+      const updated = await solarTrackApi.approveStaffRegistration(regId, currentUser);
+      setRegistrations((prev) => prev.map((r) => (r.id === regId ? updated : r)));
+      refreshUsers();
+      if (canAccessSettingsTab(currentRole, "audit")) {
+        solarTrackApi.getAuditLogs().then(setAuditLogs);
+      }
+      handleSaveSettings(`Approved ${updated.name} (${ROLE_META[updated.role].title})`);
+    } catch (err: unknown) {
+      handleSaveSettings(err instanceof Error ? err.message : "Approval failed");
+    } finally {
+      setProcessingRegId(null);
+    }
+  };
+
+  const handleRejectRegistration = async (regId: string) => {
+    setProcessingRegId(regId);
+    try {
+      const updated = await solarTrackApi.rejectStaffRegistration(
+        regId,
+        "Declined by Super Admin during role verification",
+        currentUser
+      );
+      setRegistrations((prev) => prev.map((r) => (r.id === regId ? updated : r)));
+      if (canAccessSettingsTab(currentRole, "audit")) {
+        solarTrackApi.getAuditLogs().then(setAuditLogs);
+      }
+      handleSaveSettings(`Declined registration for ${updated.name}`);
+    } catch (err: unknown) {
+      handleSaveSettings(err instanceof Error ? err.message : "Rejection failed");
+    } finally {
+      setProcessingRegId(null);
+    }
+  };
 
   const handleSaveSettings = (category: string) => {
     setSaveToast(`Settings for ${category} successfully saved and applied.`);
@@ -153,6 +193,109 @@ export default function AdminSettingsPage() {
       {/* --- TAB 1: ROLES & PERMISSIONS --- */}
       {effectiveTab === "roles" && (
         <div className="space-y-4">
+          {/* Pending Staff Role Approvals (Super Admin Exclusive Approval) */}
+          <Card className="border-2 border-[#EA580C]/30">
+            <CardHeader>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-[#EA580C]" />
+                    <span>Staff Role Registration Approvals</span>
+                  </CardTitle>
+                  <CardDescription className="text-xs">
+                    Super Admin reviews and approves registrations for Operations Manager, Sales, Technician, Support, and Finance roles.
+                  </CardDescription>
+                </div>
+                <Badge variant={registrations.some((r) => r.status === "pending") ? "orange" : "success"}>
+                  {registrations.filter((r) => r.status === "pending").length} Pending Approval
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {!canPerform("APPROVE_REGISTRATIONS") && (
+                <div className="p-3 rounded-xl bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 text-xs text-[#9A3412] dark:text-orange-200 flex items-center gap-2">
+                  <Lock className="w-4 h-4 text-[#EA580C] shrink-0" />
+                  <span>Read-only view: Only the Super Admin can approve or decline pending role registrations.</span>
+                </div>
+              )}
+
+              {registrations.length === 0 ? (
+                <div className="p-6 text-center text-xs text-emerald-700/80 dark:text-emerald-200/80">
+                  No staff registration requests on record.
+                </div>
+              ) : (
+                <div className="space-y-2.5">
+                  {registrations.map((reg) => {
+                    const roleMeta = ROLE_META[reg.role];
+                    const isPending = reg.status === "pending";
+                    return (
+                      <div
+                        key={reg.id}
+                        data-testid={`registration-row-${reg.id}`}
+                        className="p-4 rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-[#06361f] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                      >
+                        <div className="space-y-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="font-bold text-sm text-[#05361e] dark:text-white">
+                              {reg.name}
+                            </span>
+                            <Badge variant="outline" className="text-[10px]">
+                              {roleMeta?.title || reg.role}
+                            </Badge>
+                            <Badge
+                              variant={
+                                reg.status === "approved"
+                                  ? "success"
+                                  : reg.status === "rejected"
+                                  ? "destructive"
+                                  : "warning"
+                              }
+                            >
+                              {reg.status.toUpperCase()}
+                            </Badge>
+                          </div>
+                          <div className="text-xs text-emerald-700/80 dark:text-emerald-200/80 font-mono">
+                            {reg.email} • {reg.phone}
+                          </div>
+                          <div className="text-[10px] text-emerald-600/80 dark:text-emerald-300/80">
+                            Requested {formatDateTime(reg.requestedAt)}
+                            {reg.reviewedBy && ` • Reviewed by ${reg.reviewedBy}`}
+                          </div>
+                        </div>
+
+                        {isPending && canPerform("APPROVE_REGISTRATIONS") && (
+                          <div className="flex items-center gap-2 shrink-0">
+                            <Button
+                              size="sm"
+                              variant="primary"
+                              disabled={processingRegId === reg.id}
+                              onClick={() => handleApproveRegistration(reg.id)}
+                              className="text-xs font-bold gap-1"
+                              data-testid={`approve-reg-${reg.id}`}
+                            >
+                              <Check className="w-3.5 h-3.5" />
+                              <span>Approve</span>
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="orange"
+                              disabled={processingRegId === reg.id}
+                              onClick={() => handleRejectRegistration(reg.id)}
+                              className="text-xs font-bold"
+                              data-testid={`reject-reg-${reg.id}`}
+                            >
+                              Decline
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Role-Based Access Control (RBAC) Matrix</CardTitle>
@@ -164,7 +307,7 @@ export default function AdminSettingsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {(Object.keys(ROLE_PERMISSIONS) as UserRole[]).map((r) => {
                   const perms = ROLE_PERMISSIONS[r];
-                  const userCount = MOCK_USERS.filter((u) => u.role === r).length;
+                  const userCount = availableUsers.filter((u) => u.role === r).length;
 
                   return (
                     <div

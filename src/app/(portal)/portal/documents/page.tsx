@@ -14,10 +14,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MOCK_CUSTOMERS, MOCK_SYSTEMS } from "@/lib/mock-data";
+import { useAuthRole } from "@/components/providers/auth-role-provider";
 
 export default function PortalDocumentsPage() {
-  const customer = MOCK_CUSTOMERS[0];
-  const system = MOCK_SYSTEMS[0];
+  const { currentCustomer } = useAuthRole();
+  const customer = currentCustomer || MOCK_CUSTOMERS[0];
+  const system = MOCK_SYSTEMS.find((s) => s.id === customer.systemId) || MOCK_SYSTEMS[0];
   const [downloadToast, setDownloadToast] = useState<string | null>(null);
 
   const handleDownload = (docName: string) => {

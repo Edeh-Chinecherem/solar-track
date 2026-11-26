@@ -21,12 +21,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MOCK_CUSTOMERS, MOCK_SYSTEMS, MOCK_PAYG_ACCOUNTS, MOCK_INSTALLATIONS, INSTALLATION_STAGES } from "@/lib/mock-data";
 import { formatNaira, formatDate } from "@/lib/utils";
+import { useAuthRole } from "@/components/providers/auth-role-provider";
 
 export default function CustomerPortalHome() {
-  const customer = MOCK_CUSTOMERS[0];
-  const system = MOCK_SYSTEMS[0];
-  const payg = MOCK_PAYG_ACCOUNTS[0];
-  const installation = MOCK_INSTALLATIONS[0];
+  const { currentCustomer } = useAuthRole();
+  const customer = currentCustomer || MOCK_CUSTOMERS[0];
+  const system = MOCK_SYSTEMS.find((s) => s.id === customer.systemId) || MOCK_SYSTEMS[0];
+  const payg = MOCK_PAYG_ACCOUNTS.find((p) => p.customerId === customer.id) || MOCK_PAYG_ACCOUNTS[0];
+  const installation = MOCK_INSTALLATIONS.find((i) => i.customerId === customer.id) || MOCK_INSTALLATIONS[0];
 
   const currentStageDef = INSTALLATION_STAGES.find((s) => s.id === installation.currentStage) || INSTALLATION_STAGES[8];
 

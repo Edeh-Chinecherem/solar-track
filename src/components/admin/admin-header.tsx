@@ -7,7 +7,8 @@ import {
   Moon,
   UserCheck,
   ChevronDown,
-  ExternalLink
+  ExternalLink,
+  LogIn
 } from "lucide-react";
 import { useAuthRole } from "@/components/providers/auth-role-provider";
 import { useTheme } from "@/components/providers/theme-provider";
@@ -148,6 +149,16 @@ export function AdminHeader({ onMenuClick }: { onMenuClick: () => void }) {
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>Public Tag</span>
+          </Link>
+
+          {/* Sign In / Switch Account */}
+          <Link
+            href="/sign-in"
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800 text-xs font-bold text-[#0A5C36] dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-[#084729] transition"
+            title="Staff & Customer Sign In"
+          >
+            <LogIn className="w-3.5 h-3.5 text-[#EA580C]" />
+            <span>Sign In</span>
           </Link>
         </div>
       </div>

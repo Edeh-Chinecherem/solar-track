@@ -32,11 +32,15 @@ import {
 import { MOCK_CUSTOMERS, MOCK_SYSTEMS, MOCK_PAYG_ACCOUNTS } from "@/lib/mock-data";
 import { formatNaira, formatDate } from "@/lib/utils";
 import { solarTrackApi } from "@/lib/api";
+import { useAuthRole } from "@/components/providers/auth-role-provider";
 
 export default function PortalPaymentsPage() {
-  const [customer, setCustomer] = useState(MOCK_CUSTOMERS[0]);
-  const [system, setSystem] = useState(MOCK_SYSTEMS[0]);
-  const [payg, setPayg] = useState(MOCK_PAYG_ACCOUNTS[0]);
+  const { currentCustomer } = useAuthRole();
+  const customer = currentCustomer || MOCK_CUSTOMERS[0];
+  const system = MOCK_SYSTEMS.find((s) => s.id === customer.systemId) || MOCK_SYSTEMS[0];
+  const basePayg = MOCK_PAYG_ACCOUNTS.find((p) => p.customerId === customer.id) || MOCK_PAYG_ACCOUNTS[0];
+  const [paygOverride, setPaygOverride] = useState<typeof basePayg | null>(null);
+  const payg = paygOverride && paygOverride.customerId === customer.id ? paygOverride : basePayg;
 
   // Paystack Modal State
   const [paystackOpen, setPaystackOpen] = useState(false);
@@ -87,13 +91,13 @@ export default function PortalPaymentsPage() {
 
     try {
       await solarTrackApi.recordCustomerPayment(customer.id, selectedPlanAmount, "Paystack");
-      setPayg((prev) => ({
-        ...prev,
+      setPaygOverride({
+        ...payg,
         status: "active",
         daysRemainingOfPower: 30,
         balanceOwedNaira: 0,
         nextDueDate: new Date(Date.now() + 30 * 86400000).toISOString().split("T")[0]
-      }));
+      });
 
       // Add to history
       const newPay = {

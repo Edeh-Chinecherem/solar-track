@@ -259,13 +259,12 @@ function SystemHealthDetailContent() {
       </div>
 
       {/* AUTOMATED DIAGNOSIS CARD */}
-      <Card className={`border-2 ${
-        diagnosis.cause === "NORMAL"
-          ? "border-emerald-500/50 bg-emerald-50/20 dark:bg-emerald-950/10"
-          : diagnosis.cause === "OVERLOAD"
+      <Card className={`border-2 ${diagnosis.cause === "NORMAL"
+        ? "border-emerald-500/50 bg-emerald-50/20 dark:bg-emerald-950/10"
+        : diagnosis.cause === "OVERLOAD"
           ? "border-[#C2410C]/60 bg-orange-50/30 dark:bg-orange-950/20"
           : "border-[#EA580C]/60 bg-orange-50/20 dark:bg-orange-950/20"
-      }`}>
+        }`}>
         <CardHeader>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div className="flex items-center gap-2">

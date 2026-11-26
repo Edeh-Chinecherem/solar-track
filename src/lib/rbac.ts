@@ -1,4 +1,12 @@
-import { UserRole } from "@/lib/types";
+import { RegistrableStaffRole, UserRole } from "@/lib/types";
+
+export const REGISTRABLE_ROLES: RegistrableStaffRole[] = [
+  "operations_manager",
+  "sales",
+  "technician",
+  "support_agent",
+  "finance"
+];
 
 export type CustomerProfileTab =
   | "overview"
@@ -199,6 +207,7 @@ const ACTION_ROLES: Record<string, UserRole[]> = {
   RESOLVE_TICKET: ["super_admin", "operations_manager", "support_agent", "technician"],
   VIEW_SETTINGS: ["super_admin", "operations_manager"],
   EDIT_SETTINGS: ["super_admin"],
+  APPROVE_REGISTRATIONS: ["super_admin"],
   VIEW_AUDIT_LOGS: ["super_admin", "operations_manager"],
   EXPORT_REPORTS: ["super_admin", "operations_manager", "finance", "sales"]
 };

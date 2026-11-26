@@ -1,4 +1,6 @@
-import { User } from "@/lib/types";
+import { StaffRegistration, User } from "@/lib/types";
+
+export const DEMO_STAFF_PASSWORD = "Greener@2026";
 
 export const MOCK_USERS: User[] = [
   {
@@ -7,6 +9,7 @@ export const MOCK_USERS: User[] = [
     email: "femi.adeleke@greenerafrik.com",
     role: "super_admin",
     phone: "+234 803 555 0100",
+    status: "approved",
     avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80"
   },
   {
@@ -15,6 +18,7 @@ export const MOCK_USERS: User[] = [
     email: "amina.yusuf@greenerafrik.com",
     role: "operations_manager",
     phone: "+234 802 444 0200",
+    status: "approved",
     avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&auto=format&fit=crop&q=80"
   },
   {
@@ -23,6 +27,7 @@ export const MOCK_USERS: User[] = [
     email: "chukwudi.okafor@greenerafrik.com",
     role: "sales",
     phone: "+234 806 333 0300",
+    status: "approved",
     avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80"
   },
   {
@@ -31,6 +36,7 @@ export const MOCK_USERS: User[] = [
     email: "tunde.bakare@greenerafrik.com",
     role: "technician",
     phone: "+234 814 222 0400",
+    status: "approved",
     avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&auto=format&fit=crop&q=80"
   },
   {
@@ -39,6 +45,7 @@ export const MOCK_USERS: User[] = [
     email: "zainab.bello@greenerafrik.com",
     role: "support_agent",
     phone: "+234 809 111 0500",
+    status: "approved",
     avatarUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&auto=format&fit=crop&q=80"
   },
   {
@@ -47,6 +54,30 @@ export const MOCK_USERS: User[] = [
     email: "olumide.daniels@greenerafrik.com",
     role: "finance",
     phone: "+234 818 777 0600",
+    status: "approved",
     avatarUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&auto=format&fit=crop&q=80"
+  }
+];
+
+export const MOCK_PENDING_REGISTRATIONS: StaffRegistration[] = [
+  {
+    id: "reg_pending_001",
+    name: "Ibrahim Garba",
+    email: "ibrahim.garba@greenerafrik.com",
+    phone: "+234 805 612 8840",
+    role: "technician",
+    password: "Greener@2026",
+    status: "pending",
+    requestedAt: "2026-11-25T14:20:00Z"
+  },
+  {
+    id: "reg_pending_002",
+    name: "Nneka Umeh",
+    email: "nneka.umeh@greenerafrik.com",
+    phone: "+234 810 924 1150",
+    role: "sales",
+    password: "Greener@2026",
+    status: "pending",
+    requestedAt: "2026-11-26T06:45:00Z"
   }
 ];

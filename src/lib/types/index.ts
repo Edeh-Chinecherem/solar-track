@@ -6,6 +6,9 @@ export type UserRole =
   | "support_agent"
   | "finance";
 
+export type RegistrableStaffRole = Exclude<UserRole, "super_admin">;
+export type AccountApprovalStatus = "pending" | "approved" | "rejected";
+
 export interface User {
   id: string;
   name: string;
@@ -13,6 +16,21 @@ export interface User {
   role: UserRole;
   avatarUrl?: string;
   phone: string;
+  status?: AccountApprovalStatus;
+}
+
+export interface StaffRegistration {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  role: RegistrableStaffRole;
+  password: string;
+  status: AccountApprovalStatus;
+  requestedAt: string;
+  reviewedAt?: string;
+  reviewedBy?: string;
+  rejectionReason?: string;
 }
 
 export type InstallationStageId =

@@ -9,6 +9,7 @@ import {
   AuditLogEntry,
   InstallationStageId,
   User,
+  StaffRegistration,
   TelemetryReading,
   DiagnosisResult
 } from "@/lib/types";
@@ -19,6 +20,9 @@ import {
   MOCK_PAYG_ACCOUNTS,
   MOCK_TICKETS,
   MOCK_AUDIT_LOGS,
+  MOCK_USERS,
+  MOCK_PENDING_REGISTRATIONS,
+  DEMO_STAFF_PASSWORD,
   INSTALLATION_STAGES,
   generate24HourTelemetry,
   generateLiveTelemetry,
@@ -33,8 +37,18 @@ const STORAGE_KEYS = {
   PAYG: "solartrack_payg",
   TICKETS: "solartrack_tickets",
   AUDIT: "solartrack_audit",
-  COMMANDS: "solartrack_commands"
+  COMMANDS: "solartrack_commands",
+  REGISTRATIONS: "solartrack_staff_registrations",
+  CUSTOMER_OTPS: "solartrack_customer_otps"
 };
+
+export function normalizeNigerianPhone(phone: string): string {
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length >= 10) {
+    return digits.slice(-10);
+  }
+  return digits;
+}
 
 // Helper to simulate network latency
 const sleep = (ms = 200) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -548,6 +562,272 @@ class SolarTrackApi {
     logs.unshift(newEntry);
     saveToStorage(STORAGE_KEYS.AUDIT, logs);
     return newEntry;
+  }
+
+  // --- STAFF REGISTRATION, APPROVAL & SIGN IN ---
+  async getStaffRegistrations(): Promise<StaffRegistration[]> {
+    await sleep(150);
+    return loadFromStorage<StaffRegistration[]>(STORAGE_KEYS.REGISTRATIONS, MOCK_PENDING_REGISTRATIONS);
+  }
+
+  getAllActiveUsersSync(): User[] {
+    const registrations = loadFromStorage<StaffRegistration[]>(STORAGE_KEYS.REGISTRATIONS, MOCK_PENDING_REGISTRATIONS);
+    const approvedUsers: User[] = registrations
+      .filter((r) => r.status === "approved")
+      .map((r) => ({
+        id: `usr_${r.id}`,
+        name: r.name,
+        email: r.email,
+        role: r.role,
+        phone: r.phone,
+        status: "approved"
+      }));
+    return [...MOCK_USERS, ...approvedUsers];
+  }
+
+  async registerStaffAccount(
+    data: Omit<StaffRegistration, "id" | "status" | "requestedAt">
+  ): Promise<StaffRegistration> {
+    await sleep(300);
+    const emailLower = data.email.trim().toLowerCase();
+    const registrations = loadFromStorage<StaffRegistration[]>(STORAGE_KEYS.REGISTRATIONS, MOCK_PENDING_REGISTRATIONS);
+
+    const existsInMock = MOCK_USERS.some((u) => u.email.toLowerCase() === emailLower);
+    const existsInRegistrations = registrations.some(
+      (r) => r.email.toLowerCase() === emailLower && r.status !== "rejected"
+    );
+
+    if (existsInMock || existsInRegistrations) {
+      throw new Error("An account or pending registration with this email already exists.");
+    }
+
+    const newReg: StaffRegistration = {
+      ...data,
+      email: emailLower,
+      id: `reg_${Date.now()}`,
+      status: "pending",
+      requestedAt: new Date().toISOString()
+    };
+
+    registrations.unshift(newReg);
+    saveToStorage(STORAGE_KEYS.REGISTRATIONS, registrations);
+
+    await this.addAuditLog({
+      userId: newReg.id,
+      userName: newReg.name,
+      userRole: newReg.role,
+      action: "REGISTER_STAFF_REQUEST",
+      targetEntity: "StaffRegistration",
+      targetId: newReg.id,
+      details: `Submitted registration request for role ${newReg.role} (${newReg.email}). Awaiting Super Admin approval.`
+    });
+
+    return newReg;
+  }
+
+  async approveStaffRegistration(registrationId: string, reviewer: User): Promise<StaffRegistration> {
+    if (reviewer.role !== "super_admin") {
+      throw new Error("Only a Super Admin can approve staff registrations.");
+    }
+    await sleep(250);
+    const registrations = loadFromStorage<StaffRegistration[]>(STORAGE_KEYS.REGISTRATIONS, MOCK_PENDING_REGISTRATIONS);
+    const idx = registrations.findIndex((r) => r.id === registrationId);
+    if (idx === -1) throw new Error("Registration request not found.");
+
+    const updated: StaffRegistration = {
+      ...registrations[idx],
+      status: "approved",
+      reviewedAt: new Date().toISOString(),
+      reviewedBy: reviewer.name
+    };
+    registrations[idx] = updated;
+    saveToStorage(STORAGE_KEYS.REGISTRATIONS, registrations);
+
+    await this.addAuditLog({
+      userId: reviewer.id,
+      userName: reviewer.name,
+      userRole: reviewer.role,
+      action: "APPROVE_USER_REGISTRATION",
+      targetEntity: "StaffRegistration",
+      targetId: updated.id,
+      details: `Approved ${updated.name} (${updated.email}) for role ${updated.role}.`
+    });
+
+    return updated;
+  }
+
+  async rejectStaffRegistration(
+    registrationId: string,
+    reason: string,
+    reviewer: User
+  ): Promise<StaffRegistration> {
+    if (reviewer.role !== "super_admin") {
+      throw new Error("Only a Super Admin can reject staff registrations.");
+    }
+    await sleep(250);
+    const registrations = loadFromStorage<StaffRegistration[]>(STORAGE_KEYS.REGISTRATIONS, MOCK_PENDING_REGISTRATIONS);
+    const idx = registrations.findIndex((r) => r.id === registrationId);
+    if (idx === -1) throw new Error("Registration request not found.");
+
+    const updated: StaffRegistration = {
+      ...registrations[idx],
+      status: "rejected",
+      reviewedAt: new Date().toISOString(),
+      reviewedBy: reviewer.name,
+      rejectionReason: reason || "Declined by Super Admin"
+    };
+    registrations[idx] = updated;
+    saveToStorage(STORAGE_KEYS.REGISTRATIONS, registrations);
+
+    await this.addAuditLog({
+      userId: reviewer.id,
+      userName: reviewer.name,
+      userRole: reviewer.role,
+      action: "REJECT_USER_REGISTRATION",
+      targetEntity: "StaffRegistration",
+      targetId: updated.id,
+      details: `Rejected registration for ${updated.name} (${updated.role}). Reason: ${updated.rejectionReason}`
+    });
+
+    return updated;
+  }
+
+  async authenticateStaff(
+    email: string,
+    password: string
+  ): Promise<
+    | { ok: true; user: User }
+    | {
+        ok: false;
+        reason: "not_found" | "invalid_password" | "pending_approval" | "rejected";
+        message: string;
+        registration?: StaffRegistration;
+      }
+  > {
+    await sleep(250);
+    const emailLower = email.trim().toLowerCase();
+
+    const mockMatch = MOCK_USERS.find((u) => u.email.toLowerCase() === emailLower);
+    if (mockMatch) {
+      if (password !== DEMO_STAFF_PASSWORD) {
+        return {
+          ok: false,
+          reason: "invalid_password",
+          message: "Incorrect password. Try the demo password shown below."
+        };
+      }
+      return { ok: true, user: mockMatch };
+    }
+
+    const registrations = loadFromStorage<StaffRegistration[]>(STORAGE_KEYS.REGISTRATIONS, MOCK_PENDING_REGISTRATIONS);
+    const regMatch = registrations.find((r) => r.email.toLowerCase() === emailLower);
+
+    if (!regMatch) {
+      return {
+        ok: false,
+        reason: "not_found",
+        message: "No staff account found with that email address."
+      };
+    }
+
+    if (regMatch.password !== password) {
+      return {
+        ok: false,
+        reason: "invalid_password",
+        message: "Incorrect password for this account."
+      };
+    }
+
+    if (regMatch.status === "pending") {
+      return {
+        ok: false,
+        reason: "pending_approval",
+        message: "Your registration is pending Super Admin approval before you can sign in.",
+        registration: regMatch
+      };
+    }
+
+    if (regMatch.status === "rejected") {
+      return {
+        ok: false,
+        reason: "rejected",
+        message: `Your registration was declined${regMatch.rejectionReason ? `: ${regMatch.rejectionReason}` : "."}`,
+        registration: regMatch
+      };
+    }
+
+    const approvedUser: User = {
+      id: `usr_${regMatch.id}`,
+      name: regMatch.name,
+      email: regMatch.email,
+      role: regMatch.role,
+      phone: regMatch.phone,
+      status: "approved"
+    };
+    return { ok: true, user: approvedUser };
+  }
+
+  // --- CUSTOMER PHONE + OTP SIGN IN ---
+  async findCustomerByPhone(phone: string): Promise<Customer | null> {
+    await sleep(180);
+    const normalized = normalizeNigerianPhone(phone);
+    if (normalized.length < 10) return null;
+    const customers = loadFromStorage<Customer[]>(STORAGE_KEYS.CUSTOMERS, MOCK_CUSTOMERS);
+    return customers.find((c) => normalizeNigerianPhone(c.phone) === normalized) || null;
+  }
+
+  async requestCustomerOtp(
+    phone: string
+  ): Promise<{ ok: true; customer: Customer; otpCode: string; expiresInSeconds: number } | { ok: false; message: string }> {
+    await sleep(280);
+    const customer = await this.findCustomerByPhone(phone);
+    if (!customer) {
+      return {
+        ok: false,
+        message: "No registered customer found with this phone number. Use a phone number already registered on Solar Track."
+      };
+    }
+
+    const otpCode = String(Math.floor(100000 + Math.random() * 900000));
+    const expiresAt = Date.now() + 5 * 60 * 1000;
+    const otps = loadFromStorage<Record<string, { code: string; expiresAt: number }>>(STORAGE_KEYS.CUSTOMER_OTPS, {});
+    otps[normalizeNigerianPhone(customer.phone)] = { code: otpCode, expiresAt };
+    saveToStorage(STORAGE_KEYS.CUSTOMER_OTPS, otps);
+
+    return {
+      ok: true,
+      customer,
+      otpCode,
+      expiresInSeconds: 300
+    };
+  }
+
+  async verifyCustomerOtp(
+    phone: string,
+    otpCode: string
+  ): Promise<{ ok: true; customer: Customer } | { ok: false; message: string }> {
+    await sleep(240);
+    const normalized = normalizeNigerianPhone(phone);
+    const customer = await this.findCustomerByPhone(phone);
+    if (!customer) {
+      return { ok: false, message: "Phone number is not registered on the system." };
+    }
+
+    const otps = loadFromStorage<Record<string, { code: string; expiresAt: number }>>(STORAGE_KEYS.CUSTOMER_OTPS, {});
+    const record = otps[normalized];
+    if (!record) {
+      return { ok: false, message: "No active OTP found. Please request a new code." };
+    }
+    if (Date.now() > record.expiresAt) {
+      return { ok: false, message: "OTP has expired. Please request a new code." };
+    }
+    if (record.code !== otpCode.trim()) {
+      return { ok: false, message: "Invalid 6-digit OTP code. Please check and try again." };
+    }
+
+    delete otps[normalized];
+    saveToStorage(STORAGE_KEYS.CUSTOMER_OTPS, otps);
+    return { ok: true, customer };
   }
 }
 

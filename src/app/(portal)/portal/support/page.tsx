@@ -24,10 +24,12 @@ import { Input } from "@/components/ui/input";
 import { MOCK_CUSTOMERS, MOCK_SYSTEMS, MOCK_TICKETS } from "@/lib/mock-data";
 import { formatDate } from "@/lib/utils";
 import { Ticket, TicketPriority, TicketCategory } from "@/lib/types";
+import { useAuthRole } from "@/components/providers/auth-role-provider";
 
 export default function PortalSupportPage() {
-  const customer = MOCK_CUSTOMERS[0];
-  const system = MOCK_SYSTEMS[0];
+  const { currentCustomer } = useAuthRole();
+  const customer = currentCustomer || MOCK_CUSTOMERS[0];
+  const system = MOCK_SYSTEMS.find((s) => s.id === customer.systemId) || MOCK_SYSTEMS[0];
 
   // Self-Help Diagnosis Wizard State
   const [activeTab, setActiveTab] = useState<"self-help" | "raise-ticket" | "tickets">("self-help");

@@ -27,12 +27,24 @@ export default function Home() {
           <GreenerAfrikLogo size="lg" textColor="light" showTagline={true} showRc={true} />
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
+          <Link
+            href="/sign-in"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-emerald-500/50 text-emerald-100 hover:bg-[#0A5C36] hover:text-white font-bold text-xs sm:text-sm transition"
+          >
+            <span>Sign In</span>
+          </Link>
+          <Link
+            href="/sign-up"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#EA580C] hover:bg-[#C2410C] text-white font-bold text-xs sm:text-sm shadow-md transition"
+          >
+            <span>Register Role</span>
+          </Link>
           <Link
             href="/admin"
             className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0A5C36] hover:bg-[#074728] text-white font-bold text-sm shadow-md shadow-[#0A5C36]/30 transition-all hover:scale-105 border border-emerald-500/40"
           >
-            <span>Launch Operations Desk</span>
+            <span>Operations Desk</span>
             <ArrowRight className="w-4 h-4 text-[#EA580C]" />
           </Link>
         </div>

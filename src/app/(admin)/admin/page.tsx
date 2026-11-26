@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Users,
@@ -16,18 +16,29 @@ import {
   BatteryCharging,
   Zap,
   CheckCircle2,
-  Clock
+  Clock,
+  UserPlus
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useAuthRole } from "@/components/providers/auth-role-provider";
 import { MOCK_CUSTOMERS, MOCK_SYSTEMS, MOCK_INSTALLATIONS, MOCK_PAYG_ACCOUNTS, MOCK_TICKETS } from "@/lib/mock-data";
+import { api } from "@/lib/api";
 import { formatNaira } from "@/lib/utils";
 import { ROLE_META } from "@/lib/rbac";
 
 export default function AdminOverviewPage() {
-  const { currentRole, currentUser, canAccess } = useAuthRole();
+  const { currentRole, currentUser, canAccess, canPerform } = useAuthRole();
+  const [pendingApprovalsCount, setPendingApprovalsCount] = useState(0);
+
+  useEffect(() => {
+    if (canPerform("APPROVE_REGISTRATIONS")) {
+      api.getStaffRegistrations().then((regs) => {
+        setPendingApprovalsCount(regs.filter((r) => r.status === "pending").length);
+      });
+    }
+  }, [canPerform]);
 
   const canSeeCustomers = canAccess("/admin/customers");
   const canCreateCustomer = canAccess("/admin/customers/new");
@@ -83,6 +94,30 @@ export default function AdminOverviewPage() {
           </div>
         </div>
       </div>
+
+      {/* Super Admin Pending Role Registration Alert */}
+      {canPerform("APPROVE_REGISTRATIONS") && pendingApprovalsCount > 0 && (
+        <div className="rounded-2xl border-2 border-[#EA580C]/40 bg-orange-50 dark:bg-orange-950/30 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#EA580C] text-white flex items-center justify-center shrink-0">
+              <UserPlus className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-sm font-black text-[#05361e] dark:text-white">
+                {pendingApprovalsCount} Pending Staff Role {pendingApprovalsCount === 1 ? "Registration" : "Registrations"}
+              </div>
+              <p className="text-xs text-[#9A3412] dark:text-orange-200">
+                Review and approve or decline new staff onboarding requests in Settings & Governance.
+              </p>
+            </div>
+          </div>
+          <Link href="/admin/settings">
+            <Button variant="orange" size="sm" className="text-xs font-bold shrink-0">
+              Review Approvals →
+            </Button>
+          </Link>
+        </div>
+      )}
 
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
