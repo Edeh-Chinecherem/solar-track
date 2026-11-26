@@ -7,8 +7,9 @@ import {
   Moon,
   UserCheck,
   ChevronDown,
-  ExternalLink,
-  LogIn
+  Lock,
+  LogIn,
+  LogOut
 } from "lucide-react";
 import { useAuthRole } from "@/components/providers/auth-role-provider";
 import { useTheme } from "@/components/providers/theme-provider";
@@ -19,7 +20,7 @@ import { GreenerAfrikTopBand, GreenerAfrikEmblem } from "@/components/ui/greener
 import { canAccessRoute, ROLE_META } from "@/lib/rbac";
 
 export function AdminHeader({ onMenuClick }: { onMenuClick: () => void }) {
-  const { currentRole, switchRole, availableUsers } = useAuthRole();
+  const { currentRole, isStaffSignedIn, canSwitchRoles, signOutStaff, switchRole, availableUsers } = useAuthRole();
   const { theme, toggleTheme } = useTheme();
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const pathname = usePathname();
@@ -54,12 +55,29 @@ export function AdminHeader({ onMenuClick }: { onMenuClick: () => void }) {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4">
-          {/* ROLE SWITCHER DROPDOWN */}
+          {/* ROLE SWITCHER DROPDOWN (Super Admin only; locked for other roles) */}
           <div className="relative">
             <button
+              type="button"
               data-testid="role-switcher-btn"
-              onClick={() => setRoleDropdownOpen(!roleDropdownOpen)}
-              className="flex items-center gap-2 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50/60 dark:bg-[#084729]/80 px-3 py-1.5 text-xs font-semibold text-[#05361e] dark:text-white hover:border-[#0A5C36] dark:hover:border-[#10B981] transition cursor-pointer shadow-sm"
+              disabled={!canSwitchRoles}
+              aria-disabled={!canSwitchRoles}
+              onClick={() => {
+                if (canSwitchRoles) {
+                  setRoleDropdownOpen(!roleDropdownOpen);
+                }
+              }}
+              title={
+                canSwitchRoles
+                  ? "Switch active role view"
+                  : "Role is locked to your signed-in account. Only Super Admin can switch roles."
+              }
+              className={cn(
+                "flex items-center gap-2 rounded-xl border px-3 py-1.5 text-xs font-semibold transition shadow-sm",
+                canSwitchRoles
+                  ? "border-emerald-200 dark:border-emerald-800 bg-emerald-50/60 dark:bg-[#084729]/80 text-[#05361e] dark:text-white hover:border-[#0A5C36] dark:hover:border-[#10B981] cursor-pointer"
+                  : "border-emerald-200/80 dark:border-emerald-800/80 bg-emerald-50/40 dark:bg-[#084729]/50 text-[#05361e] dark:text-emerald-100 cursor-not-allowed opacity-90"
+              )}
             >
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#0A5C36] dark:bg-[#10B981] animate-pulse" />
@@ -68,10 +86,14 @@ export function AdminHeader({ onMenuClick }: { onMenuClick: () => void }) {
                   {ROLE_META[currentRole]?.title || currentRole}
                 </span>
               </div>
-              <ChevronDown className="w-3.5 h-3.5 text-[#0A5C36] dark:text-emerald-300" />
+              {canSwitchRoles ? (
+                <ChevronDown className="w-3.5 h-3.5 text-[#0A5C36] dark:text-emerald-300" />
+              ) : (
+                <Lock className="w-3.5 h-3.5 text-[#EA580C]" />
+              )}
             </button>
 
-            {roleDropdownOpen && (
+            {canSwitchRoles && roleDropdownOpen && (
               <>
                 <div
                   className="fixed inset-0 z-40"
@@ -83,7 +105,7 @@ export function AdminHeader({ onMenuClick }: { onMenuClick: () => void }) {
                       Switch Active Persona
                     </div>
                     <div className="text-[11px] text-emerald-700/80 dark:text-emerald-200/80 mt-0.5">
-                      Live demo: UI permissions adapt immediately
+                      Super Admin preview: UI permissions adapt immediately
                     </div>
                   </div>
 
@@ -140,26 +162,30 @@ export function AdminHeader({ onMenuClick }: { onMenuClick: () => void }) {
             {theme === "dark" ? <Sun className="w-4 h-4 text-[#EA580C]" /> : <Moon className="w-4 h-4" />}
           </button>
 
-          {/* Public QR shortcut */}
-          <Link
-            href="/q/ST-LGS-001-X9"
-            target="_blank"
-            className="hidden xl:flex items-center gap-1.5 text-xs text-emerald-700/80 dark:text-emerald-200 hover:text-[#0A5C36] dark:hover:text-[#10B981] transition font-medium"
-            title="Open sample public QR landing"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            <span>Public Tag</span>
-          </Link>
-
-          {/* Sign In / Switch Account */}
-          <Link
-            href="/sign-in"
-            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800 text-xs font-bold text-[#0A5C36] dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-[#084729] transition"
-            title="Staff & Customer Sign In"
-          >
-            <LogIn className="w-3.5 h-3.5 text-[#EA580C]" />
-            <span>Sign In</span>
-          </Link>
+          {/* Sign In / Sign Out */}
+          {isStaffSignedIn ? (
+            <button
+              type="button"
+              onClick={() => {
+                signOutStaff();
+                router.push("/sign-in");
+              }}
+              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-orange-300 dark:border-orange-800 bg-orange-50 dark:bg-orange-950/40 text-xs font-bold text-[#EA580C] hover:bg-orange-100 transition cursor-pointer"
+              title="Sign Out"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Sign Out</span>
+            </button>
+          ) : (
+            <Link
+              href="/sign-in"
+              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800 text-xs font-bold text-[#0A5C36] dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-[#084729] transition"
+              title="Staff & Customer Sign In"
+            >
+              <LogIn className="w-3.5 h-3.5 text-[#EA580C]" />
+              <span>Sign In</span>
+            </Link>
+          )}
         </div>
       </div>
     </header>

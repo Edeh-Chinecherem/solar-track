@@ -8,6 +8,7 @@ import {
   Leaf
 } from "lucide-react";
 import { GreenerAfrikLogo, GreenerAfrikTopBand } from "@/components/ui/greenerafrik-logo";
+import { HomeHeaderActions } from "@/components/home/home-header-actions";
 
 export default function Home() {
   return (
@@ -27,27 +28,7 @@ export default function Home() {
           <GreenerAfrikLogo size="lg" textColor="light" showTagline={true} showRc={true} />
         </div>
 
-        <div className="flex items-center gap-2.5">
-          <Link
-            href="/sign-in"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-emerald-500/50 text-emerald-100 hover:bg-[#0A5C36] hover:text-white font-bold text-xs sm:text-sm transition"
-          >
-            <span>Sign In</span>
-          </Link>
-          <Link
-            href="/sign-up"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#EA580C] hover:bg-[#C2410C] text-white font-bold text-xs sm:text-sm shadow-md transition"
-          >
-            <span>Register Role</span>
-          </Link>
-          <Link
-            href="/admin"
-            className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0A5C36] hover:bg-[#074728] text-white font-bold text-sm shadow-md shadow-[#0A5C36]/30 transition-all hover:scale-105 border border-emerald-500/40"
-          >
-            <span>Operations Desk</span>
-            <ArrowRight className="w-4 h-4 text-[#EA580C]" />
-          </Link>
-        </div>
+        <HomeHeaderActions />
       </header>
 
       {/* Hero Section */}
@@ -67,13 +48,10 @@ export default function Home() {
           </p>
         </div>
 
-        {/* 4 Launch Cards */}
+        {/* Platform Modules & Public QR Card */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-          {/* Card 1: Admin */}
-          <Link
-            href="/admin"
-            className="group rounded-3xl border border-emerald-800 bg-[#06361f]/90 hover:bg-[#06361f] p-6 transition-all duration-200 hover:border-emerald-400/60 hover:shadow-2xl hover:shadow-[#0A5C36]/30 flex flex-col justify-between"
-          >
+          {/* Card 1: Admin (informational, no navigation) */}
+          <div className="group rounded-3xl border border-emerald-800 bg-[#06361f]/90 hover:bg-[#06361f] p-6 transition-all duration-200 hover:border-emerald-400/60 hover:shadow-2xl hover:shadow-[#0A5C36]/30 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-2xl bg-[#0A5C36]/40 border border-emerald-500/40 flex items-center justify-center text-[#10B981] group-hover:scale-110 transition-transform">
                 <Users className="w-6 h-6" />
@@ -84,21 +62,17 @@ export default function Home() {
                   Staff Operations Desk
                 </h2>
                 <p className="text-xs text-emerald-100/80 leading-relaxed">
-                  Persona switcher across 6 staff roles, 10-stage gated pipeline, fleet telemetry map, diagnosis card & PAYG defaulters queue.
+                  Role-locked workspace across 6 staff roles, 10-stage gated pipeline, fleet telemetry map, diagnosis card & PAYG defaulters queue.
                 </p>
               </div>
             </div>
-            <div className="pt-6 mt-4 border-t border-emerald-800/80 flex items-center justify-between text-xs font-bold text-emerald-400 group-hover:translate-x-1 transition-transform">
-              <span>Open Operations Desk</span>
-              <ArrowRight className="w-4 h-4 text-[#EA580C]" />
+            <div className="pt-6 mt-4 border-t border-emerald-800/80 text-[11px] font-semibold text-emerald-300/80 group-hover:text-emerald-200 transition-colors">
+              Requires authorized staff sign-in
             </div>
-          </Link>
+          </div>
 
-          {/* Card 2: Tech Mobile */}
-          <Link
-            href="/tech"
-            className="group rounded-3xl border border-emerald-800 bg-[#06361f]/90 hover:bg-[#06361f] p-6 transition-all duration-200 hover:border-emerald-400/60 hover:shadow-2xl hover:shadow-[#0A5C36]/30 flex flex-col justify-between"
-          >
+          {/* Card 2: Tech Mobile (informational, no navigation) */}
+          <div className="group rounded-3xl border border-emerald-800 bg-[#06361f]/90 hover:bg-[#06361f] p-6 transition-all duration-200 hover:border-emerald-400/60 hover:shadow-2xl hover:shadow-[#0A5C36]/30 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-2xl bg-[#0A5C36]/40 border border-emerald-500/40 flex items-center justify-center text-[#10B981] group-hover:scale-110 transition-transform">
                 <Smartphone className="w-6 h-6" />
@@ -113,17 +87,13 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="pt-6 mt-4 border-t border-emerald-800/80 flex items-center justify-between text-xs font-bold text-emerald-400 group-hover:translate-x-1 transition-transform">
-              <span>Open Field Technician View</span>
-              <ArrowRight className="w-4 h-4 text-[#EA580C]" />
+            <div className="pt-6 mt-4 border-t border-emerald-800/80 text-[11px] font-semibold text-emerald-300/80 group-hover:text-emerald-200 transition-colors">
+              Requires technician sign-in
             </div>
-          </Link>
+          </div>
 
-          {/* Card 3: Customer Portal */}
-          <Link
-            href="/portal"
-            className="group rounded-3xl border border-emerald-800 bg-[#06361f]/90 hover:bg-[#06361f] p-6 transition-all duration-200 hover:border-orange-400/60 hover:shadow-2xl hover:shadow-[#EA580C]/20 flex flex-col justify-between"
-          >
+          {/* Card 3: Customer Portal (informational, no navigation) */}
+          <div className="group rounded-3xl border border-emerald-800 bg-[#06361f]/90 hover:bg-[#06361f] p-6 transition-all duration-200 hover:border-orange-400/60 hover:shadow-2xl hover:shadow-[#EA580C]/20 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-2xl bg-[#EA580C]/20 border border-[#EA580C]/40 flex items-center justify-center text-[#EA580C] group-hover:scale-110 transition-transform">
                 <ShieldCheck className="w-6 h-6" />
@@ -138,11 +108,10 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="pt-6 mt-4 border-t border-emerald-800/80 flex items-center justify-between text-xs font-bold text-orange-400 group-hover:translate-x-1 transition-transform">
-              <span>Open Customer Portal</span>
-              <ArrowRight className="w-4 h-4" />
+            <div className="pt-6 mt-4 border-t border-emerald-800/80 text-[11px] font-semibold text-orange-300/80 group-hover:text-orange-300 transition-colors">
+              Use Sign In with registered phone & OTP
             </div>
-          </Link>
+          </div>
 
           {/* Card 4: Public QR Landing */}
           <Link
@@ -173,7 +142,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="relative z-10 border-t border-emerald-900/80 py-6 px-6 text-center text-xs text-emerald-200/70">
-        GreenerAfrik Energies Limited (RC 9402141) — ...Powering Africa. Residential, Commercial & Enterprise Solar Infrastructure.
+        GreenerAfrik Energies Limited (RC 9402141) | ...Powering Africa. Residential, Commercial & Enterprise Solar Infrastructure.
       </footer>
     </div>
   );

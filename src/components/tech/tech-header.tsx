@@ -2,12 +2,14 @@
 
 import React from "react";
 import Link from "next/link";
-import { CheckCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { CheckCircle, LogOut } from "lucide-react";
 import { useAuthRole } from "@/components/providers/auth-role-provider";
 import { GreenerAfrikEmblem, GreenerAfrikTopBand } from "@/components/ui/greenerafrik-logo";
 
 export function TechHeader() {
-  const { currentUser } = useAuthRole();
+  const { currentUser, isStaffSignedIn, signOutStaff } = useAuthRole();
+  const router = useRouter();
 
   return (
     <header className="sticky top-0 z-30 flex flex-col bg-[#05361e] text-white border-b border-emerald-800 shadow-md">
@@ -33,12 +35,26 @@ export function TechHeader() {
             <CheckCircle className="w-3 h-3" />
             <span>Synced</span>
           </div>
-          <Link
-            href="/sign-in"
-            className="text-[11px] font-semibold text-emerald-200 hover:text-white px-2 py-1 rounded-lg hover:bg-[#0A5C36] transition"
-          >
-            Sign In
-          </Link>
+          {isStaffSignedIn ? (
+            <button
+              type="button"
+              onClick={() => {
+                signOutStaff();
+                router.push("/sign-in");
+              }}
+              className="inline-flex items-center gap-1 text-[11px] font-semibold text-orange-300 hover:text-white px-2 py-1 rounded-lg hover:bg-[#EA580C] transition cursor-pointer"
+            >
+              <LogOut className="w-3 h-3" />
+              <span>Sign Out</span>
+            </button>
+          ) : (
+            <Link
+              href="/sign-in"
+              className="text-[11px] font-semibold text-emerald-200 hover:text-white px-2 py-1 rounded-lg hover:bg-[#0A5C36] transition"
+            >
+              Sign In
+            </Link>
+          )}
           <Link
             href="/admin"
             className="text-[11px] font-semibold text-emerald-200 hover:text-white px-2 py-1 rounded-lg hover:bg-[#0A5C36] transition"

@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "GreenerAfrik - Solar Operations & Fleet Telemetry",
-  description: "GreenerAfrik Energies Limited (RC 9402141) — Enterprise, residential & commercial solar installations, 10-stage tracking, IoT telemetry, and PAYG metering.",
+  description: "GreenerAfrik Energies Limited (RC 9402141): Enterprise, residential & commercial solar installations, 10-stage tracking, IoT telemetry, and PAYG metering.",
   manifest: "/manifest.json"
 };
 

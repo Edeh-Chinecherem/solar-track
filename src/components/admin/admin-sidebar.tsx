@@ -42,7 +42,7 @@ export function AdminSidebar({
   setMobileOpen: (open: boolean) => void;
 }) {
   const pathname = usePathname();
-  const { currentRole, currentUser } = useAuthRole();
+  const { currentRole, currentUser, canSwitchRoles } = useAuthRole();
 
   const visibleNavItems = NAV_ITEMS.filter((item) => canAccessRoute(currentRole, item.href));
   const showTechLink = canAccessRoute(currentRole, "/tech");
@@ -72,7 +72,7 @@ export function AdminSidebar({
               <span className="text-xs font-semibold text-emerald-100">Active Role</span>
             </div>
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#0A5C36] text-emerald-200 border border-emerald-500/40">
-              DEMO
+              {canSwitchRoles ? "SUPER ADMIN" : "LOCKED"}
             </span>
           </div>
           <div className="mt-1 text-sm font-bold text-white">{ROLE_META[currentRole]?.shortTitle || currentRole}</div>

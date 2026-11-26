@@ -25,7 +25,7 @@ import { Badge } from "@/components/ui/badge";
 import { GreenerAfrikLogo, GreenerAfrikTopBand } from "@/components/ui/greenerafrik-logo";
 import { api } from "@/lib/api";
 import { DEMO_STAFF_PASSWORD, MOCK_USERS, MOCK_CUSTOMERS } from "@/lib/mock-data";
-import { ROLE_META } from "@/lib/rbac";
+import { canAccessRoute, ROLE_META } from "@/lib/rbac";
 import { useAuthRole } from "@/components/providers/auth-role-provider";
 import { useToast } from "@/components/providers/toast-provider";
 import { Customer } from "@/lib/types";
@@ -91,7 +91,15 @@ function SignInContent() {
         type: "success"
       });
 
-      if (result.user.role === "technician") {
+      const redirectParam = searchParams.get("redirect");
+      const safeRedirect =
+        redirectParam && redirectParam.startsWith("/") && !redirectParam.startsWith("//")
+          ? redirectParam
+          : null;
+
+      if (safeRedirect && canAccessRoute(result.user.role, safeRedirect)) {
+        router.push(safeRedirect);
+      } else if (result.user.role === "technician") {
         router.push("/tech");
       } else {
         router.push("/admin");
@@ -183,11 +191,10 @@ function SignInContent() {
               type="button"
               data-testid="signin-tab-staff"
               onClick={() => setMode("staff")}
-              className={`py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                mode === "staff"
+              className={`py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${mode === "staff"
                   ? "bg-[#0A5C36] text-white shadow-sm"
                   : "text-[#0A5C36] dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-[#084729]"
-              }`}
+                }`}
             >
               <ShieldCheck className="w-4 h-4" />
               <span>Staff Operations</span>
@@ -196,11 +203,10 @@ function SignInContent() {
               type="button"
               data-testid="signin-tab-customer"
               onClick={() => setMode("customer")}
-              className={`py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                mode === "customer"
+              className={`py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${mode === "customer"
                   ? "bg-[#EA580C] text-white shadow-sm"
                   : "text-[#0A5C36] dark:text-emerald-200 hover:bg-emerald-50 dark:hover:bg-[#084729]"
-              }`}
+                }`}
             >
               <Smartphone className="w-4 h-4" />
               <span>Customer (Phone + OTP)</span>
@@ -534,7 +540,7 @@ function SignInContent() {
       </main>
 
       <footer className="py-4 px-6 text-center text-xs text-emerald-700/80 dark:text-emerald-200/70">
-        GreenerAfrik Energies Limited (RC 9402141) — ...Powering Africa
+        GreenerAfrik Energies Limited (RC 9402141) | ...Powering Africa
       </footer>
     </div>
   );

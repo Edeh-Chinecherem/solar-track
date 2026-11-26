@@ -368,7 +368,7 @@ export default function SignUpPage() {
       </main>
 
       <footer className="py-4 px-6 text-center text-xs text-emerald-700/80 dark:text-emerald-200/70">
-        GreenerAfrik Energies Limited (RC 9402141) — Role-Governed Solar Operations Platform
+        GreenerAfrik Energies Limited (RC 9402141) | Role-Governed Solar Operations Platform
       </footer>
     </div>
   );

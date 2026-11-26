@@ -1,5 +1,5 @@
 # GreenerAfrik ☀️🌿🇳🇬
-### GreenerAfrik Energies Limited (RC 9402141) — ...Powering Africa
+### GreenerAfrik Energies Limited (RC 9402141) | ...Powering Africa
 #### Enterprise Solar Fleet Registry, 10-Stage Installation Tracking & PAYG Remote Contactor Platform
 
 **GreenerAfrik** is a web platform designed for Nigerian solar engineering and energy infrastructure companies. It manages the full lifecycle of residential, commercial, and enterprise solar installations: from inquiry and site survey to commissioning, remote IoT telemetry monitoring, automated fault diagnosis, and Pay-As-You-Go (PAYG) metering with remote hardware contactor control.

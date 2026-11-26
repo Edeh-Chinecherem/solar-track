@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { usePathname } from "next/navigation";
+import React, { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { TechHeader } from "@/components/tech/tech-header";
 import { TechBottomNav } from "@/components/tech/tech-bottom-nav";
 import { useAuthRole } from "@/components/providers/auth-role-provider";
@@ -10,8 +10,26 @@ import { AccessRestricted } from "@/components/ui/access-restricted";
 
 function TechLayoutInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { currentRole } = useAuthRole();
+  const router = useRouter();
+  const { currentRole, isStaffSignedIn, isAuthReady } = useAuthRole();
   const hasAccess = canAccessRoute(currentRole, pathname);
+
+  useEffect(() => {
+    if (isAuthReady && !isStaffSignedIn) {
+      const target = pathname ? `?mode=staff&redirect=${encodeURIComponent(pathname)}` : "?mode=staff";
+      router.replace(`/sign-in${target}`);
+    }
+  }, [isAuthReady, isStaffSignedIn, pathname, router]);
+
+  if (!isAuthReady || !isStaffSignedIn) {
+    return (
+      <div className="min-h-screen bg-emerald-50/40 dark:bg-[#042414] flex items-center justify-center p-6">
+        <div className="rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-[#06361f] px-6 py-4 text-xs font-semibold text-[#0A5C36] dark:text-emerald-200 shadow-lg">
+          {!isAuthReady ? "Verifying staff session..." : "Redirecting to Staff Sign In..."}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-emerald-50/40 dark:bg-[#042414] flex flex-col pb-20">
